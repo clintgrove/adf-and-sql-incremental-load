@@ -1,0 +1,19 @@
+variables:
+  ServiceConnection: 'clintazrealallrgs'
+  DevEnvironment: 'Dev'
+  TestEnvironment: 'Test'
+  PpeEnvironment: 'Ppe'
+  ProdEnvironment: 'Prod'
+  Location: 'uksouth'
+
+
+  # Arm template paths (make sure strongly typed)
+  # Parameter files are environment specific, so they will be in the vars for individual environments
+  AzureKeyVaultArmTemplate: "ArmTemplates/Keyvault/AzureKeyVault.json"
+  AzureBicep: "ArmTemplates/main.bicep"
+  AzureSqlServer: "ArmTemplates/AzureSQL/AzureSQL.json"
+  AzureDataShareArmTemplate:  "ArmTemplates/Datashare/AzureDataShare.json"
+  AzureDataFactoryArmTemplate:  "ArmTemplates/DataFactory/AzureDataFactory.json"
+
+
+  

@@ -1,0 +1,21 @@
+{
+	"name": "sink_csv_cdmmodel",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "lakeStoreFactoryStuffAcc",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

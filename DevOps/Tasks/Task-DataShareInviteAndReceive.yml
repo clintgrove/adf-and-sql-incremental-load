@@ -1,0 +1,25 @@
+parameters:
+  ServiceConnection: string
+  SubscriptionId: string
+  ResourceGroup: string
+  Location: string
+  Environment: string
+
+
+steps:
+- script: echo This is the resource group that has been passed in ${{ parameters.ResourceGroup }} and dsaccount is clintdatashare${{ lower(parameters.Environment) }}
+- script: echo ${{ parameters.SubscriptionId }}  is the sub id
+- ${{ if ne(parameters.Environment, 'Prod') }}:
+    - task: AzurePowerShell@5
+      displayName: PS1 Setting up datashare send and receive
+      inputs:
+       azureSubscription: ${{ parameters.ServiceConnection }}
+       ScriptPath: "$(Agent.BuildDirectory)/ArmTemplates/Datashare/powershelldatashare.ps1"
+       ScriptArguments:
+        -resourceGroupNameReceive  ${{ parameters.ResourceGroup }} `
+        -dataShareAccountNameReceive "clintdatashare${{ lower(parameters.Environment) }}" `
+        -subscriptionId ${{ parameters.SubscriptionId }} `
+        -env ${{ parameters.Environment }}
+       azurePowerShellVersion: 'LatestVersion'
+       errorActionPreference: continue
+

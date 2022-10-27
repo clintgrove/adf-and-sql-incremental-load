@@ -1,0 +1,47 @@
+parameters:
+  ServiceConnection: string
+  SubscriptionId: string
+  ResourceGroupName: string
+  Location: string
+  TemplateFilePath: string
+  TemplateParamFilePath: string
+  ServiceReleased: string
+  sqlServerPasswordDA: string
+  doSql: false 
+  
+
+steps:
+- script: echo the dsql param ${{parameters.doSql}}
+  displayName: Checking doSql param
+- ${{ if eq(parameters.doSql, 'true') }}:
+  - task: AzureResourceManagerTemplateDeployment@3
+    #condition: and(succeed(), eq('${{parameters.doSql}}', 'true'))
+    displayName: "Create ${{ parameters.ServiceReleased}}"
+    inputs:
+      deploymentScope: 'Resource Group'
+      azureResourceManagerConnection: ${{ parameters.ServiceConnection }}
+      subscriptionId: ${{ parameters.SubscriptionId }}
+      action: 'Create Or Update Resource Group'
+      resourceGroupName: ${{ parameters.ResourceGroupName }}
+      location: ${{ parameters.Location }}
+      templateLocation: 'Linked artifact'
+      csmFile: ${{ parameters.TemplateFilePath }}
+      csmParametersFile: ${{ parameters.TemplateParamFilePath }}
+      deploymentMode: 'Incremental'
+      overrideParameters: '-administratorLoginPassword ${{parameters.sqlServerPasswordDA}}'
+
+- ${{ if eq(parameters.doSql, 'false') }}:
+  - task: AzureResourceManagerTemplateDeployment@3
+    #condition: and(succeed(), eq('${{parameters.doSql}}', 'true'))
+    displayName: "Create ${{ parameters.ServiceReleased}}"
+    inputs:
+      deploymentScope: 'Resource Group'
+      azureResourceManagerConnection: ${{ parameters.ServiceConnection }}
+      subscriptionId: ${{ parameters.SubscriptionId }}
+      action: 'Create Or Update Resource Group'
+      resourceGroupName: ${{ parameters.ResourceGroupName }}
+      location: ${{ parameters.Location }}
+      templateLocation: 'Linked artifact'
+      csmFile: ${{ parameters.TemplateFilePath }}
+      csmParametersFile: ${{ parameters.TemplateParamFilePath }}
+      deploymentMode: 'Incremental'

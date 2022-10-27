@@ -1,0 +1,28 @@
+parameters:
+  SQLBuildSourceFolder: string
+  OutputDacpac: string
+  ArtifactName: string
+
+steps:
+
+    - task: VSBuild@1
+      displayName: 'Visual Studio Build sln file '
+      inputs:
+        vsVersion: 17.0
+        msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactstagingdirectory)\\"'
+        platform: 'any cpu'
+        configuration: release
+
+    - task: CopyFiles@2
+      displayName: 'Copy Files to:  $(Build.ArtifactStagingDirectory)'
+      inputs:
+        SourceFolder: '${{ parameters.SQLBuildSourceFolder }}/bin/release'
+        Contents: '**.dacpac'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+    - task: PublishPipelineArtifact@1
+      displayName: 'Publish Pipeline Artifact'
+      inputs:
+        targetPath: '$(Build.ArtifactStagingDirectory)'
+        artifact: ${{ parameters.ArtifactName }}
+

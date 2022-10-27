@@ -1,0 +1,39 @@
+parameters:
+  ServiceConnection: string
+  SubscriptionId: string
+  ResourceGroupName: string
+  Location: string
+  TemplateFilePath: string
+  TemplateParamFilePath: string
+  ServiceReleased: string
+  Environment: string 
+
+steps:
+
+- task: AzureCLI@2
+  displayName: Bicep deploy Scope of SubscriptionId
+  inputs:
+    azureSubscription: $(ServiceConnection)
+    scriptType: bash
+    scriptLocation: inlineScript
+    inlineScript: |
+      az --version
+      az deployment sub create  \
+        --name ClintGAzReal \
+        --location ${{parameters.Location}} \
+        --template-file $(Pipeline.Workspace)/ArmTemplates/ResourceGroupCreation/createResourceGroups.json \
+        --parameters $(Pipeline.Workspace)/ArmTemplates/ResourceGroupCreation/Parameters/TEST/AzureResourceGroup.Data.parameters.json
+
+# - task: AzureCLI@2
+#   displayName: Bicep deploy scope to ResourceGroup
+#   inputs:
+#     azureSubscription: $(ServiceConnection)
+#     scriptType: bash
+#     scriptLocation: inlineScript
+#     inlineScript: |
+#       az --version
+#       az deployment group create \
+#         --resource-group ${{ parameters.ResourceGroupName }} \
+#         --template-file $(Pipeline.Workspace)/ArmTemplates/main.bicep \
+#         --parameters ${{ parameters.TemplateParamFilePath }} environment=${{parameters.Environment}}
+

@@ -1,0 +1,16 @@
+{
+	"name": "lakeStoreFactoryStuffAcc",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureBlobFS",
+		"typeProperties": {
+			"url": "https://stguksclintonpmsft2.dfs.core.windows.net/",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDA3OTk1OENDLUFDNzgtNDYxQy04Q0VFLTMxODYxQkJERjYwMF81ZDU3NGQ2NC0zODk2LTQyNTgtODBkZi1lYWZjOWZlY2NmZTAiDQp9"
+		},
+		"connectVia": {
+			"referenceName": "MVNprivate",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

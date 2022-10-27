@@ -1,0 +1,23 @@
+{
+	"name": "csvconnector",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLake2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "*.csv",
+				"fileSystem": "cgruploads1"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,30 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "sqlServerName": {
+      "value": "lz-cgr-prod-uks-sqldb-23"
+    },
+    "administratorLogin": {
+      "value": "sqladmin"
+    },
+    "administratorLoginPassword": {
+
+      "value": "$(SqlPassword)"
+
+    },
+    "databases": {
+        "value": [
+            {
+                "name": "DATransactions"
+            }
+        ]
+    },
+    "LogAnalyticsResourceGroup": {
+      "value": "lz-data-ppe-uks-rg-01"
+    },
+    "LogAnaWspName": {
+      "value": "law-ppe-eastus23"
+    }
+  }
+}

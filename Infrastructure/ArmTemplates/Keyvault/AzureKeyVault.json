@@ -1,0 +1,135 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "name": {
+            "type": "string",
+			"defaultValue":"keyv-cgreal2-test"
+        },
+        "location": {
+            "type": "string",
+			"defaultValue":"eastus"
+        },
+        "sku": {
+            "type": "string",
+			"defaultValue":"standard"
+        },
+        "tenant": {
+            "type": "string",
+			"defaultValue":"16b3c013-d300-468d-ac64-7eda0820b6d3"
+        },
+        "enabledForDeployment": {
+			 "defaultValue": true,
+            "type": "bool"
+        },
+        "enabledForTemplateDeployment": {
+			 "defaultValue": true,
+            "type": "bool"
+        },
+        "enabledForDiskEncryption": {
+			 "defaultValue": true,
+            "type": "bool"
+        },
+        "enableRbacAuthorization": {
+			 "defaultValue": true,
+            "type": "bool"
+        },
+        "publicNetworkAccess": {
+            "type": "string ",
+			"defaultValue":"Enabled"
+        },
+        "enableSoftDelete": {
+			 "defaultValue": true,
+            "type": "bool"
+        },
+        "softDeleteRetentionInDays": {
+            "type": "int",
+			"defaultValue": 7
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "apiVersion": "2021-10-01",
+            "name": "[parameters('name')]",
+            "location": "[parameters('location')]",
+            "type": "Microsoft.KeyVault/vaults",
+            "properties": {
+                "enabledForDeployment": "[parameters('enabledForDeployment')]",
+                "enabledForTemplateDeployment": "[parameters('enabledForTemplateDeployment')]",
+                "enabledForDiskEncryption": "[parameters('enabledForDiskEncryption')]",
+                "enableRbacAuthorization": "[parameters('enableRbacAuthorization')]",
+                "accessPolicies": [
+                    {
+                        "tenantId": "16b3c013-d300-468d-ac64-7eda0820b6d3",
+                        "objectId": "3752c7e6-5902-47be-ad6b-a9cd4dff5854",
+                        "permissions": {
+                            "keys": [
+                                "Get",
+                                "List",
+                                "Update",
+                                "Create",
+                                "Import",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore",
+                                "GetRotationPolicy",
+                                "SetRotationPolicy",
+                                "Rotate"
+                            ],
+                            "secrets": [
+                                "Get",
+                                "List",
+                                "Set",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore"
+                            ],
+                            "certificates": [
+                                "Get",
+                                "List",
+                                "Update",
+                                "Create",
+                                "Import",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore",
+                                "ManageContacts",
+                                "ManageIssuers",
+                                "GetIssuers",
+                                "ListIssuers",
+                                "SetIssuers",
+                                "DeleteIssuers"
+                            ]
+                        }
+                    }
+                ],
+                "tenantId": "[parameters('tenant')]",
+                "sku": {
+                    "name": "[parameters('sku')]",
+                    "family": "A"
+                },
+                "publicNetworkAccess": "[parameters('publicNetworkAccess')]",
+                "enableSoftDelete": "[parameters('enableSoftDelete')]",
+                "softDeleteRetentionInDays": "[parameters('softDeleteRetentionInDays')]"
+            },
+            "tags": {},
+            "dependsOn": []
+        },
+        {
+        "type": "Microsoft.Authorization/roleAssignments",
+        "apiVersion": "2022-04-01",
+        "dependsOn": ["[parameters('name')]"],
+        "name": "4633458b-17de-408a-b874-0445c86b69e6",
+        "scope": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/',resourceGroup().name,'/providers/Microsoft.KeyVault/vaults/',parameters('name'))]",
+            "properties": {
+                "principalId": "cd80e1b9-8520-4178-aa3f-220047774a5b",
+                "roleDefinitionId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', '4633458b-17de-408a-b874-0445c86b69e6')]"
+            }
+        }
+    ],
+    "outputs": {}
+}

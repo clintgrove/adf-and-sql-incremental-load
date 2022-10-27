@@ -1,0 +1,97 @@
+parameters:
+  Environment: string
+  Location: String
+  ServiceConnection: String
+  FeatureFlag_SQL_StopIfDataLossCanOccur: boolean
+  FeatureFlag_SQL_Deploy: boolean
+
+jobs:  
+- deployment: JobDataServices
+  displayName: Job - Data Services
+  pool:
+   vmImage: 'windows-2019'
+  dependsOn: JobDataBuild
+  variables:
+    - template: ..\Variables\Variables-Global.yml
+    - template: ..\Variables\Variables-${{ Parameters.Environment }}.yml
+    - group: ${{ Parameters.Environment }}-vars
+  environment: ${{ variables.AdoEnvironment }}
+  strategy:
+    runOnce:
+      preDeploy:
+        steps:
+        - ${{ if eq(parameters.FeatureFlag_ADF_DeployPipelines, true) }}:
+          - download: current
+            artifact: 'AdfArmTemplatesData01' #  ADF01 arm templates
+        - ${{ if eq(parameters.FeatureFlag_SQL_Deploy, true) }}:
+          - download: current
+            artifact: 'dropDacpacDATransactions' #  Lida dacpac
+          - download: current
+            artifact: 'dropDacpacFACSOURCE' #  facSource dacpac
+        - download: current
+          artifact: 'ArmTemplates' 
+
+        
+      deploy:
+        steps:
+
+        # Deploy Databases
+        - ${{ if eq(parameters.FeatureFlag_SQL_Deploy, true) }}:
+          # Deploy LIDAMovementTransactions Database
+          - template: ../Tasks/Task-DeployAzureSqlDb.yml
+            parameters:
+              DacpacFilePath: '$(Pipeline.Workspace)/dropDacpacDATransactions/DatabaseLIDA.dacpac'
+              DatabaseName: ${{ variables.DADatabaseName }}
+              AdditionalArguments: /p:BlockOnPossibleDataLoss=${{ lower(parameters.FeatureFlag_SQL_StopIfDataLossCanOccur) }}
+              ServerName: ${{ variables.AzureSqlServerDADbAddress }}
+              ServiceConnection: ${{ parameters.ServiceConnection }}
+
+          #dfac source database
+          - template: ../Tasks/Task-DeployAzureSqlDb.yml
+            parameters:
+              DacpacFilePath: '$(Pipeline.Workspace)/dropDacpacFACSOURCE/dafacstuffuks-source.dacpac'
+              DatabaseName: ${{ variables.DatabaseName_facstuff_source }}
+              AdditionalArguments: /p:BlockOnPossibleDataLoss=${{ lower(parameters.FeatureFlag_SQL_StopIfDataLossCanOccur) }}
+              ServerName: ${{ variables.AzureSqlServerDbAddress_facstuff_source }}
+              ServiceConnection: ${{ parameters.ServiceConnection }}
+          
+          #dfac target database
+          - template: ../Tasks/Task-DeployAzureSqlDb.yml
+            parameters:
+              DacpacFilePath: '$(Pipeline.Workspace)/dropDacpacFACTARGET/dafacstuffuks-target.dacpac'
+              DatabaseName: ${{ variables.DatabaseName_facstuff_target }}
+              AdditionalArguments: /p:BlockOnPossibleDataLoss=${{ lower(parameters.FeatureFlag_SQL_StopIfDataLossCanOccur) }}
+              ServerName: ${{ variables.AzureSqlServerDbAddress_facstuff_target }}
+              ServiceConnection: ${{ parameters.ServiceConnection }}
+
+
+        # Stop ADF 01 triggers
+        - ${{ if eq(parameters.FeatureFlag_ADF_DeployPipelines, true) }}:
+          - template: ../Tasks/Utils/Util-StopDataFactoryTriggers.yml
+            parameters:
+              ServiceConnection: ${{ parameters.ServiceConnection }}
+              ResourceGroup: ${{ variables.ResourceGroupNameData }}
+              SubscriptionId: ${{ variables.SubscriptionIdData }}
+              DataFactoryName: ${{ variables.DataFactoryNameData }}
+
+            #Deploy Data Factory 01 pipelines
+          - script: echo template file ouput write is -- '$(Pipeline.Workspace)/AdfArmTemplatesData01/ARMTemplateForFactory.json'            
+          - script: echo param file ouput write is -- '$(Agent.BuildDirectory)/${{ variables.AzureDataFactoryPipelinesArmTemplateParametersDataAdf01 }}'
+          - template: ../Tasks/Task-ArmTemplateDeployment.yml
+            parameters:
+              ServiceConnection: ${{ parameters.ServiceConnection }}
+              SubscriptionId: ${{ variables.SubscriptionIdData }} 
+              ResourceGroupName: ${{ variables.ResourceGroupNameData }}
+              Location: ${{ parameters.Location }}
+              TemplateFilePath: '$(Pipeline.Workspace)/AdfArmTemplatesData01/ARMTemplateForFactory.json' # From downloaded artifact
+              TemplateParamFilePath: '$(Agent.BuildDirectory)/${{ variables.AzureDataFactoryPipelinesArmTemplateParametersDataAdf01 }}' # From environment specific variables
+              ServiceReleased: "Azure Data Factory 01 Pipelines"
+              doSql: false
+
+            #Start ADF 01 triggers
+          - template: ../Tasks/Utils/Util-StartDataFactoryTriggers.yml
+            parameters:
+              ServiceConnection: ${{ parameters.ServiceConnection }}
+              ResourceGroup: ${{ variables.ResourceGroupNameData }}
+              SubscriptionId: ${{ variables.SubscriptionIdData }}
+              DataFactoryName: ${{ variables.DataFactoryNameData }}

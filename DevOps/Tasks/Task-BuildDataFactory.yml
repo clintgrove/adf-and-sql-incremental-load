@@ -1,0 +1,45 @@
+parameters:
+  - name: DataFactoryResourceId
+    type: string
+  - name: ZoneType
+    type: string
+  - name: ArmTemplateExportPath
+    type: string
+  - name: ArmTemplatesADFArtifact 
+    type: string 
+  - name: ArmTemplateParametersADFArtifact
+    type: string 
+
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '14.x'
+  displayName: 'Install Node.js'
+ 
+- task: Npm@1
+  inputs:
+    command: 'install'
+    verbose: true
+  displayName: 'Install npm package'
+ 
+# Validate and then generate the ARM template into the destination folder. Same as clicking "Publish" from UX
+# The ARM template generated is not published to the ‘Live’ version of the factory. Deployment should be done using a release pipeline. 
+- task: Npm@1
+  inputs:
+    command: 'custom'
+    customCommand: 'run build export ${{ parameters.ArmTemplateExportPath }}  ${{ parameters.DataFactoryResourceId }} "ArmTemplate"'
+  displayName: 'Validate and Generate ARM template'
+ 
+# Publish the Artifact to be used as a source for a release pipeline
+- task: PublishPipelineArtifact@1
+  inputs:
+      targetPath: '$(Build.Repository.LocalPath)/ArmTemplate'
+      artifact: '${{ parameters.ArmTemplatesADFArtifact }}'
+      publishLocation: 'pipeline'
+
+- task: PublishPipelineArtifact@1
+  inputs:
+      targetPath: '$(Build.Repository.LocalPath)/Infrastructure/Services/${{ parameters.ZoneType }}'
+      artifact: '${{ parameters.ArmTemplateParametersADFArtifact }}'
+      publishLocation: 'pipeline'

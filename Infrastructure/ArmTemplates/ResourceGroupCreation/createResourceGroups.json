@@ -1,0 +1,33 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "rgName": {
+        "type": "string",
+        "defaultValue": "lz-data-test-uks-rg-02"
+      },
+      "rgLocation": {
+        "type": "string",
+        "defaultValue": "uk south"
+      },
+      "resourceTags": {
+        "type": "object",
+        "defaultValue": {
+            "Environment": "Test 2",
+            "Project": "Tutorial"
+        }
+     }
+    },
+    "variables": {},
+    "resources": [
+      {
+        "type": "Microsoft.Resources/resourceGroups",
+        "apiVersion": "2021-04-01",
+        "name": "[parameters('rgName')]",
+        "location": "[parameters('rgLocation')]",
+        "tags": "[parameters('resourceTags')]",
+        "properties": {}
+      }
+    ],
+    "outputs": {}
+  }

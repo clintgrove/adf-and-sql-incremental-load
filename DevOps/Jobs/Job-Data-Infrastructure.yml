@@ -1,0 +1,75 @@
+parameters:
+  Environment: string
+  Location: String
+  ServiceConnection: String
+  sqlServerPasswordDA: String
+  clintazrealsecret: string
+  clintazrealappid: string
+  FeatureFlag_ADF_DeployPipelines: boolean
+  FeatureFlag_SQL_Deploy: boolean
+
+jobs: 
+- deployment: JobDataInfrastructure
+  displayName: Job - Data Infrastructure
+  dependsOn: JobGlobalBuild
+  variables:
+    - template: ..\Variables\Variables-Global.yml
+    - template: ..\Variables\Variables-${{ Parameters.Environment }}.yml
+    - group: ${{ Parameters.Environment }}-vars
+  environment: ${{ variables.AdoEnvironment }}
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+
+        # Create Resouce Groups
+        - template: ../Tasks/Task-BicepTemplateDeployment.yml
+          parameters:
+            ServiceConnection: ${{ parameters.ServiceConnection }}
+            SubscriptionId: ${{ variables.SubscriptionIdData }}
+            ResourceGroupName: ${{ variables.ResourceGroupNameData }}
+            Location: ${{ parameters.Location }}
+            #TemplateFilePath: '$(Agent.BuildDirectory)/${{ variables.AzureKeyVaultArmTemplate }}' # From global variables
+            #TemplateParamFilePath: '$(Agent.BuildDirectory)/${{ variables.AzureKeyVaultArmTemplateParametersData }}' # From environment specific variables
+            ServiceReleased: "Azure Resource Groups"
+            doSql: false
+            
+        # Create key vault
+        - template: ../Tasks/Task-ArmTemplateDeployment.yml
+          parameters:
+            ServiceConnection: ${{ parameters.ServiceConnection }}
+            SubscriptionId: ${{ variables.SubscriptionIdData }}
+            ResourceGroupName: ${{ variables.ResourceGroupNameData }}
+            Location: ${{ parameters.Location }}
+            TemplateFilePath: '$(Agent.BuildDirectory)/${{ variables.AzureKeyVaultArmTemplate }}' # From global variables
+            TemplateParamFilePath: '$(Agent.BuildDirectory)/${{ variables.AzureKeyVaultArmTemplateParametersData }}' # From environment specific variables
+            ServiceReleased: "Azure Key Vault"
+            doSql: false
+            
+        # Create Azure SQL Server
+        - ${{ if eq(parameters.FeatureFlag_SQL_Deploy, true) }}:
+          - template: ../Tasks/Task-ArmTemplateDeployment.yml
+            parameters:
+              ServiceConnection: ${{ parameters.ServiceConnection }}
+              SubscriptionId: ${{ variables.SubscriptionIdData }}
+              ResourceGroupName: ${{ variables.ResourceGroupNameData }}
+              Location: ${{ parameters.Location }}
+              TemplateFilePath: '$(Agent.BuildDirectory)/${{ variables.AzureSqlServer }}' # From global variables
+              TemplateParamFilePath: '$(Agent.BuildDirectory)/${{ variables.AzureSqlServerParametersData }}' # From environment specific variables
+              ServiceReleased: "Azure Sql Server"
+              sqlServerPasswordDA: $(SqlPassword)
+              doSql: true
+
+        # Create Data Factory (as LZ can have INT, DATA and SHARED, this can be seen in the last bit of each variable name such as SubscriptionIdData)
+        - ${{ if eq(parameters.FeatureFlag_ADF_DeployPipelines, true) }}:
+          - template: ../Tasks/Task-ArmTemplateDeployment.yml
+            parameters:
+              ServiceConnection: ${{ parameters.ServiceConnection }}
+              SubscriptionId: ${{ variables.SubscriptionIdData }}
+              ResourceGroupName: ${{ variables.ResourceGroupNameData }}
+              Location: ${{ parameters.Location }}
+              TemplateFilePath: '$(Agent.BuildDirectory)/${{ variables.AzureDataFactoryArmTemplate }}' # From global variables
+              TemplateParamFilePath: '$(Agent.BuildDirectory)/${{ variables.AzureDataFactoryParametersData }}' # From environment specific variables
+              ServiceReleased: "Azure Data Factory"
+              doSql: false
+              Environment:  ${{ parameters.Environment }}  

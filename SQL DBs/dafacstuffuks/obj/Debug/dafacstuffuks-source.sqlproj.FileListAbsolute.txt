@@ -1,0 +1,6 @@
+C:\Users\clintgrove\repos\DataG\SQL DBs\dafacstuffuks\bin\Debug\dafacstuffuks-source.dacpac
+C:\Users\clintgrove\repos\DataG\SQL DBs\dafacstuffuks\obj\Debug\dafacstuffuks-source.sqlproj.AssemblyReference.cache
+C:\Users\clintgrove\repos\DataG\SQL DBs\dafacstuffuks\bin\Debug\dafacstuffuks-source.dll
+C:\Users\clintgrove\repos\DataG\SQL DBs\dafacstuffuks\bin\Debug\dafacstuffuks-source.pdb
+C:\Users\clintgrove\repos\DataG\SQL DBs\dafacstuffuks\obj\Debug\dafacstuffuks-source.dll
+C:\Users\clintgrove\repos\DataG\SQL DBs\dafacstuffuks\obj\Debug\dafacstuffuks-source.pdb

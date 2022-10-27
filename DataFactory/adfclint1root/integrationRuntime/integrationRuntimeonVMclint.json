@@ -1,0 +1,6 @@
+{
+	"name": "integrationRuntimeonVMclint",
+	"properties": {
+		"type": "SelfHosted"
+	}
+}

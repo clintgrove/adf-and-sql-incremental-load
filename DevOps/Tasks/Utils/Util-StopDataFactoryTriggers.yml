@@ -1,0 +1,20 @@
+parameters:
+  ServiceConnection: string
+  ResourceGroup: string
+  SubscriptionId: string
+  DataFactoryName: string
+
+steps:
+  - task: AzurePowerShell@5
+    displayName: 'Disable  Azure DataFactory Triggers'
+    inputs:
+      azureSubscription: "$(ServiceConnection)"
+      ScriptType: InlineScript
+      Inline: |
+        Select-AzSubscription -Subscription "${{ parameters.SubscriptionId }}"
+      
+        $triggersADF = Get-AzDataFactoryV2Trigger -DataFactoryName "${{ parameters.DataFactoryName }}" -ResourceGroupName ${{  parameters.ResourceGroup }}
+
+        $triggersADF | ForEach-Object { Stop-AzDataFactoryV2Trigger -ResourceGroupName ${{ parameters.ResourceGroup }} -DataFactoryName "${{  parameters.DataFactoryName }}" -Name $_.name -Force }
+      errorActionPreference: Continue
+      azurePowerShellVersion: LatestVersion

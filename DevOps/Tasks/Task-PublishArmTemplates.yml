@@ -1,0 +1,17 @@
+parameters:
+  - name: ArmTemplatesPath
+    type: string
+  - name: ServicesTemplatesPath
+    type: string
+  - name: ScriptsPath
+    type: string
+
+steps:
+  - publish: ${{ parameters.ArmTemplatesPath }}
+    artifact: ArmTemplates
+
+  - publish: ${{ parameters.ServicesTemplatesPath }}
+    artifact: Services
+
+#  - publish: ${{ parameters.ScriptsPath }}
+#    artifact: Scripts

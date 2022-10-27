@@ -1,0 +1,32 @@
+variables:
+  Environment: 'Test' 
+  AdoEnvironment: 'test-data'
+
+  # Data lz variables
+  SubscriptionIdData: "3be2ce56-4a5f-4034-88d7-2953d1819ed3"
+  ResourceGroupNameData: "lz-data-${{ lower(variables.Environment) }}-uks-rg-01"
+  DataFactoryNameData: "lz-data-${{ lower(variables.Environment) }}-uks-adf-01"
+  AzureDataFactoryPipelinesArmTemplateParametersDataAdf01: "Services/DataAnalytics/ARMTemplateParametersForFactory01${{ variables.Environment }}.json" #this file doesn't exist for dev
+
+  # Arm template parameter files
+  AzureKeyVaultArmTemplateParametersData: "ArmTemplates/Keyvault/Parameters/${{ upper(variables.Environment) }}/AzureKeyVault.Data.parameters.json"
+  AzureSqlServerParametersData: "ArmTemplates/AzureSQL/Parameters/${{ upper(variables.Environment) }}/AzureSQL.Data.parameters.json"
+  AzureDataFactoryParametersData: "ArmTemplates/DataFactory/Parameters/${{ upper(variables.Environment) }}/AzureDataFactory.parameters.json"
+
+ # Sql server variable for server 23
+  AzureSqlServerName_23: "lz-cgr-${{ lower(variables.Environment) }}-uks-sqldb-23" 
+ 
+  # DATransactions vars
+  SQLBuildSourceFolder_dbLida: "SQL DBs/DatabaseLIDA"
+  AzureSqlServerDADbAddress: ${{ lower(variables.AzureSqlServerName_23) }}.database.windows.net #comes from the variable above
+  DADatabaseName: "DATransactions"
+
+  # dafac source database vars
+  SQLBuildSourceFolder_dbfacStuffSource: "SQL DBs/dafacstuffuks"
+  AzureSqlServerDbAddress_facstuff_source: ${{ lower(variables.AzureSqlServerName_23) }}.database.windows.net #comes from the variable above
+  DatabaseName_facstuff_source: "dba-fac-stf-source"
+
+  # dafac target database vars
+  SQLBuildSourceFolder_dbfacStuffTarget: "SQL DBs/dafacstuffuks-target"
+  AzureSqlServerDbAddress_facstuff_target: ${{ lower(variables.AzureSqlServerName_23) }}.database.windows.net #comes from the variable above
+  DatabaseName_facstuff_target: "dba-facstuff-target"

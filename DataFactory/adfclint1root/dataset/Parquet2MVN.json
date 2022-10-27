@@ -1,0 +1,76 @@
+{
+	"name": "Parquet2MVN",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "lakeStoreFactoryStuffAcc",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileSystem": "cgruploads1"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "medallion",
+				"type": "UTF8"
+			},
+			{
+				"name": "hack_license",
+				"type": "UTF8"
+			},
+			{
+				"name": "vendor_id",
+				"type": "UTF8"
+			},
+			{
+				"name": "rate_code",
+				"type": "UTF8"
+			},
+			{
+				"name": "store_and_fwd_flag",
+				"type": "UTF8"
+			},
+			{
+				"name": "pickup_datetime",
+				"type": "UTF8"
+			},
+			{
+				"name": "dropoff_datetime",
+				"type": "UTF8"
+			},
+			{
+				"name": "passenger_count",
+				"type": "UTF8"
+			},
+			{
+				"name": "trip_time_in_secs",
+				"type": "UTF8"
+			},
+			{
+				"name": "trip_distance",
+				"type": "UTF8"
+			},
+			{
+				"name": "pickup_longitude",
+				"type": "UTF8"
+			},
+			{
+				"name": "pickup_latitude",
+				"type": "UTF8"
+			},
+			{
+				"name": "dropoff_longitude",
+				"type": "UTF8"
+			},
+			{
+				"name": "dropoff_latitude",
+				"type": "UTF8"
+			}
+		]
+	}
+}

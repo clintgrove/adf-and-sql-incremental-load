@@ -1,0 +1,10 @@
+C:\Users\clintgrove\repos\DataG\SQL DBs\dafacstuffuks-target\bin\Debug\dafacstuffuks-target.dacpac
+C:\Users\clintgrove\repos\DataG\SQL DBs\dafacstuffuks-target\bin\Debug\dafacstuffuks_target.dll
+C:\Users\clintgrove\repos\DataG\SQL DBs\dafacstuffuks-target\bin\Debug\dafacstuffuks_target.pdb
+C:\Users\clintgrove\repos\DataG\SQL DBs\dafacstuffuks-target\obj\Debug\dafacstuffuks-target.sqlproj.AssemblyReference.cache
+C:\Users\clintgrove\repos\DataG\SQL DBs\dafacstuffuks-target\obj\Debug\Model.xml
+C:\Users\clintgrove\repos\DataG\SQL DBs\dafacstuffuks-target\obj\Debug\refactor.xml
+C:\Users\clintgrove\repos\DataG\SQL DBs\dafacstuffuks-target\obj\Debug\postdeploy.sql
+C:\Users\clintgrove\repos\DataG\SQL DBs\dafacstuffuks-target\obj\Debug\predeploy.sql
+C:\Users\clintgrove\repos\DataG\SQL DBs\dafacstuffuks-target\obj\Debug\dafacstuffuks_target.dll
+C:\Users\clintgrove\repos\DataG\SQL DBs\dafacstuffuks-target\obj\Debug\dafacstuffuks_target.pdb

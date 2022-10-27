@@ -1,0 +1,193 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "sqlServerName": {
+      "type": "string",
+      "defaultValue": "[uniqueString('sql', resourceGroup().id)]",
+      "metadata": {
+        "description": "The name of the SQL logical server."
+      }
+    },
+    "databases": {
+            "type": "array",
+            "defaultValue": [
+                {
+                    "name": "CGMetadataTelemetery"
+                }
+            ],
+            "metadata": {
+                "description": "The names of the databases to create."
+            }
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]",
+      "metadata": {
+        "description": "Location for all resources."
+      }
+    },
+    "administratorLogin": {
+      "type": "string",
+      "metadata": {
+        "description": "The administrator username of the SQL logical server."
+      }
+    },
+    "administratorLoginPassword": {
+      "type": "secureString",
+      "metadata": {
+        "description": "The administrator password of the SQL logical server."
+      }
+    },
+    "redundancyBackup": {
+            "type": "string",
+            "defaultValue": "Local",
+            "metadata": {
+                "description": "Will the backup for this DB be geo or local or zrs"
+            }
+    },    
+    "LogAnalyticsResourceGroup": {
+        "type": "string",
+        "defaultValue": "rg-log-eastus"
+    },
+    "LogAnaWspName": {
+        "type": "string",
+        "defaultValue": "DefaultWorkspace-3be2ce56-4a5f-4034-88d7-2953d1819ed3-CUS",
+        "metadata": {
+            "description": "Log Analytics workspace name"
+        }
+    },
+    "isMSDevOpsAuditEnabled": {
+        "type": "bool",
+        "defaultValue": false,
+        "metadata": {
+            "description": "Enable Auditing of Microsoft support operations (DevOps)"
+        }
+    },
+    "EnableDiagnostics":{
+        "type": "bool",
+        "defaultValue": true,
+        "metadata": {
+            "description": "This doesn't need setting for production as Azure policy does it for us"
+        }
+    },
+    "SubscriptionID":{
+      "type": "string",
+      "defaultValue":"3be2ce56-4a5f-4034-88d7-2953d1819ed3"
+    }
+  },
+  "variables":{
+            "diagnosticSettingsName": "SQLSecurityAuditEvents_randomNameHere"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Sql/servers",
+      "apiVersion": "2021-08-01-preview",
+      "name": "[parameters('sqlServerName')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "administratorLogin": "[parameters('administratorLogin')]",
+        "administratorLoginPassword": "[parameters('administratorLoginPassword')]"
+      },
+      "identity": {
+        "type": "SystemAssigned"
+      },
+      "resources": [
+                {
+                    "type": "databases",
+                    "apiVersion": "2017-03-01-preview",
+                    "location": "[parameters('location')]",
+                    "dependsOn": [
+                        "[parameters('sqlServerName')]"
+                    ],
+                    "name": "master",
+                    "properties": {}
+                },
+                {
+                    
+                    "condition": "[parameters('EnableDiagnostics')]",
+                    "type": "databases/providers/diagnosticSettings",
+                    "name": "[concat('master/microsoft.insights/',variables('diagnosticSettingsName'))]",
+                    "dependsOn": [
+                        "[parameters('sqlServerName')]",
+                        "[resourceId('Microsoft.Sql/servers/databases', parameters('sqlServerName'), 'master')]"
+                    ],
+                    "apiVersion": "2017-05-01-preview",
+                    "properties": {
+                        "name": "[variables('diagnosticSettingsName')]",
+                        "workspaceId": "[resourceId(parameters('SubscriptionID'), parameters('LogAnalyticsResourceGroup'), 'Microsoft.OperationalInsights/workspaces',parameters('LogAnaWspName'))]",
+                        "logs": [
+                            {
+                                "category": "SQLSecurityAuditEvents",
+                                "enabled": true,
+                                "retentionPolicy": {
+                                    "days": 0,
+                                    "enabled": false
+                                }
+                            },
+                            {
+                                "condition": "[parameters('isMSDevOpsAuditEnabled')]",
+                                "category": "DevOpsOperationsAudit",
+                                "enabled": true,
+                                "retentionPolicy": {
+                                    "days": 0,
+                                    "enabled": false
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "apiVersion": "2017-03-01-preview",
+                    "type": "auditingSettings",
+                    "name": "DefaultAuditingSettings",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Sql/servers/', parameters('sqlServerName'))]"
+                    ],
+                    "properties": {
+                        "State": "Enabled",
+                        "isAzureMonitorTargetEnabled": true
+                    }
+                },
+                {
+                    "condition": "[parameters('isMSDevOpsAuditEnabled')]",
+                    "type": "devOpsAuditingSettings",
+                    "apiVersion": "2020-08-01-preview",
+                    "name": "Default",
+                    "dependsOn": [ "[parameters('sqlServerName')]" ],
+                    "properties": {
+                        "State": "Enabled",
+                        "isAzureMonitorTargetEnabled": true
+                    }
+                }
+            ]
+    },
+    {
+      "type": "Microsoft.Sql/servers/databases",
+      "apiVersion": "2021-08-01-preview",
+      "condition": "[not(empty(parameters('databases')))]",
+      "name": "[concat(parameters('sqlServerName'), '/', parameters('databases')[copyIndex()].name)]",
+      "location": "[parameters('location')]",
+      "copy": {
+          "name": "databaseLoop",
+          "count": "[length(parameters('databases'))]"
+      },
+      "sku": {
+        "name": "Standard",
+        "tier": "Standard"
+      },
+      "properties": {
+                "collation": "SQL_Latin1_General_CP1_CI_AS",
+                "maxSizeBytes": 2147483648,
+                "catalogCollation": "SQL_Latin1_General_CP1_CI_AS",
+                "zoneRedundant": false,
+                "readScale": "Disabled",
+                "requestedBackupStorageRedundancy": "[parameters('redundancyBackup')]",
+                "isLedgerOn": false
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Sql/servers', parameters('sqlServerName'))]"
+      ]
+    }
+  ]
+}

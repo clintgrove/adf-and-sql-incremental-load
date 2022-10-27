@@ -1,0 +1,45 @@
+parameters:
+ - name: ServiceConnection
+ - name: ResourceGroupName
+ - name: Environment
+ - name: clintazrealsecret
+ - name: clintazrealappid
+ - name: Location
+ - name: SubscripIdTerra
+
+steps:
+- checkout: self
+- task: TerraformInstaller@0
+  displayName: Install Terraform latest
+#- script: echo This is the resource group that has been passed in ${{ parameters.ResourceGroupName }} and service connection is  ${{ parameters.ServiceConnection }}
+# this powershell login is needed if you want to use the data external me in the main.tf
+- powershell: 'az login                                                
+              --service-principal                                        
+              -u ${{ parameters.clintazrealappid }}    
+              -p ${{ parameters.clintazrealsecret }}                 
+              --tenant "16b3c013-d300-468d-ac64-7eda0820b6d3"'
+  displayName: 'Azure Service Principal Login'
+- task: TerraformTaskV2@2
+  displayName: 'Terraform : Init'
+  inputs:
+    workingDirectory: ././Infrastructure/Terraform
+    backendServiceArm:   ${{ parameters.ServiceConnection }}
+    backendAzureRmResourceGroupName: "NetworkWatcherRG"
+    backendAzureRmStorageAccountName: "${{ lower(parameters.Environment) }}terrastate919"
+    backendAzureRmContainerName: tfstate
+    backendAzureRmKey: terraform.tfstate
+- task: TerraformTaskV2@2
+  displayName: 'Terraform : Plan'
+  inputs:
+    workingDirectory: ././Infrastructure/Terraform
+    command: plan
+    environmentServiceNameAzureRM:  ${{ parameters.ServiceConnection }}
+    commandOptions: '-out=terraform.tfstate -var client_id=${{parameters.clintazrealappid}} -var client_secret=${{parameters.clintazrealsecret}} -var resourcegroup=${{ parameters.ResourceGroupName }} -var envvar=${{ parameters.Environment }}'
+- task: TerraformTaskV2@2
+  displayName: 'Terraform : Validate and Apply'
+  inputs:
+    command: apply
+    environmentServiceNameAzureRM:  ${{ parameters.ServiceConnection }}
+    workingDirectory: ././Infrastructure/Terraform
+    commandOptions: '-var resourcegroup=${{ parameters.ResourceGroupName }} -var subscription_id=${{ parameters.SubscripIdTerra }} -var envvar=${{ parameters.Environment }} -var client_id=${{parameters.clintazrealappid}} -var client_secret=${{parameters.clintazrealsecret}} -var location=${{parameters.Location}}'
+#  in commandOptions, this is where I override the databricks tfvar values

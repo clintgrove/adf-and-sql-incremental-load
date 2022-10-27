@@ -1,0 +1,24 @@
+parameters:
+  Environment: String
+  Location: String
+  ServiceConnection: String  
+  
+jobs:  
+- deployment: JobGlobalBuild
+  displayName: Job - Global Build
+  variables:
+    - template: ..\Variables\Variables-Global.yml
+    - template: ..\Variables\Variables-${{ Parameters.Environment }}.yml
+  environment: ${{ variables.AdoEnvironment }}
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+        - checkout: self
+        
+        - template: ..\Tasks\Task-PublishArmTemplates.yml
+          parameters:
+            ArmTemplatesPath: "$(System.DefaultWorkingDirectory)/Infrastructure/ArmTemplates"
+            ServicesTemplatesPath: "$(System.DefaultWorkingDirectory)/Infrastructure/Services"
+            ScriptsPath: "$(System.DefaultWorkingDirectory)/Scripts"
+

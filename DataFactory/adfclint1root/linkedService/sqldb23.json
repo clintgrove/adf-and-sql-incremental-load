@@ -1,0 +1,23 @@
+{
+	"name": "sqldb23",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"parameters": {
+			"envlinked": {
+				"type": "string",
+				"defaultValue": "dev"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"connectionString": "integrated security=False;encrypt=True;connection timeout=30;data source=\"@{concat('lz-cgr-',linkedService().envlinked,'-uks-sqldb-23.database.windows.net')}\";initial catalog=DATransactions;user id=sqladmin",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDA3OTk1OENDLUFDNzgtNDYxQy04Q0VFLTMxODYxQkJERjYwMF8wNWE1NWU3Ni04Nzg1LTQ0NzctYTQ1OC1hZDBjMjMzMDVkY2UiDQp9"
+		},
+		"connectVia": {
+			"referenceName": "MVNprivate",
+			"type": "IntegrationRuntimeReference"
+		},
+		"description": "connecting to sql db"
+	}
+}

@@ -1,0 +1,22 @@
+parameters:
+  DacpacFilePath: string
+  DatabaseName: string
+  AdditionalArguments: string
+  ServerName: string
+  ServiceConnection: string
+
+steps:
+
+    - task: 'SqlAzureDacpacDeployment@1'
+      displayName: 'Deploy SQL Database - ${{ parameters.DatabaseName }}'
+      inputs:
+        azureSubscription: ${{ parameters.ServiceConnection }}
+        ServerName: ${{parameters.ServerName}}
+        DatabaseName: ${{ parameters.DatabaseName }}
+        SqlUsername: 'sqladmin'
+        SqlPassword: $(SqlPassword)
+        deployType: 'DacpacTask'
+        DeploymentAction: 'Publish'
+        DacpacFile: '${{ parameters.DacpacFilePath }}'
+        IpDetectionMethod: 'AutoDetect'
+        additionalArguments: ${{ parameters.AdditionalArguments }}

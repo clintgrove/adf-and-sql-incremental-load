@@ -1,0 +1,54 @@
+parameters:
+  Environment: String  
+  Location: String
+  ServiceConnection: String
+  FeatureFlag_ADF_DeployPipelines: boolean
+  FeatureFlag_SQL_Deploy: boolean
+
+jobs:  
+- deployment: JobDataBuild
+  pool:
+    vmImage: 'windows-latest'
+  displayName: Job - Data Build
+  dependsOn: JobDataInfrastructure
+  variables:
+    - template: ..\Variables\Variables-Global.yml
+    - template: ..\Variables\Variables-${{ Parameters.Environment }}.yml
+    - group: ${{ Parameters.Environment }}-vars
+  environment: ${{ variables.AdoEnvironment }}
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+        - checkout: self
+        
+        
+        - ${{ if eq(parameters.FeatureFlag_SQL_Deploy, true) }}:
+          # Build DATransactions database
+          - template: ..\Tasks\Task-BuildAzureSqlDb.yml
+            parameters:
+              SQLBuildSourceFolder: ${{ variables.SQLBuildSourceFolder_dbLida }}
+              ArtifactName: 'dropDacpacDATransactions'
+          
+          # dfac source build
+          - template: ..\Tasks\Task-BuildAzureSqlDb.yml
+            parameters:
+              SQLBuildSourceFolder: ${{ variables.SQLBuildSourceFolder_dbfacStuffSource }}
+              ArtifactName: 'dropDacpacFACSOURCE'
+          
+          # dfac target build
+          - template: ..\Tasks\Task-BuildAzureSqlDb.yml
+            parameters:
+              SQLBuildSourceFolder: ${{ variables.SQLBuildSourceFolder_dbfacStuffTarget }}
+              ArtifactName: 'dropDacpacFACTARGET'
+
+        # Build Data Factory ADF01
+        - ${{ if eq(parameters.FeatureFlag_ADF_DeployPipelines, true) }}:
+          - template: ..\Tasks\Task-BuildDataFactory.yml
+            parameters:
+              ArmTemplateExportPath : '$(Build.Repository.LocalPath)/DataFactory/cgr-dev-uks'
+              #DataFactoryResourceId must always point to the dev data factory you are trying to build
+              DataFactoryResourceId : '/subscriptions/3be2ce56-4a5f-4034-88d7-2953d1819ed3/resourceGroups/lz-data-dev-uks-rg-01/providers/Microsoft.DataFactory/factories/cgr-dev-uks-adf-01'
+              ZoneType : 'DataAnalytics'
+              ArmTemplatesADFArtifact: 'ADFArmTemplatesData01'
+              ArmTemplateParametersADFArtifact: 'ADFArmTemplateParametersData01'
