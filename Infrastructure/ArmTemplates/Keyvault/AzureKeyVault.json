@@ -123,7 +123,7 @@
         "name": "4633458b-17de-408a-b874-0445c86b69e6",
         "scope": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/',resourceGroup().name,'/providers/Microsoft.KeyVault/vaults/',parameters('name'))]",
             "properties": {
-                "principalId": "cd80e1b9-8520-4178-aa3f-220047774a5b",
+                "principalId": "026cb336-2088-4c7c-b60a-f6fe53a14cad",
                 "roleDefinitionId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', '4633458b-17de-408a-b874-0445c86b69e6')]"
             }
         }
