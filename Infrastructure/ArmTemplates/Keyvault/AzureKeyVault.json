@@ -4,7 +4,7 @@
     "parameters": {
         "name": {
             "type": "string",
-			"defaultValue": "[concat('kvghub-',uniqueString(resourceGroup().id),'-test')]"
+			"defaultValue": "[concat('kv-',uniqueString(resourceGroup().id),'-test')]"
         },
         "location": {
             "type": "string",
