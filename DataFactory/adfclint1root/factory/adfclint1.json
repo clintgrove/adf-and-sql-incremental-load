@@ -1,9 +1,0 @@
-{
-	"name": "adfclint1",
-	"location": "uksouth",
-	"identity": {
-		"type": "SystemAssigned",
-		"principalId": "cd80e1b9-8520-4178-aa3f-220047774a5b",
-		"tenantId": "16b3c013-d300-468d-ac64-7eda0820b6d3"
-	}
-}

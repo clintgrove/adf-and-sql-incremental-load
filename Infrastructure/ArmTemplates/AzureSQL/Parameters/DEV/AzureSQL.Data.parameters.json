@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "sqlServerName": {
-            "value": "lz-data-dev-uks-sqldb-02"
+            "value": "lz-ghub-dev-uks-sqldb-02"
         },
         "adminLogin": {
             "value": "sqladmin"
@@ -11,7 +11,7 @@
         "adminPassword": {
             "reference": {
                 "keyVault": {
-                    "id": "/subscriptions/99405095-9731-419b-9b7c-acb371a14e87/resourceGroups/lz-data-dev-uks-rg-01/providers/Microsoft.KeyVault/vaults/lz-data-dev-uks-kv-01"
+                    "id": "/subscriptions/99405095-9731-419b-9b7c-acb371a14e87/resourceGroups/lz-ghub-dev-uks-rg-01/providers/Microsoft.KeyVault/vaults/lz-ghub-dev-uks-kv-01"
                 },
                 "secretName": "DATransactions-password"
             }
@@ -24,10 +24,10 @@
             }
         },
         "subnetName": {
-            "value": "snet-lz-data-dev-be-uks-01"
+            "value": "snet-lz-ghub-dev-be-uks-01"
         },
         "virtualNetworkName": {
-            "value": "vnet-lz-data-dev-uks-01"
+            "value": "vnet-lz-ghub-dev-uks-01"
         },
         "enablePrivateEndpoint": {
             "value": false
@@ -36,7 +36,7 @@
             "value": "Enabled"
         },
         "virtualNetworkResourceGroupName": {
-            "value": "rg-lz-data-vnet-dev-uks-01"
+            "value": "rg-lz-ghub-vnet-dev-uks-01"
         },
         "location": {
             "value": "eastus"
@@ -54,10 +54,10 @@
             "value": "rg-plt-con-pdns-prod-uks-01"
         },
         "keyVaultName": {
-            "value": "lz-data-dev-uks-kv-01"
+            "value": "lz-ghub-dev-uks-kv-01"
         },
         "keyVaultResourceGroupName": {
-            "value": "lz-data-dev-uks-rg-01"
+            "value": "lz-ghub-dev-uks-rg-01"
         },
         "databases": {
             "value": [

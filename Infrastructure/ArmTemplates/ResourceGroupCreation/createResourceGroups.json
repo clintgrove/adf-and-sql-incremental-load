@@ -4,7 +4,7 @@
     "parameters": {
       "rgName": {
         "type": "string",
-        "defaultValue": "lz-data-test-uks-rg-02"
+        "defaultValue": "lz-ghub-test-uks-rg-02"
       },
       "rgLocation": {
         "type": "string",
@@ -13,7 +13,7 @@
       "resourceTags": {
         "type": "object",
         "defaultValue": {
-            "Environment": "Test 2",
+            "Environment": "Git Hub created Test 2",
             "Project": "Tutorial"
         }
      }
