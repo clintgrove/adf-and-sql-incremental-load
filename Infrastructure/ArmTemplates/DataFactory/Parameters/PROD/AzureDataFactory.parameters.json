@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
       "dataFactoryName": {
-        "value": "cgr-prod-uks-adf-01"
+        "value": "ghub-prod-uks-adf-01"
       },
       "location": {
         "value": "uksouth"
