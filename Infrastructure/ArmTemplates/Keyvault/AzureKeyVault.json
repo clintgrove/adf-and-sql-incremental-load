@@ -4,7 +4,7 @@
     "parameters": {
         "name": {
             "type": "string",
-			"defaultValue":"keyv-cgreal2-test"
+			"defaultValue": "[concat('kv-ghub',uniqueString(resourceGroup().id, deployment().name),'-test')]"
         },
         "location": {
             "type": "string",
@@ -73,10 +73,7 @@
                                 "Delete",
                                 "Recover",
                                 "Backup",
-                                "Restore",
-                                "GetRotationPolicy",
-                                "SetRotationPolicy",
-                                "Rotate"
+                                "Restore"
                             ],
                             "secrets": [
                                 "Get",
