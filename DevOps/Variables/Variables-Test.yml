@@ -4,14 +4,15 @@ variables:
 
   # Data lz variables
   SubscriptionIdData: "3be2ce56-4a5f-4034-88d7-2953d1819ed3"
-  ResourceGroupNameData: "lz-ghub-${{ lower(variables.Environment) }}-uks-rg-01"
-  DataFactoryNameData: "lz-ghub-${{ lower(variables.Environment) }}-uks-adf-01"
+  ResourceGroupNameData: "lz-data-${{ lower(variables.Environment) }}-uks-rg-01"
+  DataFactoryNameData: "lz-data-${{ lower(variables.Environment) }}-uks-adf-01"
   AzureDataFactoryPipelinesArmTemplateParametersDataAdf01: "Services/DataAnalytics/ARMTemplateParametersForFactory01${{ variables.Environment }}.json" #this file doesn't exist for dev
 
   # Arm template parameter files
   AzureKeyVaultArmTemplateParametersData: "ArmTemplates/Keyvault/Parameters/${{ upper(variables.Environment) }}/AzureKeyVault.Data.parameters.json"
   AzureSqlServerParametersData: "ArmTemplates/AzureSQL/Parameters/${{ upper(variables.Environment) }}/AzureSQL.Data.parameters.json"
   AzureDataFactoryParametersData: "ArmTemplates/DataFactory/Parameters/${{ upper(variables.Environment) }}/AzureDataFactory.parameters.json"
+  AzureLogAnalyticsParameters: "ArmTemplates/LogAnalytics/Parameters/${{ upper(variables.Environment) }}/LogAnalytics.parameters.json"
 
  # Sql server variable for server 23
   AzureSqlServerName_23: "lz-cgr-${{ lower(variables.Environment) }}-uks-sqldb-23" 

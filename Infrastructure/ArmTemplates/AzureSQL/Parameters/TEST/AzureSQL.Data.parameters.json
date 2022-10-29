@@ -18,10 +18,10 @@
           ]
       },
       "LogAnalyticsResourceGroup": {
-        "value": "lz-data-test-uks-rg-01"
+        "value": "lz-ghub-test-uks-rg-01"
       },
       "LogAnaWspName": {
-        "value": "law-test-eastus23"
+        "value": "law-uksouth-test-01"
       }
     }
   }

@@ -45,6 +45,18 @@ jobs:
             TemplateParamFilePath: '$(Agent.BuildDirectory)/${{ variables.AzureKeyVaultArmTemplateParametersData }}' # From environment specific variables
             ServiceReleased: "Azure Key Vault"
             doSql: false
+        
+        # Create Log Analytics
+        - template: ../Tasks/Task-ArmTemplateDeployment.yml
+          parameters:
+            ServiceConnection: ${{ parameters.ServiceConnection }}
+            SubscriptionId: ${{ variables.SubscriptionIdData }}
+            ResourceGroupName: ${{ variables.ResourceGroupNameData }}
+            Location: ${{ parameters.Location }}
+            TemplateFilePath: '$(Agent.BuildDirectory)/${{ variables.AzureLogAnalyticsArmTemplate }}' # From global variables
+            TemplateParamFilePath: '$(Agent.BuildDirectory)/${{ variables.AzureLogAnalyticsParameters }}' # From environment specific variables
+            ServiceReleased: "Log Analytics"
+            doSql: false
             
         # Create Azure SQL Server
         - ${{ if eq(parameters.FeatureFlag_SQL_Deploy, true) }}:

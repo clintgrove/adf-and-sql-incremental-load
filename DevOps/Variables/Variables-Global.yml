@@ -12,7 +12,7 @@ variables:
   AzureKeyVaultArmTemplate: "ArmTemplates/Keyvault/AzureKeyVault.json"
   AzureBicep: "ArmTemplates/main.bicep"
   AzureSqlServer: "ArmTemplates/AzureSQL/AzureSQL.json"
-  AzureDataShareArmTemplate:  "ArmTemplates/Datashare/AzureDataShare.json"
+  AzureLogAnalyticsArmTemplate:  "ArmTemplates/LogAnalytics/LogAnalytics.json"
   AzureDataFactoryArmTemplate:  "ArmTemplates/DataFactory/AzureDataFactory.json"
 
 
