@@ -3,7 +3,7 @@
 	"contentVersion": "1.0.0.0",
 	"parameters": {
 		"factoryName": {
-			"value": "cgr-test-uks-adf-01"
+			"value": "ghub-test-uks-adf-01"
 		},
 		"facstuff_DatabaseSOURCE_properties_typeProperties_connectionString_secretName": {
 			"value": "sqlserver-facstuff-test-source-connectionstring"
