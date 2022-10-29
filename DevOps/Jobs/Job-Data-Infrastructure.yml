@@ -23,7 +23,7 @@ jobs:
         steps:
 
         # Create Resouce Groups
-        - template: ../Tasks/Task-BicepTemplateDeployment.yml
+        - template: ../Tasks/Task-ArmTemplateSubscDeployment.yml
           parameters:
             ServiceConnection: ${{ parameters.ServiceConnection }}
             SubscriptionId: ${{ variables.SubscriptionIdData }}

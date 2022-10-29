@@ -11,7 +11,7 @@ parameters:
 steps:
 
 - task: AzureCLI@2
-  displayName: Bicep deploy Scope of SubscriptionId
+  displayName: Create ResourceGroup Scope of SubscriptionId
   inputs:
     azureSubscription: $(ServiceConnection)
     scriptType: bash
