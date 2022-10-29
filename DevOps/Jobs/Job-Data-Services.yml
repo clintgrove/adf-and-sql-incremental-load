@@ -70,9 +70,9 @@ jobs:
           - template: ../Tasks/Utils/Util-StopDataFactoryTriggers.yml
             parameters:
               ServiceConnection: ${{ parameters.ServiceConnection }}
-              ResourceGroup: ${{ variables.ResourceGroupNameData }}
-              SubscriptionId: ${{ variables.SubscriptionIdData }}
-              DataFactoryName: ${{ variables.DataFactoryNameData }}
+              ResourceGroup: ${{ variables.ResourceGroupNameGHUB }}
+              SubscriptionId: ${{ variables.SubscriptionIdGHUB }}
+              DataFactoryName: ${{ variables.DataFactoryNameGHUB }}
 
             #Deploy Data Factory 01 pipelines
           - script: echo template file ouput write is -- '$(Pipeline.Workspace)/AdfArmTemplatesData01/ARMTemplateForFactory.json'            
@@ -80,8 +80,8 @@ jobs:
           - template: ../Tasks/Task-ArmTemplateDeployment.yml
             parameters:
               ServiceConnection: ${{ parameters.ServiceConnection }}
-              SubscriptionId: ${{ variables.SubscriptionIdData }} 
-              ResourceGroupName: ${{ variables.ResourceGroupNameData }}
+              SubscriptionId: ${{ variables.SubscriptionIdGHUB }} 
+              ResourceGroupName: ${{ variables.ResourceGroupNameGHUB }}
               Location: ${{ parameters.Location }}
               TemplateFilePath: '$(Pipeline.Workspace)/AdfArmTemplatesData01/ARMTemplateForFactory.json' # From downloaded artifact
               TemplateParamFilePath: '$(Agent.BuildDirectory)/${{ variables.AzureDataFactoryPipelinesArmTemplateParametersDataAdf01 }}' # From environment specific variables
@@ -92,6 +92,6 @@ jobs:
           - template: ../Tasks/Utils/Util-StartDataFactoryTriggers.yml
             parameters:
               ServiceConnection: ${{ parameters.ServiceConnection }}
-              ResourceGroup: ${{ variables.ResourceGroupNameData }}
-              SubscriptionId: ${{ variables.SubscriptionIdData }}
-              DataFactoryName: ${{ variables.DataFactoryNameData }}
+              ResourceGroup: ${{ variables.ResourceGroupNameGHUB }}
+              SubscriptionId: ${{ variables.SubscriptionIdGHUB }}
+              DataFactoryName: ${{ variables.DataFactoryNameGHUB }}
