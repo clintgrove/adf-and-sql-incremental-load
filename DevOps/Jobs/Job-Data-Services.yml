@@ -43,7 +43,7 @@ jobs:
               DacpacFilePath: '$(Pipeline.Workspace)/dropDacpacDATransactions/DatabaseLIDA.dacpac'
               DatabaseName: ${{ variables.DADatabaseName }}
               AdditionalArguments: /p:BlockOnPossibleDataLoss=${{ lower(parameters.FeatureFlag_SQL_StopIfDataLossCanOccur) }}
-              ServerName: ${{ variables.AzureSqlServerDADbAddress }}
+              ServerName: ${{ variables.AzureSqlServerName_ghub }}
               ServiceConnection: ${{ parameters.ServiceConnection }}
 
           #dfac source database
@@ -52,7 +52,7 @@ jobs:
               DacpacFilePath: '$(Pipeline.Workspace)/dropDacpacFACSOURCE/dafacstuffuks-source.dacpac'
               DatabaseName: ${{ variables.DatabaseName_facstuff_source }}
               AdditionalArguments: /p:BlockOnPossibleDataLoss=${{ lower(parameters.FeatureFlag_SQL_StopIfDataLossCanOccur) }}
-              ServerName: ${{ variables.AzureSqlServerDbAddress_facstuff_source }}
+              ServerName: ${{ variables.AzureSqlServerName_ghub }}
               ServiceConnection: ${{ parameters.ServiceConnection }}
           
           #dfac target database
@@ -61,7 +61,7 @@ jobs:
               DacpacFilePath: '$(Pipeline.Workspace)/dropDacpacFACTARGET/dafacstuffuks-target.dacpac'
               DatabaseName: ${{ variables.DatabaseName_facstuff_target }}
               AdditionalArguments: /p:BlockOnPossibleDataLoss=${{ lower(parameters.FeatureFlag_SQL_StopIfDataLossCanOccur) }}
-              ServerName: ${{ variables.AzureSqlServerDbAddress_facstuff_target }}
+              ServerName: ${{ variables.AzureSqlServerName_ghub }}
               ServiceConnection: ${{ parameters.ServiceConnection }}
 
 
