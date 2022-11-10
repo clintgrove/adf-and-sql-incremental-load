@@ -13,13 +13,13 @@
       "databases": {
           "value": [
               {
-                  "name": "dafacstuffuks_target"
+                  "name": "dba-fac-stf-source"
               },
               {
-                "name": "dafacstuffuks-source"
+                "name": "dba-facstuff-target"
             },
             {
-              "name": "DatabaseDAtransactions"
+              "name": "DATransactions"
           }
           ]
       },
