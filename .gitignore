@@ -3,3 +3,11 @@
 
 # Ada Library Information
 *.ali
+SQL DBs/dafacstuffuks-target/dafacstuffuks-target.dbmdl
+.gitignore
+SQL DBs/DatabaseLIDA/DatabaseLIDA.sqlproj.user
+SQL DBs/DatabaseLIDA/obj/Debug/DatabaseLIDA.sqlproj.FileListAbsolute.txt
+SQL DBs/DatabaseLIDA/DatabaseLIDA.sqlproj.user
+SQL DBs/DatabaseLIDA/obj/Debug/DatabaseLIDA.sqlproj.FileListAbsolute.txt
+SQL DBs/DatabaseLIDA/obj/Debug/Model.xml
+.gitignore
