@@ -173,8 +173,8 @@
           "count": "[length(parameters('databases'))]"
       },
       "sku": {
-        "name": "Standard",
-        "tier": "Standard"
+        "name": "Basic",
+        "tier": "Basic"
       },
       "properties": {
                 "collation": "SQL_Latin1_General_CP1_CI_AS",
