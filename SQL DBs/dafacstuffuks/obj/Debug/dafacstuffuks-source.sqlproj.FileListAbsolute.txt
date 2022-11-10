@@ -4,3 +4,13 @@ C:\Users\clintgrove\repos\DataG\SQL DBs\dafacstuffuks\bin\Debug\dafacstuffuks-so
 C:\Users\clintgrove\repos\DataG\SQL DBs\dafacstuffuks\bin\Debug\dafacstuffuks-source.pdb
 C:\Users\clintgrove\repos\DataG\SQL DBs\dafacstuffuks\obj\Debug\dafacstuffuks-source.dll
 C:\Users\clintgrove\repos\DataG\SQL DBs\dafacstuffuks\obj\Debug\dafacstuffuks-source.pdb
+C:\Users\clintgrove\GitHubRepos\adf-and-sql-incremental-load\SQL DBs\dafacstuffuks\bin\Debug\dafacstuffuks-source.dacpac
+C:\Users\clintgrove\GitHubRepos\adf-and-sql-incremental-load\SQL DBs\dafacstuffuks\bin\Debug\dafacstuffuks-source.dll
+C:\Users\clintgrove\GitHubRepos\adf-and-sql-incremental-load\SQL DBs\dafacstuffuks\bin\Debug\dafacstuffuks-source.pdb
+C:\Users\clintgrove\GitHubRepos\adf-and-sql-incremental-load\SQL DBs\dafacstuffuks\obj\Debug\dafacstuffuks-source.sqlproj.AssemblyReference.cache
+C:\Users\clintgrove\GitHubRepos\adf-and-sql-incremental-load\SQL DBs\dafacstuffuks\obj\Debug\Model.xml
+C:\Users\clintgrove\GitHubRepos\adf-and-sql-incremental-load\SQL DBs\dafacstuffuks\obj\Debug\refactor.xml
+C:\Users\clintgrove\GitHubRepos\adf-and-sql-incremental-load\SQL DBs\dafacstuffuks\obj\Debug\postdeploy.sql
+C:\Users\clintgrove\GitHubRepos\adf-and-sql-incremental-load\SQL DBs\dafacstuffuks\obj\Debug\predeploy.sql
+C:\Users\clintgrove\GitHubRepos\adf-and-sql-incremental-load\SQL DBs\dafacstuffuks\obj\Debug\dafacstuffuks-source.dll
+C:\Users\clintgrove\GitHubRepos\adf-and-sql-incremental-load\SQL DBs\dafacstuffuks\obj\Debug\dafacstuffuks-source.pdb
