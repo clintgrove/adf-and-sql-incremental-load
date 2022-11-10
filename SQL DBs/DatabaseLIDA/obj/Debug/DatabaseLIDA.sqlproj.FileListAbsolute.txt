@@ -24,9 +24,5 @@ C:\Users\clintgrove\GitHubRepos\adf-and-sql-incremental-load\SQL DBs\DatabaseLID
 C:\Users\clintgrove\GitHubRepos\adf-and-sql-incremental-load\SQL DBs\DatabaseLIDA\bin\Debug\DatabaseDAtransactions.dll
 C:\Users\clintgrove\GitHubRepos\adf-and-sql-incremental-load\SQL DBs\DatabaseLIDA\bin\Debug\DatabaseDAtransactions.pdb
 C:\Users\clintgrove\GitHubRepos\adf-and-sql-incremental-load\SQL DBs\DatabaseLIDA\obj\Debug\DatabaseLIDA.sqlproj.AssemblyReference.cache
-C:\Users\clintgrove\GitHubRepos\adf-and-sql-incremental-load\SQL DBs\DatabaseLIDA\obj\Debug\Model.xml
-C:\Users\clintgrove\GitHubRepos\adf-and-sql-incremental-load\SQL DBs\DatabaseLIDA\obj\Debug\refactor.xml
-C:\Users\clintgrove\GitHubRepos\adf-and-sql-incremental-load\SQL DBs\DatabaseLIDA\obj\Debug\postdeploy.sql
-C:\Users\clintgrove\GitHubRepos\adf-and-sql-incremental-load\SQL DBs\DatabaseLIDA\obj\Debug\predeploy.sql
 C:\Users\clintgrove\GitHubRepos\adf-and-sql-incremental-load\SQL DBs\DatabaseLIDA\obj\Debug\DatabaseDAtransactions.dll
 C:\Users\clintgrove\GitHubRepos\adf-and-sql-incremental-load\SQL DBs\DatabaseLIDA\obj\Debug\DatabaseDAtransactions.pdb
