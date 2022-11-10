@@ -13,8 +13,14 @@
       "databases": {
           "value": [
               {
-                  "name": "Db2ghub"
-              }
+                  "name": "dafacstuffuks_target"
+              },
+              {
+                "name": "dafacstuffuks-source"
+            },
+            {
+              "name": "DatabaseDAtransactions"
+          }
           ]
       },
       "LogAnalyticsResourceGroup": {
