@@ -7,6 +7,11 @@
 *.sqlproj.user
 *.sqlproj.FileListAbsolute.txt
 *.vs
+*.jfm
+*.dbmdl
+*.dll
+*.pdb
+
 /SQL DBs/DatabaseLIDA/DatabaseLIDA.jfm
 /SQL DBs/DatabaseLIDA/DatabaseLIDA.dbmdl
 /SQL DBs/DatabaseLIDA/obj/Debug/DatabaseDAtransactions.pdb
