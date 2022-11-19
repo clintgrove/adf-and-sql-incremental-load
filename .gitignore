@@ -7,3 +7,20 @@
 *.sqlproj.user
 *.sqlproj.FileListAbsolute.txt
 *.vs
+/SQL DBs/DatabaseLIDA/DatabaseLIDA.jfm
+/SQL DBs/DatabaseLIDA/DatabaseLIDA.dbmdl
+/SQL DBs/DatabaseLIDA/obj/Debug/DatabaseDAtransactions.pdb
+/SQL DBs/DatabaseLIDA/obj/Debug/DatabaseDAtransactions.dll
+/SQL DBs/dafacstuffuks-target/obj/Debug/dafacstuffuks_target.pdb
+/SQL DBs/dafacstuffuks-target/obj/Debug/dafacstuffuks_target.dll
+/SQL DBs/DatabaseLIDA/bin/Debug/DatabaseDAtransactions.dll
+/SQL DBs/DatabaseLIDA/bin/Debug/DatabaseDAtransactions.pdb
+/SQL DBs/dafacstuffuks-target/bin/Debug/dafacstuffuks_target.pdb
+/SQL DBs/dafacstuffuks-target/bin/Debug/dafacstuffuks_target.dll
+/SQL DBs/dafacstuffuks/dafacstuffuks-source.jfm
+/SQL DBs/dafacstuffuks/dafacstuffuks-source.dbmdl
+/SQL DBs/dafacstuffuks/obj/Debug/dafacstuffuks-source.sqlproj.FileListAbsolute.txt
+/SQL DBs/dafacstuffuks/obj/Debug/dafacstuffuks-source.pdb
+/SQL DBs/dafacstuffuks/obj/Debug/dafacstuffuks-source.dll
+/SQL DBs/dafacstuffuks/bin/Debug/dafacstuffuks-source.dll
+/SQL DBs/dafacstuffuks/bin/Debug/dafacstuffuks-source.pdb
