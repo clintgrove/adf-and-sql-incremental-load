@@ -12,9 +12,5 @@ C:\Users\clintgrove\GitHubRepos\adf-and-sql-incremental-load\SQL DBs\dafacstuffu
 C:\Users\clintgrove\GitHubRepos\adf-and-sql-incremental-load\SQL DBs\dafacstuffuks-target\bin\Debug\dafacstuffuks_target.dll
 C:\Users\clintgrove\GitHubRepos\adf-and-sql-incremental-load\SQL DBs\dafacstuffuks-target\bin\Debug\dafacstuffuks_target.pdb
 C:\Users\clintgrove\GitHubRepos\adf-and-sql-incremental-load\SQL DBs\dafacstuffuks-target\obj\Debug\dafacstuffuks-target.sqlproj.AssemblyReference.cache
-C:\Users\clintgrove\GitHubRepos\adf-and-sql-incremental-load\SQL DBs\dafacstuffuks-target\obj\Debug\Model.xml
-C:\Users\clintgrove\GitHubRepos\adf-and-sql-incremental-load\SQL DBs\dafacstuffuks-target\obj\Debug\refactor.xml
-C:\Users\clintgrove\GitHubRepos\adf-and-sql-incremental-load\SQL DBs\dafacstuffuks-target\obj\Debug\postdeploy.sql
-C:\Users\clintgrove\GitHubRepos\adf-and-sql-incremental-load\SQL DBs\dafacstuffuks-target\obj\Debug\predeploy.sql
 C:\Users\clintgrove\GitHubRepos\adf-and-sql-incremental-load\SQL DBs\dafacstuffuks-target\obj\Debug\dafacstuffuks_target.dll
 C:\Users\clintgrove\GitHubRepos\adf-and-sql-incremental-load\SQL DBs\dafacstuffuks-target\obj\Debug\dafacstuffuks_target.pdb
