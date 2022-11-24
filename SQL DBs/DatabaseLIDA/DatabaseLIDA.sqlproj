@@ -59,5 +59,6 @@
   <ItemGroup>
     <Build Include="Customer.sql" />
     <Build Include="tblAuthors.sql" />
+    <Build Include="Table22.sql" />
   </ItemGroup>
 </Project>
