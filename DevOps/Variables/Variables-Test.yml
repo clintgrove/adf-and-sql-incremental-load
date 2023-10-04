@@ -8,7 +8,7 @@ variables:
   DataFactoryNameData: "lz-data-${{ lower(variables.Environment) }}-uks-adf-01"
   AzureDataFactoryPipelinesArmTemplateParametersDataAdf01: "Services/DataAnalytics/ARMTemplateParametersForFactory01${{ variables.Environment }}.json" #this file doesn't exist for dev
 
-  # GHUB lz variables
+  # GHUB lz variables (the factory varialbe name is pointless here, its in services folder)
   SubscriptionIdGHUB: "3be2ce56-4a5f-4034-88d7-2953d1819ed3"
   ResourceGroupNameGHUB: "lz-ghub-${{ lower(variables.Environment) }}-uks-rg-01"
   DataFactoryNameGHUB: "lz-ghub-${{ lower(variables.Environment) }}-uks-adf-01"
