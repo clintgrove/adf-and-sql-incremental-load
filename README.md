@@ -6,3 +6,4 @@ Change the SubscriptionIdGHUB varialbe in each variable yaml file for test, ppe 
 
 Add your DevOps service Connection as a User Access Administrator in RBAC in your subscription. 
  
+Change your tenantID in keyvault to your own tenantID
