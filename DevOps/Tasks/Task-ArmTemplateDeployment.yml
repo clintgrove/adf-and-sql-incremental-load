@@ -17,7 +17,7 @@ steps:
     azureSubscription: ${{ parameters.ServiceConnection }}
     ScriptType: 'InlineScript'
     Inline: |
-      $deploymentName1 = Get-AzResourceGroupDeployment -ResourceGroupName 'lz-ghub-test-uks-rg-01' -OrderBy Timestamp -Descending
+      $deploymentName1 = Get-AzResourceGroupDeployment -ResourceGroupName 'lz-ghub-test-uks-rg-01'
       $deploymentName2 = $deploymentName1.DeploymentName
       $deployment = Get-AzResourceGroupDeployment -ResourceGroupName 'lz-ghub-test-uks-rg-01' -Name $deploymentName2
       $sqlServerName = $deployment.Outputs.sqlServerName.Value
