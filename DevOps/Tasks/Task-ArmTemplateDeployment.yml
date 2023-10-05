@@ -42,7 +42,9 @@ steps:
       csmParametersFile: ${{ parameters.TemplateParamFilePath }}
       deploymentMode: 'Incremental'
       overrideParameters: '-administratorLoginPassword ${{parameters.sqlServerPasswordDA}}'
-      outputs: sqlServerName
+      outputs: armOutput
+
+  -script: echo sql server name is $(armOutput.sqlServerFqdn.value)
 
 - ${{ if eq(parameters.doSql, 'false') }}:
   - task: AzureResourceManagerTemplateDeployment@3
