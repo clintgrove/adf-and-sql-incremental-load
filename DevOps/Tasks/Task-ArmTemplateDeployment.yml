@@ -31,8 +31,18 @@ steps:
       overrideParameters: '-administratorLoginPassword ${{parameters.sqlServerPasswordDA}}'
       outputs: sqlServerName
 
-- script: echo the sql Server Name var $(AzureResourceManagerTemplateDeployment.sqlServerName)
+  - task: AzurePowerShell@5
+    inputs:
+      targetType: 'inline'
+      script: |
+        $sqlServerName = $(AzureResourceManagerTemplateDeployment.sqlServerName)
+        Write-Host "##vso[task.setvariable variable=SqlServerName;isOutput=true]$sqlServerName"
+    displayName: 'Set SqlServerName output variable'
+
+- script: echo the sql Server Name var $(sqlServerName)
   displayName: Checking variable sqlServerName
+
+
 
 - ${{ if eq(parameters.doSql, 'false') }}:
   - task: AzureResourceManagerTemplateDeployment@3
