@@ -31,6 +31,9 @@ steps:
       overrideParameters: '-administratorLoginPassword ${{parameters.sqlServerPasswordDA}}'
       outputs: sqlServerName
 
+- script: echo the sqlServerName var $(SqlServerName)
+  displayName: Checking variable sqlServerName
+
 - ${{ if eq(parameters.doSql, 'false') }}:
   - task: AzureResourceManagerTemplateDeployment@3
     #condition: and(succeed(), eq('${{parameters.doSql}}', 'true'))
