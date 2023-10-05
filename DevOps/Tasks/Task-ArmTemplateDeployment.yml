@@ -38,6 +38,8 @@ steps:
       Inline: |
         $sqlServerName = $(AzureResourceManagerTemplateDeployment.sqlServerName)
         Write-Host "##vso[task.setvariable variable=SqlServerName;isOutput=true]$sqlServerName"
+      azurePowerShellVersion: 'LatestVersion'
+      
     displayName: 'Set SqlServerName output variable'
 
 - script: echo the sql Server Name var $(sqlServerName)
