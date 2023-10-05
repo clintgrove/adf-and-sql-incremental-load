@@ -189,5 +189,11 @@
         "[resourceId('Microsoft.Sql/servers', parameters('sqlServerName'))]"
       ]
     }
-  ]
+  ],
+  "outputs": {
+    "sqlServerName": {
+      "type": "string",
+      "value": "[parameters('sqlServerName')]"
+    }
+  }
 }
