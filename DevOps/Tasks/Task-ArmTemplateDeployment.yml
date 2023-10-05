@@ -44,7 +44,6 @@ steps:
       overrideParameters: '-administratorLoginPassword ${{parameters.sqlServerPasswordDA}}'
       outputs: armOutput
 
-    -script: echo sql server name is $(armOutput.sqlServerFqdn.value)
 
 - ${{ if eq(parameters.doSql, 'false') }}:
   - task: AzureResourceManagerTemplateDeployment@3
