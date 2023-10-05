@@ -12,18 +12,18 @@ parameters:
 
 steps:
 
-- task: AzurePowerShell@5
-  inputs:
-    azureSubscription: ${{ parameters.ServiceConnection }}
-    ScriptType: 'InlineScript'
-    Inline: |
-      $deploymentName1 = Get-AzResourceGroupDeployment -ResourceGroupName 'lz-ghub-test-uks-rg-01'
-      $deploymentName2 = $deploymentName1.DeploymentName[0]
-      $deployment = Get-AzResourceGroupDeployment -ResourceGroupName 'lz-ghub-test-uks-rg-01' -Name $deploymentName2
-      $sqlServerName = $deployment.Outputs.sqlServerName.Value
-      Write-Host "##vso[task.setvariable variable=sqlServerName;isOutput=true]$sqlServerName"
-    azurePowerShellVersion: 'LatestVersion'
-  displayName: 'Set SqlServerName output variable'
+# - task: AzurePowerShell@5
+#   inputs:
+#     azureSubscription: ${{ parameters.ServiceConnection }}
+#     ScriptType: 'InlineScript'
+#     Inline: |
+#       $deploymentName1 = Get-AzResourceGroupDeployment -ResourceGroupName 'lz-ghub-test-uks-rg-01'
+#       $deploymentName2 = $deploymentName1.DeploymentName[0]
+#       $deployment = Get-AzResourceGroupDeployment -ResourceGroupName 'lz-ghub-test-uks-rg-01' -Name $deploymentName2
+#       $sqlServerName = $deployment.Outputs.sqlServerName.Value
+#       Write-Host "##vso[task.setvariable variable=sqlServerName;isOutput=true]$sqlServerName"
+#     azurePowerShellVersion: 'LatestVersion'
+#   displayName: 'Set SqlServerName output variable'
 
 
 - ${{ if eq(parameters.doSql, 'true') }}:
@@ -44,7 +44,6 @@ steps:
       overrideParameters: '-administratorLoginPassword ${{parameters.sqlServerPasswordDA}}'
       outputs: armOutput
 
-  -script: echo sql server name is $(armOutput.sqlServerFqdn.value)
 
 - ${{ if eq(parameters.doSql, 'false') }}:
   - task: AzureResourceManagerTemplateDeployment@3
@@ -61,3 +60,5 @@ steps:
       csmFile: ${{ parameters.TemplateFilePath }}
       csmParametersFile: ${{ parameters.TemplateParamFilePath }}
       deploymentMode: 'Incremental'
+
+-script: echo sql server name is $(armOutput.sqlServerFqdn.value)
