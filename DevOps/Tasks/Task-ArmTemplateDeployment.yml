@@ -11,8 +11,21 @@ parameters:
   
 
 steps:
-- script: echo the dsql param ${{parameters.doSql}}
-  displayName: Checking doSql param
+
+- task: AzurePowerShell@5
+  inputs:
+    azureSubscription: ${{ parameters.ServiceConnection }}
+    ScriptType: 'InlineScript'
+    Inline: |
+      $deploymentName1 = Get-AzResourceGroupDeployment -ResourceGroupName 'lz-ghub-test-uks-rg-01' -Latest
+      $deploymentName2 = $deploymentName1.DeploymentName
+      $deployment = Get-AzResourceGroupDeployment -ResourceGroupName 'lz-ghub-test-uks-rg-01' -Name $deploymentName2
+      $sqlServerName = $deployment.Outputs.sqlServerName.Value
+      Write-Host "##vso[task.setvariable variable=sqlServerName;isOutput=true]$sqlServerName"
+    azurePowerShellVersion: 'LatestVersion'
+  displayName: 'Set SqlServerName output variable'
+
+
 - ${{ if eq(parameters.doSql, 'true') }}:
   - task: AzureResourceManagerTemplateDeployment@3
     #condition: and(succeed(), eq('${{parameters.doSql}}', 'true'))
@@ -30,22 +43,6 @@ steps:
       deploymentMode: 'Incremental'
       overrideParameters: '-administratorLoginPassword ${{parameters.sqlServerPasswordDA}}'
       outputs: sqlServerName
-
-  - task: AzurePowerShell@5
-    inputs:
-      azureSubscription: ${{ parameters.ServiceConnection }}
-      ScriptType: 'InlineScript'
-      Inline: |
-        $sqlServerName = $(AzureResourceManagerTemplateDeployment.sqlServerName)
-        Write-Host "##vso[task.setvariable variable=SqlServerName;isOutput=true]$sqlServerName"
-      azurePowerShellVersion: 'LatestVersion'
-      
-    displayName: 'Set SqlServerName output variable'
-
-- script: echo the sql Server Name var $(sqlServerName)
-  displayName: Checking variable sqlServerName
-
-
 
 - ${{ if eq(parameters.doSql, 'false') }}:
   - task: AzureResourceManagerTemplateDeployment@3

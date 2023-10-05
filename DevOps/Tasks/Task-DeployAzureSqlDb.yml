@@ -7,16 +7,16 @@ parameters:
 
 steps:
 
-    - task: 'SqlAzureDacpacDeployment@1'
-      displayName: 'Deploy SQL Database - ${{ parameters.DatabaseName }}'
-      inputs:
-        azureSubscription: ${{ parameters.ServiceConnection }}
-        ServerName: $(SqlServerName) #${{parameters.ServerName}}
-        DatabaseName: ${{ parameters.DatabaseName }}
-        SqlUsername: 'sqladmin'
-        SqlPassword: $(SqlPassword)
-        deployType: 'DacpacTask'
-        DeploymentAction: 'Publish'
-        DacpacFile: '${{ parameters.DacpacFilePath }}'
-        IpDetectionMethod: 'AutoDetect'
-        additionalArguments: ${{ parameters.AdditionalArguments }}
+  - task: 'SqlAzureDacpacDeployment@1'
+    displayName: 'Deploy SQL Database - ${{ parameters.DatabaseName }}'
+    inputs:
+      azureSubscription: ${{ parameters.ServiceConnection }}
+      ServerName: $(SqlServerName) #${{parameters.ServerName}}
+      DatabaseName: ${{ parameters.DatabaseName }}
+      SqlUsername: 'sqladmin'
+      SqlPassword: $(SqlPassword)
+      deployType: 'DacpacTask'
+      DeploymentAction: 'Publish'
+      DacpacFile: '${{ parameters.DacpacFilePath }}'
+      IpDetectionMethod: 'AutoDetect'
+      additionalArguments: ${{ parameters.AdditionalArguments }}
