@@ -77,7 +77,8 @@
     }
   },
   "variables":{
-            "diagnosticSettingsName": "SQLSecurityAuditEvents_randomNameHere"
+            "diagnosticSettingsName": "SQLSecurityAuditEvents_randomNameHere",
+            "generatedServerName" : "[concat('sqlsrv-',uniqueString('sqlsrv-',resourceGroup().location,'-', resourceGroup().id),'-test')]"
   },
   "resources": [
     {
@@ -193,7 +194,7 @@
   "outputs": {
     "sqlServerName": {
       "type": "string",
-      "value": "[parameters('sqlServerName')]"
+      "value": "[reference(parameters('sqlServerName')).fullyQualifiedDomainName]"
     }
   }
 }
