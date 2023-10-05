@@ -18,7 +18,7 @@ steps:
     ScriptType: 'InlineScript'
     Inline: |
       $deploymentName1 = Get-AzResourceGroupDeployment -ResourceGroupName 'lz-ghub-test-uks-rg-01'
-      $deploymentName2 = $deploymentName1.DeploymentName
+      $deploymentName2 = $deploymentName1.DeploymentName[0]
       $deployment = Get-AzResourceGroupDeployment -ResourceGroupName 'lz-ghub-test-uks-rg-01' -Name $deploymentName2
       $sqlServerName = $deployment.Outputs.sqlServerName.Value
       Write-Host "##vso[task.setvariable variable=sqlServerName;isOutput=true]$sqlServerName"
