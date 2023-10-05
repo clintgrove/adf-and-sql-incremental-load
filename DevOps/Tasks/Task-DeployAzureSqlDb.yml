@@ -11,7 +11,7 @@ steps:
     displayName: 'Deploy SQL Database - ${{ parameters.DatabaseName }}'
     inputs:
       azureSubscription: ${{ parameters.ServiceConnection }}
-      ServerName: $(SqlServerName) #${{parameters.ServerName}}
+      ServerName: $(armOutput.SqlServerFqdn.value) #${{parameters.ServerName}}
       DatabaseName: ${{ parameters.DatabaseName }}
       SqlUsername: 'sqladmin'
       SqlPassword: $(SqlPassword)
