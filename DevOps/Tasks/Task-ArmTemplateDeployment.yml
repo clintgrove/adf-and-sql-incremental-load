@@ -33,8 +33,9 @@ steps:
 
   - task: AzurePowerShell@5
     inputs:
-      targetType: 'inline'
-      script: |
+      azureSubscription: ${{ parameters.ServiceConnection }}
+      ScriptType: 'InlineScript'
+      Inline: |
         $sqlServerName = $(AzureResourceManagerTemplateDeployment.sqlServerName)
         Write-Host "##vso[task.setvariable variable=SqlServerName;isOutput=true]$sqlServerName"
     displayName: 'Set SqlServerName output variable'
