@@ -10,6 +10,8 @@ parameters:
 
 jobs: 
 - deployment: JobDataInfrastructure
+  pool:
+   vmImage: 'windows-2019'
   displayName: Job - Data Infrastructure
   dependsOn: JobGlobalBuild
   variables:
