@@ -7,16 +7,49 @@ parameters:
 
 steps:
 
-  - task: 'SqlAzureDacpacDeployment@1'
-    displayName: 'Deploy SQL Database - ${{ parameters.DatabaseName }}'
-    inputs:
-      azureSubscription: ${{ parameters.ServiceConnection }}
-      ServerName: $(armOutput.SqlServerFqdn.value) #${{parameters.ServerName}}
-      DatabaseName: ${{ parameters.DatabaseName }}
-      SqlUsername: 'sqladmin'
-      SqlPassword: $(SqlPassword)
-      deployType: 'DacpacTask'
-      DeploymentAction: 'Publish'
-      DacpacFile: '${{ parameters.DacpacFilePath }}'
-      IpDetectionMethod: 'AutoDetect'
-      additionalArguments: ${{ parameters.AdditionalArguments }}
+- task: AzurePowerShell@5
+  inputs:
+    azureSubscription: ${{ parameters.ServiceConnection }}
+    ScriptType: 'InlineScript'
+    Inline: |
+      param(
+      [string]  $resourceGroupName
+      )
+
+      $lastDeployment = Get-AzureRmResourceGroupDeployment -ResourceGroupName $resourceGroupName | Sort Timestamp -Descending | Select -First 1 
+
+      if(!$lastDeployment) {
+          throw "Deployment could not be found for Resource Group '$resourceGroupName'."
+      }
+
+      if(!$lastDeployment.Outputs) {
+          throw "No output parameters could be found for the last deployment of Resource Group '$resourceGroupName'."
+      }
+
+      foreach ($key in $lastDeployment.Outputs.Keys){
+          $type = $lastDeployment.Outputs.Item($key).Type
+          $value = $lastDeployment.Outputs.Item($key).Value
+
+          if ($type -eq "SecureString") {
+              Write-Host "##vso[task.setvariable variable=$key;issecret=true]$value" 
+          }
+          else {
+              Write-Host "##vso[task.setvariable variable=$key;]$value" 
+          }
+      }
+    azurePowerShellVersion: 'LatestVersion'
+  displayName: 'Set SqlServerName output variable'
+
+- task: 'SqlAzureDacpacDeployment@1'
+  displayName: 'Deploy SQL Database - ${{ parameters.DatabaseName }}'
+  inputs:
+    azureSubscription: ${{ parameters.ServiceConnection }}
+    ServerName: $(armOutput.SqlServerName) #${{parameters.ServerName}}
+    DatabaseName: ${{ parameters.DatabaseName }}
+    SqlUsername: 'sqladmin'
+    SqlPassword: $(SqlPassword)
+    deployType: 'DacpacTask'
+    DeploymentAction: 'Publish'
+    DacpacFile: '${{ parameters.DacpacFilePath }}'
+    IpDetectionMethod: 'AutoDetect'
+    additionalArguments: ${{ parameters.AdditionalArguments }}
