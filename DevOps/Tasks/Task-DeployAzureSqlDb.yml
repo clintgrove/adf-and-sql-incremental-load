@@ -12,11 +12,10 @@ steps:
     azureSubscription: ${{ parameters.ServiceConnection }}
     ScriptType: 'InlineScript'
     Inline: |
-      param(
-      [string]  $resourceGroupName
-      )
+      #https://stackoverflow.com/questions/36948549/how-do-i-use-arm-outputs-values-another-release-task
 
-      $lastDeployment = Get-AzureRmResourceGroupDeployment -ResourceGroupName $resourceGroupName | Sort Timestamp -Descending | Select -First 1 
+      $resourceGroupName = 'lz-ghub-test-uks-rg-01'
+      $lastDeployment = Get-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName | Sort Timestamp -Descending | Select -First 1 
 
       if(!$lastDeployment) {
           throw "Deployment could not be found for Resource Group '$resourceGroupName'."
@@ -26,17 +25,9 @@ steps:
           throw "No output parameters could be found for the last deployment of Resource Group '$resourceGroupName'."
       }
 
-      foreach ($key in $lastDeployment.Outputs.Keys){
-          $type = $lastDeployment.Outputs.Item($key).Type
-          $value = $lastDeployment.Outputs.Item($key).Value
+      $sqlSrvNameOutput = $lastDeployment.Outputs.armOutput.Value
+      Write-Host "##vso[task.setvariable variable=sqlSrv;isOutput=true]$sqlSrvNameOutput"
 
-          if ($type -eq "SecureString") {
-              Write-Host "##vso[task.setvariable variable=$key;issecret=true]$value" 
-          }
-          else {
-              Write-Host "##vso[task.setvariable variable=$key;]$value" 
-          }
-      }
     azurePowerShellVersion: 'LatestVersion'
   displayName: 'Set SqlServerName output variable'
 
@@ -44,7 +35,7 @@ steps:
   displayName: 'Deploy SQL Database - ${{ parameters.DatabaseName }}'
   inputs:
     azureSubscription: ${{ parameters.ServiceConnection }}
-    ServerName: $(armOutput.SqlServerName) #${{parameters.ServerName}}
+    ServerName: $(sqlSrv) #${{parameters.ServerName}}
     DatabaseName: ${{ parameters.DatabaseName }}
     SqlUsername: 'sqladmin'
     SqlPassword: $(SqlPassword)
