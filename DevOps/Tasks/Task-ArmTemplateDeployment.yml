@@ -32,11 +32,13 @@ steps:
 
       $sqlSrvNameOutput = $lastDeployment.Outputs.armOutput.Value
       Write-Host "##vso[task.setvariable variable=sqlSrvNameOutput;isOutput=true]$sqlSrvNameOutput"
+      Write-Host "The sqlServerName variable is $sqlSrvNameOutput"
 
     azurePowerShellVersion: 'LatestVersion'
   displayName: 'Set SqlServerName output variable'
+  name: 'SetSqlVar'
 
-- script: echo '$(sqlSrvNameOutput)'' or try echo '$env:sqlSrvNameOutput'
+- script: echo '$(SetSqlVar.sqlSrvNameOutput)'  or even $(SetSqlVar.sqlSrvNameOutput) or  '$(sqlSrvNameOutput)' or try echo '$env:sqlSrvNameOutput'
   displayName: 'Print SqlServerName output variable' 
 
 - ${{ if eq(parameters.doSql, 'true') }}:
