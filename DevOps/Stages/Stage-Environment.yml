@@ -12,6 +12,7 @@ stages:
   dependsOn: []
   variables:
     - template: ..\Variables\Variables-Global.yml
+    - template: ..\Variables\Variables-${{ Parameters.Environment }}.yml
   jobs:  
 
     - template: ..\Jobs\Job-Global-Build.yml
