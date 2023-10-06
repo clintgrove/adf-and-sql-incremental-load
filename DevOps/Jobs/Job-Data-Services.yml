@@ -36,6 +36,16 @@ jobs:
       deploy:
         steps:
 
+        - task: AzurePowerShell@5
+          displayName: PS add firewall rule 
+          name: SetSqlVarFQDN
+          inputs:
+            script: FilePath
+            azureSubscription: '$(ServiceConnection)'
+            ScriptPath: '$(Pipeline.Workspace)/Scripts/getDeploymentOutputs.ps1'
+            ScriptArguments: '-resourceGroupName ${{parameters.RGroup}}'
+            azurePowerShellVersion: LatestVersion
+            
         # Deploy Databases
         - ${{ if eq(parameters.FeatureFlag_SQL_Deploy, true) }}:
           # Deploy LIDAMovementTransactions Database

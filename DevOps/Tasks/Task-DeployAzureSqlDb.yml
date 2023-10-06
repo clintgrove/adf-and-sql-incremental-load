@@ -8,16 +8,6 @@ parameters:
 
 steps:
 
-- task: AzurePowerShell@5
-  displayName: PS add firewall rule 
-  name: SetSqlVarFQDN
-  inputs:
-    script: FilePath
-    azureSubscription: '$(ServiceConnection)'
-    ScriptPath: '$(Pipeline.Workspace)/Scripts/getDeploymentOutputs.ps1'
-    ScriptArguments: '-resourceGroupName ${{parameters.RGroup}}'
-    azurePowerShellVersion: LatestVersion
-
 - task: 'SqlAzureDacpacDeployment@1'
   displayName: 'Deploy SQL Database - ${{ parameters.DatabaseName }}'
   inputs:
