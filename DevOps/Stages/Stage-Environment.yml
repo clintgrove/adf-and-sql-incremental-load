@@ -41,6 +41,7 @@ stages:
         Environment: ${{ parameters.Environment }}  
         Location: ${{ parameters.Location }}
         ServiceConnection: ${{ parameters.ServiceConnection }}
+        RGroup: ${{ variables.ResourceGroupNameGHUB}}
         FeatureFlag_SQL_StopIfDataLossCanOccur: ${{ parameters.FeatureFlag_SQL_StopIfDataLossCanOccur }}
         FeatureFlag_ADF_DeployPipelines: ${{ parameters.FeatureFlag_ADF_DeployPipelines }}
         FeatureFlag_SQL_Deploy: ${{ parameters.FeatureFlag_SQL_Deploy }}   

@@ -13,5 +13,5 @@ steps:
   - publish: ${{ parameters.ServicesTemplatesPath }}
     artifact: Services
 
-#  - publish: ${{ parameters.ScriptsPath }}
-#    artifact: Scripts
+  - publish: ${{ parameters.ScriptsPath }}
+    artifact: Scripts

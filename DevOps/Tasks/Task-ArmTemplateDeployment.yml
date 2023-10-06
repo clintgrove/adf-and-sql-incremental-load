@@ -12,34 +12,34 @@ parameters:
 
 steps:
 
-- task: AzurePowerShell@5
-  inputs:
-    azureSubscription: ${{ parameters.ServiceConnection }}
-    ScriptType: 'InlineScript'
-    Inline: |
-      #https://stackoverflow.com/questions/36948549/how-do-i-use-arm-outputs-values-another-release-task
+# - task: AzurePowerShell@5
+#   inputs:
+#     azureSubscription: ${{ parameters.ServiceConnection }}
+#     ScriptType: 'InlineScript'
+#     Inline: |
+#       #https://stackoverflow.com/questions/36948549/how-do-i-use-arm-outputs-values-another-release-task
 
-      $resourceGroupName = 'lz-ghub-test-uks-rg-01'
-      $lastDeployment = Get-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName | Sort Timestamp -Descending | Select -First 1 
+#       $resourceGroupName = 'lz-ghub-test-uks-rg-01'
+#       $lastDeployment = Get-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName | Sort Timestamp -Descending | Select -First 1 
 
-      if(!$lastDeployment) {
-          throw "Deployment could not be found for Resource Group '$resourceGroupName'."
-      }
+#       if(!$lastDeployment) {
+#           throw "Deployment could not be found for Resource Group '$resourceGroupName'."
+#       }
 
-      if(!$lastDeployment.Outputs) {
-          throw "No output parameters could be found for the last deployment of Resource Group '$resourceGroupName'."
-      }
+#       if(!$lastDeployment.Outputs) {
+#           throw "No output parameters could be found for the last deployment of Resource Group '$resourceGroupName'."
+#       }
 
-      $sqlSrvNameOutput = $lastDeployment.Outputs.armOutput.Value
-      Write-Host "##vso[task.setvariable variable=sqlSrvNameOutput;isOutput=true]$sqlSrvNameOutput"
-      Write-Host "The sqlServerName variable is $sqlSrvNameOutput"
+#       $sqlSrvNameOutput = $lastDeployment.Outputs.armOutput.Value
+#       Write-Host "##vso[task.setvariable variable=sqlSrvNameOutput;isOutput=true]$sqlSrvNameOutput"
+#       Write-Host "The sqlServerName variable is $sqlSrvNameOutput"
 
-    azurePowerShellVersion: 'LatestVersion'
-  displayName: 'Set SqlServerName output variable'
-  name: 'SetSqlVar'
+#     azurePowerShellVersion: 'LatestVersion'
+#   displayName: 'Set SqlServerName output variable'
+#   name: 'SetSqlVar'
 
-- script: echo '$(SetSqlVar.sqlSrvNameOutput)'  or even $(SetSqlVar.sqlSrvNameOutput) or  '$(sqlSrvNameOutput)' or try echo '$env:sqlSrvNameOutput'
-  displayName: 'Print SqlServerName output variable' 
+# - script: echo '$(SetSqlVar.sqlSrvNameOutput)'  or even $(SetSqlVar.sqlSrvNameOutput) or  '$(sqlSrvNameOutput)' or try echo '$env:sqlSrvNameOutput'
+#   displayName: 'Print SqlServerName output variable' 
 
 - ${{ if eq(parameters.doSql, 'true') }}:
   - task: AzureResourceManagerTemplateDeployment@3

@@ -4,38 +4,25 @@ parameters:
   AdditionalArguments: string
   ServerName: string
   ServiceConnection: string
+  RGroup: string
 
 steps:
 
 - task: AzurePowerShell@5
+  displayName: PS add firewall rule 
+  name: SetSqlVar
   inputs:
-    azureSubscription: ${{ parameters.ServiceConnection }}
-    ScriptType: 'InlineScript'
-    Inline: |
-      #https://stackoverflow.com/questions/36948549/how-do-i-use-arm-outputs-values-another-release-task
-
-      $resourceGroupName = 'lz-ghub-test-uks-rg-01'
-      $lastDeployment = Get-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName | Sort Timestamp -Descending | Select -First 1 
-
-      if(!$lastDeployment) {
-          throw "Deployment could not be found for Resource Group '$resourceGroupName'."
-      }
-
-      if(!$lastDeployment.Outputs) {
-          throw "No output parameters could be found for the last deployment of Resource Group '$resourceGroupName'."
-      }
-
-      $sqlSrvNameOutput = $lastDeployment.Outputs.armOutput.Value
-      Write-Host "##vso[task.setvariable variable=sqlSrv;isOutput=true]$sqlSrvNameOutput"
-
-    azurePowerShellVersion: 'LatestVersion'
-  displayName: 'Set SqlServerName output variable'
+    script: FilePath
+    azureSubscription: '$(ServiceConnection)'
+    ScriptPath: '$(Pipeline.Workspace)/Scripts/getDeploymentOutputs.ps1'
+    ScriptArguments: '-resourceGroupName ${{parameters.RGroup}}'
+    azurePowerShellVersion: LatestVersion
 
 - task: 'SqlAzureDacpacDeployment@1'
   displayName: 'Deploy SQL Database - ${{ parameters.DatabaseName }}'
   inputs:
     azureSubscription: ${{ parameters.ServiceConnection }}
-    ServerName: $(sqlSrv) #${{parameters.ServerName}}
+    ServerName: $(SetSqlVar.sqlSrvNameOutput)  #${{parameters.ServerName}}
     DatabaseName: ${{ parameters.DatabaseName }}
     SqlUsername: 'sqladmin'
     SqlPassword: $(SqlPassword)

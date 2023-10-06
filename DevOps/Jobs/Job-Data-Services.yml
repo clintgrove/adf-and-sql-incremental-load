@@ -4,6 +4,7 @@ parameters:
   ServiceConnection: String
   FeatureFlag_SQL_StopIfDataLossCanOccur: boolean
   FeatureFlag_SQL_Deploy: boolean
+  RGroup: string
 
 jobs:  
 - deployment: JobDataServices
@@ -45,6 +46,7 @@ jobs:
               AdditionalArguments: /p:BlockOnPossibleDataLoss=${{ lower(parameters.FeatureFlag_SQL_StopIfDataLossCanOccur) }}
               ServerName: ${{ variables.AzureSqlServerName_ghub }}
               ServiceConnection: ${{ parameters.ServiceConnection }}
+              RGroup: ${{ parameters.RGroup }}
 
           #dfac source database
           - template: ../Tasks/Task-DeployAzureSqlDb.yml
@@ -54,6 +56,7 @@ jobs:
               AdditionalArguments: /p:BlockOnPossibleDataLoss=${{ lower(parameters.FeatureFlag_SQL_StopIfDataLossCanOccur) }}
               ServerName: ${{ variables.AzureSqlServerName_ghub }}
               ServiceConnection: ${{ parameters.ServiceConnection }}
+              RGroup: ${{ parameters.RGroup }}
           
           #dfac target database
           - template: ../Tasks/Task-DeployAzureSqlDb.yml
@@ -63,6 +66,7 @@ jobs:
               AdditionalArguments: /p:BlockOnPossibleDataLoss=${{ lower(parameters.FeatureFlag_SQL_StopIfDataLossCanOccur) }}
               ServerName: ${{ variables.AzureSqlServerName_ghub }}
               ServiceConnection: ${{ parameters.ServiceConnection }}
+              RGroup: ${{ parameters.RGroup }}
 
 
         # Stop ADF 01 triggers
