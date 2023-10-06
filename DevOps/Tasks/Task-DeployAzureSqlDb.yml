@@ -10,7 +10,7 @@ steps:
 
 - task: AzurePowerShell@5
   displayName: PS add firewall rule 
-  name: SetSqlVar
+  name: SetSqlVarFQDN
   inputs:
     script: FilePath
     azureSubscription: '$(ServiceConnection)'
@@ -22,7 +22,7 @@ steps:
   displayName: 'Deploy SQL Database - ${{ parameters.DatabaseName }}'
   inputs:
     azureSubscription: ${{ parameters.ServiceConnection }}
-    ServerName: $(SetSqlVar.sqlSrvNameOutput)  #${{parameters.ServerName}}
+    ServerName: $(SetSqlVarFQDN.sqlSrvNameOutput)  #${{parameters.ServerName}}
     DatabaseName: ${{ parameters.DatabaseName }}
     SqlUsername: 'sqladmin'
     SqlPassword: $(SqlPassword)
