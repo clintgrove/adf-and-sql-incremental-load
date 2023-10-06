@@ -36,7 +36,7 @@ steps:
     azurePowerShellVersion: 'LatestVersion'
   displayName: 'Set SqlServerName output variable'
 
-- script: echo $(sqlSrvNameOutput) or try echo $env:sqlSrvNameOutput
+- script: echo '$(sqlSrvNameOutput)'' or try echo '$env:sqlSrvNameOutput'
   displayName: 'Print SqlServerName output variable' 
 
 - ${{ if eq(parameters.doSql, 'true') }}:
