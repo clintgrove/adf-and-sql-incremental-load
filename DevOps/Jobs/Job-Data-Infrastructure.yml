@@ -79,7 +79,7 @@ jobs:
             script: FilePath
             azureSubscription: '$(ServiceConnection)'
             ScriptPath: '$(Pipeline.Workspace)/Scripts/getDeploymentOutputs.ps1'
-            ScriptArguments: '-resourceGroupName ${{parameters.RGroup}}'
+            ScriptArguments: '-resourceGroupName ${{variables.ResourceGroupNameGHUB}}'
             azurePowerShellVersion: LatestVersion
             
         - script: echo sqlSrvNameOutput is  $(sqlSrvNameOutput)
