@@ -23,7 +23,7 @@ foreach ($key in $lastDeployment.Outputs.Keys){
         Write-Host "##vso[task.setvariable variable=$key;issecret=true]$value" 
     }
     else {
-        Write-Host "##vso[task.setvariable variable=sqlSrvNameOutput;]$value"
+        Write-Host "##vso[task.setvariable variable=sqlSrvNameOutput;isOutput=true]$value"
         #Write-Host "##vso[task.setvariable variable=$key;]$value"  
     }
 }

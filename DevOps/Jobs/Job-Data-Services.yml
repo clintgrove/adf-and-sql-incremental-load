@@ -37,7 +37,7 @@ jobs:
         steps:
 
         - task: AzurePowerShell@5
-          displayName: PS add firewall rule 
+          displayName: Get output from ARM template
           name: SetSqlVarFQDN
           inputs:
             script: FilePath
@@ -46,7 +46,7 @@ jobs:
             ScriptArguments: '-resourceGroupName ${{parameters.RGroup}}'
             azurePowerShellVersion: LatestVersion
             
-        - script: echo sqlSrvNameOutput is  $(SetSqlVarFQDN.sqlSrvNameOutput)
+        - script: echo sqlSrvNameOutput is  $(sqlSrvNameOutput)
         
         # Deploy Databases
         - ${{ if eq(parameters.FeatureFlag_SQL_Deploy, true) }}:
