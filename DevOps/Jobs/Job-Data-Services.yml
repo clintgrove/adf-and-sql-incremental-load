@@ -46,6 +46,8 @@ jobs:
             ScriptArguments: '-resourceGroupName ${{parameters.RGroup}}'
             azurePowerShellVersion: LatestVersion
             
+        - script: echo sqlSrvNameOutput is  $(SetSqlVarFQDN.sqlSrvNameOutput)
+        
         # Deploy Databases
         - ${{ if eq(parameters.FeatureFlag_SQL_Deploy, true) }}:
           # Deploy LIDAMovementTransactions Database
