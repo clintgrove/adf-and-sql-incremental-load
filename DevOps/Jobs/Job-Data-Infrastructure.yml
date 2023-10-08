@@ -82,7 +82,7 @@ jobs:
             ScriptArguments: '-resourceGroupName ${{variables.ResourceGroupNameGHUB}}'
             azurePowerShellVersion: LatestVersion
             
-        - script: echo sqlSrvNameOutput is  $(sqlSrvNameOutput)
+        - script: echo sqlSrvNameOutput is  with alias  $(SetSqlVarFQDNp2.sqlSrvNameOutput)
 
         - task: AzurePowerShell@5
           displayName: Get output from ARM template
