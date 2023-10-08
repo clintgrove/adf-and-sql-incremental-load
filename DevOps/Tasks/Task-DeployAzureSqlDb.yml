@@ -12,7 +12,7 @@ steps:
   displayName: 'Deploy SQL Database - ${{ parameters.DatabaseName }}'
   inputs:
     azureSubscription: ${{ parameters.ServiceConnection }}
-    ServerName: $(SetSqlVarFQDN.sqlSrvNameOutput)  #${{parameters.ServerName}}
+    ServerName: ${{parameters.ServerName}}
     DatabaseName: ${{ parameters.DatabaseName }}
     SqlUsername: 'sqladmin'
     SqlPassword: $(SqlPassword)
