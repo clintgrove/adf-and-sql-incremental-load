@@ -83,6 +83,42 @@ jobs:
             azurePowerShellVersion: LatestVersion
             
         - script: echo sqlSrvNameOutput is  $(sqlSrvNameOutput)
+
+        - task: AzurePowerShell@5
+          displayName: Get output from ARM template
+          name: SetSqlVarFQDNp3
+          inputs:
+            ScriptType: InlineScript
+            azureSubscription: '$(ServiceConnection)'
+            inline: |
+              $resourceGroupName = 'lz-ghub-test-uks-rg-01' 
+              $lastDeployment = Get-AzResourceGroupDeployment -ResourceGroupName 'lz-ghub-test-uks-rg-01' | Sort Timestamp -Descending | Where-Object {$_.DeploymentName -like "AzureSQL*"} | Select -First 1
+
+              if(!$lastDeployment) {
+                  throw "Deployment could not be found for Resource Group '$resourceGroupName'."
+              }
+
+              if(!$lastDeployment.Outputs) {
+                  throw "No output parameters could be found for the last deployment of Resource Group '$resourceGroupName'."
+              }
+
+              foreach ($key in $lastDeployment.Outputs.Keys){
+                  $type = $lastDeployment.Outputs.$key.Type
+                  $value = $lastDeployment.Outputs.$key.Value
+
+                  if ($type -eq "SecureString") {
+                      Write-Host "##vso[task.setvariable variable=$key;issecret=true]$value" 
+                  }
+                  else {
+                      if ($key -eq "armOutput") {
+                          Write-Host "##vso[task.setvariable variable=sqlSrvNameOutput3;isOutput=true]$value"
+                      }
+
+                  }
+              }
+            azurePowerShellVersion: LatestVersion
+        
+        - script: echo sqlSrvNameOutput3 is  $(sqlSrvNameOutput3) or $(SetSqlVarFQDNp3.sqlSrvNameOutput3) or even $(SetSqlVarFQDNp3.armOutput) or with quotes $'(SetSqlVarFQDNp3.sqlSrvNameOutput3)''
         
         # Create Data Factory (as LZ can have INT, DATA and SHARED, this can be seen in the last bit of each variable name such as SubscriptionIdData)
         - ${{ if eq(parameters.FeatureFlag_ADF_DeployPipelines, true) }}:
