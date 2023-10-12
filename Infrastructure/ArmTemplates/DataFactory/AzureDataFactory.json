@@ -51,8 +51,10 @@
                 "annotations": [],
                 "type": "AzureSqlDatabase",
                 "typeProperties": {
-                    "connectionString": "[parameters('factstuff_linkedServTarget_connectionString')]"
+                    "connectionString": "[parameters('factstuff_linkedServTarget_connectionString')]",
+                    "authenticationType": "ManagedIdentity"
                 }
+                
             },
             "dependsOn": [
                 "[resourceId('Microsoft.DataFactory/factories', variables('dataFactoryName'))]"
@@ -66,7 +68,8 @@
                 "annotations": [],
                 "type": "AzureSqlDatabase",
                 "typeProperties": {
-                    "connectionString": "[parameters('factstuff_linkedServSource_connectionString')]"
+                    "connectionString": "[parameters('factstuff_linkedServSource_connectionString')]",
+                    "authenticationType": "ManagedIdentity"
                 }
             },
             "dependsOn": [
