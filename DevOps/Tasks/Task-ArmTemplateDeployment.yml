@@ -50,3 +50,20 @@ steps:
       #outputs: adfNameOutput
       #have to have seperate deploy for adf if want to override the 
 
+- ${{ if and(eq(parameters.doSql, 'false'), eq(parameters.ServiceReleased, 'Azure Data Factory')) }}:
+  - task: AzureResourceManagerTemplateDeployment@3
+    #condition: and(succeed(), eq('${{parameters.doSql}}', 'true')) #this is for the datafactory deployment
+    displayName: "Create ${{ parameters.ServiceReleased}}"
+    inputs:
+      deploymentScope: 'Resource Group'
+      azureResourceManagerConnection: ${{ parameters.ServiceConnection }}
+      subscriptionId: ${{ parameters.SubscriptionId }}
+      action: 'Create Or Update Resource Group'
+      resourceGroupName: ${{ parameters.ResourceGroupName }}
+      location: ${{ parameters.Location }}
+      templateLocation: 'Linked artifact'
+      csmFile: ${{ parameters.TemplateFilePath }}
+      csmParametersFile: ${{ parameters.TemplateParamFilePath }}
+      deploymentMode: 'Incremental'
+      overrideParameters: '-factstuff_linkedServSource_connectionString "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=facstuf-sqlserver-uks-a1.database.windows.net;Initial Catalog=dba-fac-stf-source;Server=tcp:facstuf-sqlserver-uks-a1.database.windows.net,1433;TrustServerCertificate=False"'
+      outputs: adfNameOutput
