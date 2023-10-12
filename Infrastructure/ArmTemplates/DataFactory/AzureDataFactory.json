@@ -1,13 +1,16 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "dataFactoryName": {
-            "type": "string",
-            "defaultValue": "test-deploy-adf-cln1-delete",
-            "metadata": {
-                "description": "Data Factory Name"
-            }
+        "factstuff_linkedServTarget_connectionString": {
+            "type": "secureString",
+            "metadata": "Secure string for 'connectionString' of 'factstuff_linkedServTarget'",
+            "defaultValue": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=sqlsrv-yqnh5nxtq5rhi-test.database.windows.net;Initial Catalog=dba-facstuff-target;Server=tcp:sqlsrv-yqnh5nxtq5rhi-test.database.windows.net,1433;TrustServerCertificate=False"
+        },
+        "factstuff_linkedServSource_connectionString": {
+            "type": "secureString",
+            "metadata": "Secure string for 'connectionString' of 'factstuff_linkedServSource'",
+            "defaultValue": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=sqlsrv-yqnh5nxtq5rhi-test.database.windows.net;Initial Catalog=dba-fac-stf-source;Server=tcp:sqlsrv-yqnh5nxtq5rhi-test.database.windows.net,1433;TrustServerCertificate=False"
         },
         "location": {
             "type": "string",
@@ -15,20 +18,20 @@
             "metadata": {
                 "description": "Location of the data factory."
             }
-        },
-        "vNetEnabled": {
-            "defaultValue": true,
-            "type": "bool"
         }
     },
     "variables": {
-        "factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('dataFactoryName'))]"
+        "dataFactoryName": "[concat('adf-',uniqueString('adf-',resourceGroup().location,'-', resourceGroup().id),'-',resourceGroup().location,'-test')]",
+        "dataFactoryLinkedServiceNameSource": "factstuff_linkedServSource",
+        "dataFactoryLinkedServiceNameTarget": "factstuff_linkedServTarget",
+        "dataFactoryDataSetSourceName": "dba_fac_a1_source",
+        "dataFactoryDataSetTargetName": "dba_fac_a1_target"
     },
     "resources": [
         {
             "type": "Microsoft.DataFactory/factories",
             "apiVersion": "2018-06-01",
-            "name": "[parameters('dataFactoryName')]",
+            "name": "[variables('dataFactoryName')]",
             "location": "[parameters('location')]",
             "tags": {
                 "tagName1": "clint adf",
@@ -36,44 +39,391 @@
             },
             "identity": {
                 "type": "SystemAssigned"
+            },
+            "properties": {
             }
         },
         {
-            "condition": "[equals(parameters('vNetEnabled'), 'true')]",
-            "name": "[concat(parameters('dataFactoryName'), '/default')]",
-            "type": "Microsoft.DataFactory/factories/managedVirtualNetworks",
+            "name": "[format('{0}/{1}', variables('dataFactoryName'), variables('dataFactoryLinkedServiceNameTarget'))]",
+            "type": "Microsoft.DataFactory/factories/linkedServices",
             "apiVersion": "2018-06-01",
             "properties": {
-                "preventDataExfiltration": false
-            },
-            "dependsOn": [ "[parameters('dataFactoryName')]" ]
-        },
-        {
-            "condition": "[equals(parameters('vNetEnabled'), 'true')]",
-            "name": "[concat(parameters('dataFactoryName'), '/ManagedVnetIntegrationRuntime')]",
-            "type": "Microsoft.DataFactory/factories/integrationRuntimes",
-            "apiVersion": "2018-06-01",
-            "properties": {
-                "type": "Managed",
+                "annotations": [],
+                "type": "AzureSqlDatabase",
                 "typeProperties": {
-                    "computeProperties": {
-                        "location": "[parameters('location')]",
-                        "dataFlowProperties": {
-                            "computeType": "General",
-                            "coreCount": 8,
-                            "timeToLive": 10,
-                            "cleanup": true
-                        }
-                    }
-                },
-                "managedVirtualNetwork": {
-                    "type": "ManagedVirtualNetworkReference",
-                    "referenceName": "default"
+                    "connectionString": "[parameters('factstuff_linkedServTarget_connectionString')]"
                 }
             },
             "dependsOn": [
-                "[concat(variables('factoryId'), '/managedVirtualNetworks/default')]"
+                "[resourceId('Microsoft.DataFactory/factories', variables('dataFactoryName'))]"
+            ]
+        },
+                {
+            "name": "[format('{0}/{1}', variables('dataFactoryName'), variables('dataFactoryLinkedServiceNameSource'))]",
+            "type": "Microsoft.DataFactory/factories/linkedServices",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "type": "AzureSqlDatabase",
+                "typeProperties": {
+                    "connectionString": "[parameters('factstuff_linkedServSource_connectionString')]"
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.DataFactory/factories', variables('dataFactoryName'))]"
+            ]
+        },
+        {
+            "name": "[format('{0}/{1}', variables('dataFactoryName'), variables('dataFactoryDataSetTargetName'))]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "[variables('dataFactoryLinkedServiceNameTarget')]",
+                    "type": "LinkedServiceReference"
+                },
+                "parameters": {
+                    "schema_tgt": {
+                        "type": "string"
+                    },
+                    "tblname_tgt": {
+                        "type": "string"
+                    }
+                },
+                "annotations": [],
+                "type": "AzureSqlTable",
+                "schema": [],
+                "typeProperties": {
+                    "schema": {
+                        "value": "@dataset().schema_tgt",
+                        "type": "Expression"
+                    },
+                    "table": {
+                        "value": "@dataset().tblname_tgt",
+                        "type": "Expression"
+                    }
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.DataFactory/factories', variables('dataFactoryName'))]",
+                "[resourceId('Microsoft.DataFactory/factories/linkedservices', variables('dataFactoryName'), variables('dataFactoryLinkedServiceNameTarget'))]"
+           
+                ]
+        },
+        {
+            "name": "[format('{0}/{1}', variables('dataFactoryName'), variables('dataFactoryDataSetSourceName'))]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "[variables('dataFactoryLinkedServiceNameSource')]",
+                    "type": "LinkedServiceReference"
+                },
+                "parameters": {
+                    "schema": {
+                        "type": "string"
+                    },
+                    "tblname": {
+                        "type": "string"
+                    }
+                },
+                "annotations": [],
+                "type": "AzureSqlTable",
+                "schema": [],
+                "typeProperties": {
+                    "schema": {
+                        "value": "@dataset().schema",
+                        "type": "Expression"
+                    },
+                    "table": {
+                        "value": "@dataset().tblname",
+                        "type": "Expression"
+                    }
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.DataFactory/factories', variables('dataFactoryName'))]",
+                "[resourceId('Microsoft.DataFactory/factories/linkedservices', variables('dataFactoryName'), variables('dataFactoryLinkedServiceNameSource'))]"
+            ]
+        },
+        {
+            "name": "[concat(variables('dataFactoryName'), '/Incremental load - unique id exists in both')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "For Table From Source",
+                        "description": "Copy to staging and then do merge update",
+                        "type": "ForEach",
+                        "dependsOn": [],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "items": {
+                                "value": "@pipeline().parameters.tableList",
+                                "type": "Expression"
+                            },
+                            "isSequential": false,
+                            "activities": [
+                                {
+                                    "name": "Lookup Source watermark",
+                                    "type": "Lookup",
+                                    "dependsOn": [
+                                        {
+                                            "activity": "Lookup Target watermark",
+                                            "dependencyConditions": [
+                                                "Succeeded"
+                                            ]
+                                        }
+                                    ],
+                                    "policy": {
+                                        "timeout": "0.12:00:00",
+                                        "retry": 0,
+                                        "retryIntervalInSeconds": 30,
+                                        "secureOutput": false,
+                                        "secureInput": false
+                                    },
+                                    "userProperties": [],
+                                    "typeProperties": {
+                                        "source": {
+                                            "type": "AzureSqlSource",
+                                            "sqlReaderQuery": {
+                                                "value": "select MAX(@{item().WaterMark_Column}) as NewWatermarkvalue from @{item().TABLE_NAME}",
+                                                "type": "Expression"
+                                            },
+                                            "queryTimeout": "02:00:00",
+                                            "partitionOption": "None"
+                                        },
+                                        "dataset": {
+                                            "referenceName": "[variables('dataFactoryDataSetSourceName')]",
+                                            "type": "DatasetReference",
+                                            "parameters": {
+                                                "schema": "not set because use query is set to Query",
+                                                "tblname": "not set because use query is set to Query"
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "Lookup Target watermark",
+                                    "type": "Lookup",
+                                    "dependsOn": [],
+                                    "policy": {
+                                        "timeout": "0.12:00:00",
+                                        "retry": 0,
+                                        "retryIntervalInSeconds": 30,
+                                        "secureOutput": false,
+                                        "secureInput": false
+                                    },
+                                    "userProperties": [],
+                                    "typeProperties": {
+                                        "source": {
+                                            "type": "AzureSqlSource",
+                                            "sqlReaderQuery": {
+                                                "value": "select * from [loadInfo_Watermark] where sourceinfo  =  '@{item().TABLE_NAME}'",
+                                                "type": "Expression"
+                                            },
+                                            "queryTimeout": "02:00:00",
+                                            "partitionOption": "None"
+                                        },
+                                        "dataset": {
+                                            "referenceName": "[variables('dataFactoryDataSetTargetName')]",
+                                            "type": "DatasetReference",
+                                            "parameters": {
+                                                "schema_tgt": "not set because use query is set to Query",
+                                                "tblname_tgt": "not set because use query is set to Query"
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "Copy data to staging",
+                                    "type": "Copy",
+                                    "dependsOn": [
+                                        {
+                                            "activity": "Lookup Source watermark",
+                                            "dependencyConditions": [
+                                                "Succeeded"
+                                            ]
+                                        }
+                                    ],
+                                    "policy": {
+                                        "timeout": "0.12:00:00",
+                                        "retry": 0,
+                                        "retryIntervalInSeconds": 30,
+                                        "secureOutput": false,
+                                        "secureInput": false
+                                    },
+                                    "userProperties": [],
+                                    "typeProperties": {
+                                        "source": {
+                                            "type": "AzureSqlSource",
+                                            "sqlReaderQuery": {
+                                                "value": "select * from @{item().TABLE_NAME} where @{item().WaterMark_Column} > '@{activity('Lookup Target watermark').output.firstRow.dateofload}' and @{item().WaterMark_Column} <= '@{activity('Lookup Source watermark').output.firstRow.NewWatermarkvalue}'",
+                                                "type": "Expression"
+                                            },
+                                            "queryTimeout": "02:00:00",
+                                            "partitionOption": "None"
+                                        },
+                                        "sink": {
+                                            "type": "AzureSqlSink",
+                                            "preCopyScript": {
+                                                "value": "TRUNCATE TABLE staging.@{item().TABLE_NAME}",
+                                                "type": "Expression"
+                                            },
+                                            "writeBehavior": "insert",
+                                            "sqlWriterUseTableLock": false,
+                                            "disableMetricsCollection": false
+                                        },
+                                        "enableStaging": false,
+                                        "translator": {
+                                            "type": "TabularTranslator",
+                                            "typeConversion": true,
+                                            "typeConversionSettings": {
+                                                "allowDataTruncation": true,
+                                                "treatBooleanAsNumber": false
+                                            }
+                                        }
+                                    },
+                                    "inputs": [
+                                        {
+                                            "referenceName": "[variables('dataFactoryDataSetSourceName')]",
+                                            "type": "DatasetReference",
+                                            "parameters": {
+                                                "schema": "not set - dynamic query used",
+                                                "tblname": "not set - dynamic query - see below"
+                                            }
+                                        }
+                                    ],
+                                    "outputs": [
+                                        {
+                                            "referenceName": "[variables('dataFactoryDataSetTargetName')]",
+                                            "type": "DatasetReference",
+                                            "parameters": {
+                                                "schema_tgt": "staging",
+                                                "tblname_tgt": {
+                                                    "value": "@item().TABLE_NAME",
+                                                    "type": "Expression"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "Sproc update watermark",
+                                    "type": "SqlServerStoredProcedure",
+                                    "dependsOn": [
+                                        {
+                                            "activity": "Copy data to staging",
+                                            "dependencyConditions": [
+                                                "Succeeded"
+                                            ]
+                                        }
+                                    ],
+                                    "policy": {
+                                        "timeout": "0.12:00:00",
+                                        "retry": 0,
+                                        "retryIntervalInSeconds": 30,
+                                        "secureOutput": false,
+                                        "secureInput": false
+                                    },
+                                    "userProperties": [],
+                                    "typeProperties": {
+                                        "storedProcedureName": "[[dbo].[usp_write_watermark]",
+                                        "storedProcedureParameters": {
+                                            "LastModifiedtime": {
+                                                "value": {
+                                                    "value": "@{activity('Lookup Source watermark').output.firstRow.NewWatermarkvalue}",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "DateTime"
+                                            },
+                                            "TableName": {
+                                                "value": {
+                                                    "value": "@item().TABLE_NAME",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            }
+                                        }
+                                    },
+                                    "linkedServiceName": {
+                                        "referenceName": "[variables('dataFactoryLinkedServiceNameTarget')]",
+                                        "type": "LinkedServiceReference"
+                                    }
+                                },
+                                {
+                                    "name": "Sproc to copy new rows from staging",
+                                    "description": "copy news rows only to main live table",
+                                    "type": "SqlServerStoredProcedure",
+                                    "dependsOn": [
+                                        {
+                                            "activity": "Sproc update watermark",
+                                            "dependencyConditions": [
+                                                "Succeeded"
+                                            ]
+                                        }
+                                    ],
+                                    "policy": {
+                                        "timeout": "0.12:00:00",
+                                        "retry": 0,
+                                        "retryIntervalInSeconds": 30,
+                                        "secureOutput": false,
+                                        "secureInput": false
+                                    },
+                                    "userProperties": [],
+                                    "typeProperties": {
+                                        "storedProcedureName": {
+                                            "value": "usp_upsert_@{item().TABLE_NAME}",
+                                            "type": "Expression"
+                                        }
+                                    },
+                                    "linkedServiceName": {
+                                        "referenceName": "[variables('dataFactoryLinkedServiceNameTarget')]",
+                                        "type": "LinkedServiceReference"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {}
+                },
+                "parameters": {
+                    "tableList": {
+                        "type": "array",
+                        "defaultValue": [
+                            {
+                                "TABLE_NAME": "customer_table",
+                                "WaterMark_Column": "LastModifytime",
+                                "StoredProcedureNameForMergeOperation": "usp_upsert_customer_table"
+                            },
+                            {
+                                "TABLE_NAME": "project_table",
+                                "WaterMark_Column": "Creationtime",
+                                "StoredProcedureNameForMergeOperation": "usp_upsert_project_table"
+                            }
+                        ]
+                    }
+                },
+                "folder": {
+                    "name": "ETL Demo"
+                },
+                "annotations": [],
+                "lastPublishTime": "2023-10-09T08:17:57Z"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.DataFactory/factories', variables('dataFactoryName'))]",
+                "[resourceId('Microsoft.DataFactory/factories/datasets', variables('dataFactoryName'), variables('dataFactoryDataSetSourceName'))]",
+                "[resourceId('Microsoft.DataFactory/factories/datasets', variables('dataFactoryName'), variables('dataFactoryDataSetTargetName'))]"
             ]
         }
-    ]
+    ],
+    "outputs": {
+        "adfNameOutput": {
+            "type": "string",
+            "value": "[variables('dataFactoryName')]"
+        }
+    }
 }

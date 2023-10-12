@@ -33,7 +33,7 @@ steps:
 
 - ${{ if eq(parameters.doSql, 'false') }}:
   - task: AzureResourceManagerTemplateDeployment@3
-    #condition: and(succeed(), eq('${{parameters.doSql}}', 'true'))
+    #condition: and(succeed(), eq('${{parameters.doSql}}', 'true')) #this is for the datafactory deployment
     displayName: "Create ${{ parameters.ServiceReleased}}"
     inputs:
       deploymentScope: 'Resource Group'
@@ -46,4 +46,6 @@ steps:
       csmFile: ${{ parameters.TemplateFilePath }}
       csmParametersFile: ${{ parameters.TemplateParamFilePath }}
       deploymentMode: 'Incremental'
+      overrideParameters: '-factstuff_linkedServSource_connectionString "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=sqlsrv-yqnh5nxtq5rhi-test.database.windows.net;Initial Catalog=dba-facstuff-target;Server=tcp:sqlsrv-yqnh5nxtq5rhi-test.database.windows.net,1433;TrustServerCertificate=False"'
+      outputs: adfNameOutput
 
