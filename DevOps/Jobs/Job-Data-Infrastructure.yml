@@ -24,15 +24,15 @@ jobs:
       deploy:
         steps:
 
-        # Create Resouce Groups GHUB
-        - template: ../Tasks/Task-ArmTemplateSubscDeployment.yml
-          parameters:
-            ServiceConnection: ${{ parameters.ServiceConnection }}
-            SubscriptionId: ${{ variables.SubscriptionIdGHUB }}
-            ResourceGroupName: ${{ variables.ResourceGroupNameGHUB }}
-            Location: ${{ parameters.Location }}
-            ServiceReleased: "Azure Resource Groups"
-            doSql: false
+        # # Create Resouce Groups GHUB
+        # - template: ../Tasks/Task-ArmTemplateSubscDeployment.yml
+        #   parameters:
+        #     ServiceConnection: ${{ parameters.ServiceConnection }}
+        #     SubscriptionId: ${{ variables.SubscriptionIdGHUB }}
+        #     ResourceGroupName: ${{ variables.ResourceGroupNameGHUB }}
+        #     Location: ${{ parameters.Location }}
+        #     ServiceReleased: "Azure Resource Groups"
+        #     doSql: false
             
         # Create key vault on GHUB
         - template: ../Tasks/Task-ArmTemplateDeployment.yml
