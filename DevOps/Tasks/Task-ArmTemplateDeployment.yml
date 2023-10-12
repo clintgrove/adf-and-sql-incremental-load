@@ -46,6 +46,7 @@ steps:
       csmFile: ${{ parameters.TemplateFilePath }}
       csmParametersFile: ${{ parameters.TemplateParamFilePath }}
       deploymentMode: 'Incremental'
-      overrideParameters: '-factstuff_linkedServSource_connectionString "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=sqlsrv-yqnh5nxtq5rhi-test.database.windows.net;Initial Catalog=dba-facstuff-target;Server=tcp:sqlsrv-yqnh5nxtq5rhi-test.database.windows.net,1433;TrustServerCertificate=False"'
-      outputs: adfNameOutput
+      #overrideParameters: '-factstuff_linkedServSource_connectionString "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=sqlsrv-yqnh5nxtq5rhi-test.database.windows.net;Initial Catalog=dba-facstuff-target;Server=tcp:sqlsrv-yqnh5nxtq5rhi-test.database.windows.net,1433;TrustServerCertificate=False"'
+      #outputs: adfNameOutput
+      #have to have seperate deploy for adf if want to override the 
 
