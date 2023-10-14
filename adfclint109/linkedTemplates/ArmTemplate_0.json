@@ -1,0 +1,435 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "adfclint109"
+		},
+		"facstuff_DatabaseSOURCE_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'facstuff_DatabaseSOURCE'",
+			"defaultValue": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=sqlsrv-yqnh5nxtq5rhi-test.database.windows.net;Initial Catalog=dba-fac-stf-source;Server=tcp:sqlsrv-yqnh5nxtq5rhi-test.database.windows.net,1433;TrustServerCertificate=False"
+		},
+		"facstuff_DatabaseTARGET_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'facstuff_DatabaseTARGET'",
+			"defaultValue": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=sqlsrv-yqnh5nxtq5rhi-test.database.windows.net;Initial Catalog=dba-facstuff-target;Server=tcp:sqlsrv-yqnh5nxtq5rhi-test.database.windows.net,1433;TrustServerCertificate=False"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/facstuff_DatabaseSOURCE')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": "[parameters('facstuff_DatabaseSOURCE_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/facstuff_DatabaseTARGET')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": "[parameters('facstuff_DatabaseTARGET_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/default')]",
+			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks",
+			"apiVersion": "2018-06-01",
+			"properties": {},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dba_fac_a1_source')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "facstuff_DatabaseSOURCE",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"schema": {
+						"type": "string"
+					},
+					"tblname": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": {
+						"value": "@dataset().schema",
+						"type": "Expression"
+					},
+					"table": {
+						"value": "@dataset().tblname",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/facstuff_DatabaseSOURCE')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dba_fac_a1_target')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "facstuff_DatabaseTARGET",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"schema_tgt": {
+						"type": "string"
+					},
+					"tblname_tgt": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": {
+						"value": "@dataset().schema_tgt",
+						"type": "Expression"
+					},
+					"table": {
+						"value": "@dataset().tblname_tgt",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/facstuff_DatabaseTARGET')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/MVNprivate')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "Managed",
+				"typeProperties": {
+					"computeProperties": {
+						"location": "UK South",
+						"dataFlowProperties": {
+							"computeType": "General",
+							"coreCount": 16,
+							"timeToLive": 10,
+							"cleanup": false
+						},
+						"copyComputeScaleProperties": {
+							"dataIntegrationUnit": 64,
+							"timeToLive": 5
+						},
+						"pipelineExternalComputeScaleProperties": {
+							"timeToLive": 60
+						}
+					}
+				},
+				"managedVirtualNetwork": {
+					"type": "ManagedVirtualNetworkReference",
+					"referenceName": "default"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/managedVirtualNetworks/default')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Incremental load - unique id exists in both')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "For Table From Source",
+						"description": "Copy to staging and then do merge update",
+						"type": "ForEach",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@pipeline().parameters.tableList",
+								"type": "Expression"
+							},
+							"isSequential": false,
+							"activities": [
+								{
+									"name": "Lookup Source watermark",
+									"type": "Lookup",
+									"dependsOn": [
+										{
+											"activity": "Lookup Target watermark",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "AzureSqlSource",
+											"sqlReaderQuery": {
+												"value": "select MAX(@{item().WaterMark_Column}) as NewWatermarkvalue from @{item().TABLE_NAME}",
+												"type": "Expression"
+											},
+											"queryTimeout": "02:00:00",
+											"partitionOption": "None"
+										},
+										"dataset": {
+											"referenceName": "dba_fac_a1_source",
+											"type": "DatasetReference",
+											"parameters": {
+												"schema": "not set because use query is set to Query",
+												"tblname": "not set because use query is set to Query"
+											}
+										}
+									}
+								},
+								{
+									"name": "Lookup Target watermark",
+									"type": "Lookup",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "AzureSqlSource",
+											"sqlReaderQuery": {
+												"value": "select * from [loadInfo_Watermark] where sourceinfo  =  '@{item().TABLE_NAME}'",
+												"type": "Expression"
+											},
+											"queryTimeout": "02:00:00",
+											"partitionOption": "None"
+										},
+										"dataset": {
+											"referenceName": "dba_fac_a1_target",
+											"type": "DatasetReference",
+											"parameters": {
+												"schema_tgt": "not set because use query is set to Query",
+												"tblname_tgt": "not set because use query is set to Query"
+											}
+										}
+									}
+								},
+								{
+									"name": "Copy data to staging",
+									"type": "Copy",
+									"dependsOn": [
+										{
+											"activity": "Lookup Source watermark",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "AzureSqlSource",
+											"sqlReaderQuery": {
+												"value": "select * from @{item().TABLE_NAME} where @{item().WaterMark_Column} > '@{activity('Lookup Target watermark').output.firstRow.dateofload}' and @{item().WaterMark_Column} <= '@{activity('Lookup Source watermark').output.firstRow.NewWatermarkvalue}'",
+												"type": "Expression"
+											},
+											"queryTimeout": "02:00:00",
+											"partitionOption": "None"
+										},
+										"sink": {
+											"type": "AzureSqlSink",
+											"preCopyScript": {
+												"value": "TRUNCATE TABLE staging.@{item().TABLE_NAME}",
+												"type": "Expression"
+											},
+											"writeBehavior": "insert",
+											"sqlWriterUseTableLock": false,
+											"disableMetricsCollection": false
+										},
+										"enableStaging": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"typeConversion": true,
+											"typeConversionSettings": {
+												"allowDataTruncation": true,
+												"treatBooleanAsNumber": false
+											}
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "dba_fac_a1_source",
+											"type": "DatasetReference",
+											"parameters": {
+												"schema": "not set - dynamic query used",
+												"tblname": "not set - dynamic query - see below"
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "dba_fac_a1_target",
+											"type": "DatasetReference",
+											"parameters": {
+												"schema_tgt": "staging",
+												"tblname_tgt": {
+													"value": "@item().TABLE_NAME",
+													"type": "Expression"
+												}
+											}
+										}
+									]
+								},
+								{
+									"name": "Sproc update watermark",
+									"type": "SqlServerStoredProcedure",
+									"dependsOn": [
+										{
+											"activity": "Copy data to staging",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"storedProcedureName": "[[dbo].[usp_write_watermark]",
+										"storedProcedureParameters": {
+											"LastModifiedtime": {
+												"value": {
+													"value": "@{activity('Lookup Source watermark').output.firstRow.NewWatermarkvalue}",
+													"type": "Expression"
+												},
+												"type": "DateTime"
+											},
+											"TableName": {
+												"value": {
+													"value": "@item().TABLE_NAME",
+													"type": "Expression"
+												},
+												"type": "String"
+											}
+										}
+									},
+									"linkedServiceName": {
+										"referenceName": "facstuff_DatabaseTARGET",
+										"type": "LinkedServiceReference"
+									}
+								},
+								{
+									"name": "Sproc to copy new rows from staging",
+									"description": "copy news rows only to main live table",
+									"type": "SqlServerStoredProcedure",
+									"dependsOn": [
+										{
+											"activity": "Sproc update watermark",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"storedProcedureName": {
+											"value": "usp_upsert_@{item().TABLE_NAME}",
+											"type": "Expression"
+										}
+									},
+									"linkedServiceName": {
+										"referenceName": "facstuff_DatabaseTARGET",
+										"type": "LinkedServiceReference"
+									}
+								}
+							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"tableList": {
+						"type": "array",
+						"defaultValue": [
+							{
+								"TABLE_NAME": "customer_table",
+								"WaterMark_Column": "LastModifytime",
+								"StoredProcedureNameForMergeOperation": "usp_upsert_customer_table"
+							},
+							{
+								"TABLE_NAME": "project_table",
+								"WaterMark_Column": "Creationtime",
+								"StoredProcedureNameForMergeOperation": "usp_upsert_project_table"
+							}
+						]
+					}
+				},
+				"folder": {
+					"name": "ETL Demo"
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-10-09T08:17:57Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/dba_fac_a1_source')]",
+				"[concat(variables('factoryId'), '/datasets/dba_fac_a1_target')]",
+				"[concat(variables('factoryId'), '/linkedServices/facstuff_DatabaseTARGET')]"
+			]
+		}
+	]
+}
