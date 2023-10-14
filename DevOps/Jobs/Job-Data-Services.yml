@@ -100,8 +100,9 @@ jobs:
               ResourceGroupName: ${{ variables.ResourceGroupNameGHUB }}
               Location: ${{ parameters.Location }}
               TemplateFilePath: '$(Pipeline.Workspace)/AdfArmTemplatesData01/ARMTemplateForFactory.json' # From downloaded artifact
-              TemplateParamFilePath: '$(Agent.BuildDirectory)/${{ variables.AzureDataFactoryPipelinesArmTemplateParametersDataAdf01 }}' # From environment specific variables
+              #TemplateParamFilePath: '$(Agent.BuildDirectory)/${{ variables.AzureDataFactoryPipelinesArmTemplateParametersDataAdf01 }}' # From environment specific variables
               ServiceReleased: "Azure Data Factory 01 Pipelines"
+              SendSQLServerName: $(SetSqlVarFQDNp2.sqlSrvNameOutput)
               doSql: false
 
             #Start ADF 01 triggers
