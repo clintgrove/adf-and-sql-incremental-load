@@ -46,11 +46,21 @@ steps:
       csmFile: ${{ parameters.TemplateFilePath }}
       csmParametersFile: ${{ parameters.TemplateParamFilePath }}
       deploymentMode: 'Incremental'
-      #overrideParameters: '-factstuff_linkedServSource_connectionString "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=sqlsrv-yqnh5nxtq5rhi-test.database.windows.net;Initial Catalog=dba-facstuff-target;Server=tcp:sqlsrv-yqnh5nxtq5rhi-test.database.windows.net,1433;TrustServerCertificate=False"'
-      #outputs: adfNameOutput
-      #have to have seperate deploy for adf if want to override the 
 
 - ${{ if and(eq(parameters.doSql, 'false'), eq(parameters.ServiceReleased, 'Azure Data Factory')) }}:
+
+  - task: AzurePowerShell@5
+    displayName: Get output from ARM template for ADF deployment
+    name: SetSqlVarFQDNp1
+    inputs:
+      script: FilePath
+      azureSubscription: '$(ServiceConnection)'
+      ScriptPath: '$(Pipeline.Workspace)/Scripts/getDeploymentOutputs.ps1'
+      ScriptArguments: '-resourceGroupName ${{variables.ResourceGroupNameGHUB}}'
+      azurePowerShellVersion: LatestVersion
+      
+  - script: echo sqlSrvNameOutput is  with alias  $(SetSqlVarFQDNp1.sqlSrvNameOutput)
+
   - task: AzureResourceManagerTemplateDeployment@3
     #condition: and(succeed(), eq('${{parameters.doSql}}', 'true')) #this is for the datafactory deployment
     displayName: "Create ${{ parameters.ServiceReleased}}"
@@ -65,5 +75,5 @@ steps:
       csmFile: ${{ parameters.TemplateFilePath }}
       csmParametersFile: ${{ parameters.TemplateParamFilePath }}
       deploymentMode: 'Incremental'
-      overrideParameters: '-factstuff_linkedServSource_connectionString "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=facstuf-sqlserver-uks-a1.database.windows.net;Initial Catalog=dba-fac-stf-source;Server=tcp:facstuf-sqlserver-uks-a1.database.windows.net,1433;TrustServerCertificate=False"'
+      overrideParameters: '-factstuff_linkedServSource_connectionString "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=$(SetSqlVarFQDNp1.sqlSrvNameOutput);Initial Catalog=dba-fac-stf-source;Server=tcp:$(SetSqlVarFQDNp1.sqlSrvNameOutput),1433;TrustServerCertificate=False"'
       outputs: adfNameOutput

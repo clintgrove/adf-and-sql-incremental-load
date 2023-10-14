@@ -194,6 +194,10 @@
     "armOutput": {
       "type": "string",
       "value": "[reference(parameters('sqlServerName')).fullyQualifiedDomainName]"
+    },
+    "databaseName": {
+        "type": "string",
+        "value": "[parameters('databases')[0].name]"
     }
   }
 }
