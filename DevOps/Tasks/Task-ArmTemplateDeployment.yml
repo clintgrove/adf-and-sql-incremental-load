@@ -63,5 +63,5 @@ steps:
       csmFile: ${{ parameters.TemplateFilePath }}
       #csmParametersFile: ${{ parameters.TemplateParamFilePath }}
       deploymentMode: 'Incremental'
-      overrideParameters: '-factstuff_linkedServSource_connectionString "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=${{parameters.SendSQLServerName}};Initial Catalog=dba-fac-stf-source;Server=tcp:${{parameters.SendSQLServerName}},1433;TrustServerCertificate=False"'
+      overrideParameters: '-facstuff_DatabaseSOURCE_connectionString "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=${{parameters.SendSQLServerName}};Initial Catalog=dba-fac-stf-source;Server=tcp:${{parameters.SendSQLServerName}},1433;TrustServerCertificate=False"'
       outputs: adfNameOutput
