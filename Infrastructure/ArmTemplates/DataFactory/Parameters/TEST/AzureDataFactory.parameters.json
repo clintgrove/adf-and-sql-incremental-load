@@ -5,11 +5,8 @@
       "location": {
         "value": "uksouth"
       },
-      "factstuff_linkedServSource_connectionString": {
-        "value": "true"
-      }      ,
-      "factstuff_linkedServTarget_connectionString": {
-        "value": "true"
+      "az_environment" : {
+        "value": "test"
       }
-  }
+    }
 }
