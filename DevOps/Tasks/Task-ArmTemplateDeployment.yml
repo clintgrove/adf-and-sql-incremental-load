@@ -32,7 +32,7 @@ steps:
       outputs: armOutput
 
 
-- ${{ if and(eq(parameters.doSql, 'false'), eq(parameters.ServiceReleased, 'Azure Data Factory')) }}:
+- ${{ if eq(parameters.doSql, 'false') }}:
   - task: AzureResourceManagerTemplateDeployment@3
     #condition: and(succeed(), eq('${{parameters.doSql}}', 'true')) #this is for the datafactory deployment
     displayName: "Create ${{ parameters.ServiceReleased}}"
