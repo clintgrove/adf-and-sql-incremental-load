@@ -48,7 +48,6 @@ jobs:
         
         # Create Log Analytics GHUB
         - template: ../Tasks/Task-ArmTemplateDeployment.yml
-          name: LogAnalyticsDeployment
           parameters:
             ServiceConnection: ${{ parameters.ServiceConnection }}
             SubscriptionId: ${{ variables.SubscriptionIdGHUB }}
@@ -62,7 +61,6 @@ jobs:
         # Create Azure SQL Server GHUB
         - ${{ if eq(parameters.FeatureFlag_SQL_Deploy, true) }}:
           - template: ../Tasks/Task-ArmTemplateDeployment.yml
-            dependsOn: LogAnalyticsDeployment
             parameters:
               ServiceConnection: ${{ parameters.ServiceConnection }}
               SubscriptionId: ${{ variables.SubscriptionIdGHUB }}
