@@ -31,23 +31,6 @@ steps:
       overrideParameters: '-administratorLoginPassword ${{parameters.sqlServerPasswordDA}}'
       outputs: armOutput
 
-
-- ${{ if eq(parameters.doSql, 'false') }}:
-  - task: AzureResourceManagerTemplateDeployment@3
-    #condition: and(succeed(), eq('${{parameters.doSql}}', 'true')) #this is for the datafactory deployment
-    displayName: "Create ${{ parameters.ServiceReleased}}"
-    inputs:
-      deploymentScope: 'Resource Group'
-      azureResourceManagerConnection: ${{ parameters.ServiceConnection }}
-      subscriptionId: ${{ parameters.SubscriptionId }}
-      action: 'Create Or Update Resource Group'
-      resourceGroupName: ${{ parameters.ResourceGroupName }}
-      location: ${{ parameters.Location }}
-      templateLocation: 'Linked artifact'
-      csmFile: ${{ parameters.TemplateFilePath }}
-      csmParametersFile: ${{ parameters.TemplateParamFilePath }}
-      deploymentMode: 'Incremental'
-
 - ${{ if and(eq(parameters.doSql, 'false'), eq(parameters.ServiceReleased, 'Azure Data Factory 01 Pipelines')) }}:
   - task: AzureResourceManagerTemplateDeployment@3
     #condition: and(succeed(), eq('${{parameters.doSql}}', 'true')) #this is for the datafactory deployment
@@ -65,3 +48,19 @@ steps:
       deploymentMode: 'Incremental'
       overrideParameters: '-facstuff_DatabaseSOURCE_connectionString "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=${{parameters.SendSQLServerName}};Initial Catalog=dba-fac-stf-source;Server=tcp:${{parameters.SendSQLServerName}},1433;TrustServerCertificate=False" -facstuff_DatabaseTARGET_connectionString "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=${{parameters.SendSQLServerName}};Initial Catalog=dba-fac-stf-target;Server=tcp:${{parameters.SendSQLServerName}},1433;TrustServerCertificate=False"'
       outputs: adfNameOutput
+
+- ${{ if eq(parameters.doSql, 'false') }}:
+  - task: AzureResourceManagerTemplateDeployment@3
+    #condition: and(succeed(), eq('${{parameters.doSql}}', 'true')) #this is for the datafactory deployment
+    displayName: "Create ${{ parameters.ServiceReleased}}"
+    inputs:
+      deploymentScope: 'Resource Group'
+      azureResourceManagerConnection: ${{ parameters.ServiceConnection }}
+      subscriptionId: ${{ parameters.SubscriptionId }}
+      action: 'Create Or Update Resource Group'
+      resourceGroupName: ${{ parameters.ResourceGroupName }}
+      location: ${{ parameters.Location }}
+      templateLocation: 'Linked artifact'
+      csmFile: ${{ parameters.TemplateFilePath }}
+      csmParametersFile: ${{ parameters.TemplateParamFilePath }}
+      deploymentMode: 'Incremental'
