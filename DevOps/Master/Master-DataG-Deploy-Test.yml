@@ -13,7 +13,7 @@ parameters:
 name: Pipeline-$(Build.DefinitionName)-$(Date:yyyyMMdd)$(Rev:.r)
 
 pr: none
-trigger: none
+trigger: dev_test_adf
 
 variables:
 - template: ..\Variables\Variables-Global.yml
