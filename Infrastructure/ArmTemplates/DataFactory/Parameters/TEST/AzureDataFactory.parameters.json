@@ -7,6 +7,9 @@
       },
       "az_environment" : {
         "value": "test"
+      },
+      "gitConfigureLater": {
+        "value": true
       }
     }
 }
