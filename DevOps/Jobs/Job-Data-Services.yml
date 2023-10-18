@@ -91,19 +91,35 @@ jobs:
               DataFactoryName: ${{ variables.DataFactoryNameGHUB }}
 
             #Deploy Data Factory 01 pipelines
-          - script: echo template file ouput write is -- '$(Pipeline.Workspace)/AdfArmTemplatesData01/ARMTemplateForFactory.json'            
-          - script: echo param file ouput write is -- '$(Agent.BuildDirectory)/${{ variables.AzureDataFactoryPipelinesArmTemplateParametersDataAdf01 }}'
-          - template: ../Tasks/Task-ArmTemplateDeployment.yml
-            parameters:
-              ServiceConnection: ${{ parameters.ServiceConnection }}
-              SubscriptionId: ${{ variables.SubscriptionIdGHUB }} 
-              ResourceGroupName: ${{ variables.ResourceGroupNameGHUB }}
-              Location: ${{ parameters.Location }}
-              TemplateFilePath: '$(Pipeline.Workspace)/AdfArmTemplatesData01/ARMTemplateForFactory.json' # From downloaded artifact
-              #TemplateParamFilePath: '$(Agent.BuildDirectory)/${{ variables.AzureDataFactoryPipelinesArmTemplateParametersDataAdf01 }}' # From environment specific variables
-              ServiceReleased: "Azure Data Factory 01 Pipelines"
-              SendSQLServerName: $(SetSqlVarFQDNp2.sqlSrvNameOutput)
-              doSql: false
+          # - script: echo template file ouput write is -- '$(Pipeline.Workspace)/AdfArmTemplatesData01/ARMTemplateForFactory.json'            
+          # - script: echo param file ouput write is -- '$(Agent.BuildDirectory)/${{ variables.AzureDataFactoryPipelinesArmTemplateParametersDataAdf01 }}'
+          # - template: ../Tasks/Task-ArmTemplateDeployment.yml
+          #   parameters:
+          #     ServiceConnection: ${{ parameters.ServiceConnection }}
+          #     SubscriptionId: ${{ variables.SubscriptionIdGHUB }} 
+          #     ResourceGroupName: ${{ variables.ResourceGroupNameGHUB }}
+          #     Location: ${{ parameters.Location }}
+          #     TemplateFilePath: '$(Pipeline.Workspace)/AdfArmTemplatesData01/ARMTemplateForFactory.json' # From downloaded artifact
+          #     #TemplateParamFilePath: '$(Agent.BuildDirectory)/${{ variables.AzureDataFactoryPipelinesArmTemplateParametersDataAdf01 }}' # From environment specific variables
+          #     ServiceReleased: "Azure Data Factory 01 Pipelines"
+          #     SendSQLServerName: $(SetSqlVarFQDNp2.sqlSrvNameOutput)
+          #     doSql: false
+          
+          - task: AzureResourceManagerTemplateDeployment@3
+            #condition: and(succeed(), eq('${{parameters.doSql}}', 'true')) #this is for the datafactory deployment
+            displayName: "Deploy data factory inner stuff"
+            inputs:
+              deploymentScope: 'Resource Group'
+              azureResourceManagerConnection: ${{ parameters.ServiceConnection }}
+              subscriptionId: ${{ variables.SubscriptionIdGHUB }} 
+              action: 'Create Or Update Resource Group'
+              resourceGroupName: ${{ variables.ResourceGroupNameGHUB }}
+              location: ${{ parameters.Location }}
+              templateLocation: 'Linked artifact'
+              csmFile: '$(Pipeline.Workspace)/AdfArmTemplatesData01/ARMTemplateForFactory.json' # From downloaded artifact
+              deploymentMode: 'Incremental'
+              overrideParameters: '-facstuff_DatabaseSOURCE_connectionString "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=${{parameters.SendSQLServerName}};Initial Catalog=dba-fac-stf-source;Server=tcp:${{parameters.SendSQLServerName}},1433;TrustServerCertificate=False" -facstuff_DatabaseTARGET_connectionString "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=${{parameters.SendSQLServerName}};Initial Catalog=dba-fac-stf-target;Server=tcp:${{parameters.SendSQLServerName}},1433;TrustServerCertificate=False"'
+              outputs: adfNameOutput
 
             #Start ADF 01 triggers
           - template: ../Tasks/Utils/Util-StartDataFactoryTriggers.yml
