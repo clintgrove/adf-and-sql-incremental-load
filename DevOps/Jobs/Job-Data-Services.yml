@@ -90,21 +90,7 @@ jobs:
               SubscriptionId: ${{ variables.SubscriptionIdGHUB }}
               DataFactoryName: ${{ variables.DataFactoryNameGHUB }}
 
-            #Deploy Data Factory 01 pipelines
-          # - script: echo template file ouput write is -- '$(Pipeline.Workspace)/AdfArmTemplatesData01/ARMTemplateForFactory.json'            
-          # - script: echo param file ouput write is -- '$(Agent.BuildDirectory)/${{ variables.AzureDataFactoryPipelinesArmTemplateParametersDataAdf01 }}'
-          # - template: ../Tasks/Task-ArmTemplateDeployment.yml
-          #   parameters:
-          #     ServiceConnection: ${{ parameters.ServiceConnection }}
-          #     SubscriptionId: ${{ variables.SubscriptionIdGHUB }} 
-          #     ResourceGroupName: ${{ variables.ResourceGroupNameGHUB }}
-          #     Location: ${{ parameters.Location }}
-          #     TemplateFilePath: '$(Pipeline.Workspace)/AdfArmTemplatesData01/ARMTemplateForFactory.json' # From downloaded artifact
-          #     #TemplateParamFilePath: '$(Agent.BuildDirectory)/${{ variables.AzureDataFactoryPipelinesArmTemplateParametersDataAdf01 }}' # From environment specific variables
-          #     ServiceReleased: "Azure Data Factory 01 Pipelines"
-          #     SendSQLServerName: $(SetSqlVarFQDNp2.sqlSrvNameOutput)
-          #     doSql: false
-          
+        #Deploy Data Factory 01 pipelines
           - task: AzureResourceManagerTemplateDeployment@3
             #condition: and(succeed(), eq('${{parameters.doSql}}', 'true')) #this is for the datafactory deployment
             displayName: "Deploy data factory inner stuff"
