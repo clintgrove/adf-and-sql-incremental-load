@@ -28,7 +28,7 @@
         }
     },
     "variables": {
-        "dataFactoryName": "[concat('adf-',uniqueString('adf-',resourceGroup().location,'-', resourceGroup().id),'-',resourceGroup().location,'-',parameters('az_environment'))]",
+        "dataFactoryName": "[concat('adf-gittestcgro','-',resourceGroup().location,'-',parameters('az_environment'))]",
         "dataFactoryLinkedServiceNameSource": "facstuff_DatabaseSOURCE",
         "dataFactoryLinkedServiceNameTarget": "facstuff_DatabaseTARGET",
         "dataFactoryDataSetSourceName": "dba_fac_a1_source",
