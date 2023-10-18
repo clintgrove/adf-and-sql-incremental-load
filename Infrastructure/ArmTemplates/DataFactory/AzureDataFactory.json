@@ -27,7 +27,7 @@
             }
         },
         "gitConfigureLater": {
-            "defaultValue": false,
+            "defaultValue": true,
             "type": "bool"
         },
         "gitRepoType": {

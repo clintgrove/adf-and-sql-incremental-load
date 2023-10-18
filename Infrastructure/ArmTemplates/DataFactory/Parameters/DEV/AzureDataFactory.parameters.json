@@ -7,6 +7,7 @@
       },
       "az_environment" : {
         "value": "dev"
+      }
       ,
       "gitConfigureLater": {
         "value": false
@@ -25,6 +26,6 @@
       },
       "gitRootFolder": {
         "value": "/DataFactory/adf-gittestcgro-uksouth-dev-01"
-      }}
+      }
     }
 }
