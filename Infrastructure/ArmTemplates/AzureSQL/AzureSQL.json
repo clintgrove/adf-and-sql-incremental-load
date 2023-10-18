@@ -188,6 +188,29 @@
       "dependsOn": [
         "[resourceId('Microsoft.Sql/servers', parameters('sqlServerName'))]"
       ]
+    },
+    {
+      "type": "Microsoft.Sql/servers/firewallRules",
+      "name": "[concat(parameters('sqlServerName'), '/AllowAllWindowsAzureIps')]",
+      "apiVersion": "2019-06-01-preview",
+      "location": "[resourceGroup().location]",
+      "properties": {
+          "startIpAddress": "0.0.0.0",
+          "endIpAddress": "0.0.0.0"
+      },
+      "dependsOn": [
+          "[resourceId('Microsoft.Sql/servers', parameters('sqlServerName'))]"
+      ]
     }
-  ]
+  ],
+  "outputs": {
+    "armOutput": {
+      "type": "string",
+      "value": "[reference(parameters('sqlServerName')).fullyQualifiedDomainName]"
+    },
+    "databaseName": {
+        "type": "string",
+        "value": "[parameters('databases')[0].name]"
+    }
+  }
 }

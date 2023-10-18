@@ -20,5 +20,5 @@ jobs:
           parameters:
             ArmTemplatesPath: "$(System.DefaultWorkingDirectory)/Infrastructure/ArmTemplates"
             ServicesTemplatesPath: "$(System.DefaultWorkingDirectory)/Infrastructure/Services"
-            ScriptsPath: "$(System.DefaultWorkingDirectory)/Scripts"
+            ScriptsPath: "$(System.DefaultWorkingDirectory)/DevOps/Tasks/Utils"
 

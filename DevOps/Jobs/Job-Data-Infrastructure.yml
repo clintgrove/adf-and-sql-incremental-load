@@ -10,6 +10,8 @@ parameters:
 
 jobs: 
 - deployment: JobDataInfrastructure
+  pool:
+   vmImage: 'windows-2019'
   displayName: Job - Data Infrastructure
   dependsOn: JobGlobalBuild
   variables:
@@ -22,15 +24,15 @@ jobs:
       deploy:
         steps:
 
-        # Create Resouce Groups GHUB
-        - template: ../Tasks/Task-ArmTemplateSubscDeployment.yml
-          parameters:
-            ServiceConnection: ${{ parameters.ServiceConnection }}
-            SubscriptionId: ${{ variables.SubscriptionIdGHUB }}
-            ResourceGroupName: ${{ variables.ResourceGroupNameGHUB }}
-            Location: ${{ parameters.Location }}
-            ServiceReleased: "Azure Resource Groups"
-            doSql: false
+        # # Create Resouce Groups GHUB
+        # - template: ../Tasks/Task-ArmTemplateSubscDeployment.yml
+        #   parameters:
+        #     ServiceConnection: ${{ parameters.ServiceConnection }}
+        #     SubscriptionId: ${{ variables.SubscriptionIdGHUB }}
+        #     ResourceGroupName: ${{ variables.ResourceGroupNameGHUB }}
+        #     Location: ${{ parameters.Location }}
+        #     ServiceReleased: "Azure Resource Groups"
+        #     doSql: false
             
         # Create key vault on GHUB
         - template: ../Tasks/Task-ArmTemplateDeployment.yml
@@ -66,10 +68,10 @@ jobs:
               Location: ${{ parameters.Location }}
               TemplateFilePath: '$(Agent.BuildDirectory)/${{ variables.AzureSqlServer }}' # From global variables
               TemplateParamFilePath: '$(Agent.BuildDirectory)/${{ variables.AzureSqlServerParametersData }}' # From environment specific variables
-              ServiceReleased: "Azure Sql Server"
+              ServiceReleased: "AzureSqlServer"
               sqlServerPasswordDA: $(SqlPassword)
               doSql: true
-
+   
         # Create Data Factory (as LZ can have INT, DATA and SHARED, this can be seen in the last bit of each variable name such as SubscriptionIdData)
         - ${{ if eq(parameters.FeatureFlag_ADF_DeployPipelines, true) }}:
           - template: ../Tasks/Task-ArmTemplateDeployment.yml

@@ -63,5 +63,9 @@
     <Build Include="staging_project_table.sql" />
     <Build Include="project_table.sql" />
     <Build Include="customer_table.sql" />
+    <Build Include="usp_upsert_customer_table.sql" />
+    <Build Include="usp_upsert_project_table.sql" />
+    <Build Include="usp_loadInfo_Watermark.sql" />
+    <Build Include="loadInfo_Watermark.sql" />
   </ItemGroup>
 </Project>
