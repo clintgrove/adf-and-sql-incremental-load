@@ -5,12 +5,12 @@
         "factstuff_linkedServTarget_connectionString": {
             "type": "secureString",
             "metadata": "Secure string for 'connectionString' of 'factstuff_linkedServTarget'",
-            "defaultValue": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=sqlsrv-yqnh5nxtq5rhi-test.database.windows.net;Initial Catalog=dba-facstuff-target;Server=tcp:sqlsrv-yqnh5nxtq5rhi-test.database.windows.net,1433;TrustServerCertificate=False"
+            "defaultValue": ""
         },
         "factstuff_linkedServSource_connectionString": {
             "type": "secureString",
             "metadata": "Secure string for 'connectionString' of 'factstuff_linkedServSource'",
-            "defaultValue": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=sqlsrv-yqnh5nxtq5rhi-test.database.windows.net;Initial Catalog=dba-fac-stf-source;Server=tcp:sqlsrv-yqnh5nxtq5rhi-test.database.windows.net,1433;TrustServerCertificate=False"
+            "defaultValue": ""
         },
         "location": {
             "type": "string",
