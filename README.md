@@ -8,7 +8,8 @@ Add your DevOps service Connection as a User Access Administrator in RBAC in you
  
 Change your tenantID in keyvault ARM template to your own tenantID
 
-TODO 
-- The sql server name in variables folder is fixed to my server name. the deployment randomly makes a unique id
-- the connection linked services in ADF point to keyvault secret to another SQL server
-- the dacpac does not include sprocs needed to do the incremental load
+New additions
+ - added random name generation to SQL server and ADF. Then used PowerShell to get the names from the deployment Output and passed them through
+ - I updated the dacpac to include sprocs and load info watermark table
+
+Users who deploy this must add the ADF as an AD user to the SQL server, but first you must manually add your own AD account as admin to the SQL server using the Entra ID blade on the SQL server in the azure portal 
