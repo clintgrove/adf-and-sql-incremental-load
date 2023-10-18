@@ -8,10 +8,10 @@ variables:
   AzureDataFactoryPipelinesArmTemplateParametersDataAdf01: "Services/DataAnalytics/ARMTemplateParametersForFactory01${{ variables.Environment }}.json" #this file doesn't exist for dev
 
   # Arm template parameter files
-  # AzureKeyVaultArmTemplateParametersData: "ArmTemplates/Keyvault/Parameters/${{ upper(variables.Environment) }}/AzureKeyVault.Data.parameters.json"
-  # AzureSqlServerParametersData: "ArmTemplates/AzureSQL/Parameters/${{ upper(variables.Environment) }}/AzureSQL.Data.parameters.json"
-  # AzureDataFactoryParametersData: "ArmTemplates/DataFactory/Parameters/${{ upper(variables.Environment) }}/AzureDataFactory.parameters.json"
-  # AzureLogAnalyticsParameters: "ArmTemplates/LogAnalytics/Parameters/${{ upper(variables.Environment) }}/LogAnalytics.parameters.json"
+  AzureKeyVaultArmTemplateParametersData: "ArmTemplates/Keyvault/Parameters/${{ upper(variables.Environment) }}/AzureKeyVault.Data.parameters.json"
+  AzureSqlServerParametersData: "ArmTemplates/AzureSQL/Parameters/${{ upper(variables.Environment) }}/AzureSQL.Data.parameters.json"
+  AzureDataFactoryParametersData: "ArmTemplates/DataFactory/Parameters/${{ upper(variables.Environment) }}/AzureDataFactory.parameters.json"
+  AzureLogAnalyticsParameters: "ArmTemplates/LogAnalytics/Parameters/${{ upper(variables.Environment) }}/LogAnalytics.parameters.json"
 
  
   # DATransactions vars
