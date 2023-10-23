@@ -1,0 +1,12 @@
+{
+	"name": "adf-gittestcgro-uksouth-dev",
+	"properties": {
+		"globalParameters": {
+			"myGlobalParam1": {
+				"type": "string",
+				"value": "dev"
+			}
+		}
+	},
+	"location": "uksouth"
+}
