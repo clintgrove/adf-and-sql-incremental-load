@@ -104,6 +104,8 @@ jobs:
               location: ${{ parameters.Location }}
               templateLocation: 'Linked artifact'
               csmFile: '$(Pipeline.Workspace)/AdfArmTemplatesData01/ARMTemplateForFactory.json' # From downloaded artifact
+              csmParametersFile: '$(Build.Repository.LocalPath)/Infrastructure/Services/DataAnalytics/ARMTemplateParametersForFactory01${{parameters.Environment}}.json'
+
               deploymentMode: 'Incremental'
               overrideParameters: '-factoryName $(SetSqlVarFQDNp2.adfNameOutput)'
               outputs: adfNameOutput
