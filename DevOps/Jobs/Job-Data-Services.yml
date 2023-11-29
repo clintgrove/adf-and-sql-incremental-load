@@ -86,6 +86,8 @@ jobs:
         - ${{ if eq(parameters.FeatureFlag_ADF_DeployPipelines, true) }}:
           - script: ls '$(Pipeline.Workspace)/AdfArmTemplatesData01'
             displayName: 'List artifact files'
+          - script: ls '$(Build.Repository.LocalPath)/Infrastructure/Services/DataAnalytics/'
+            displayName: 'List specific directory contents'
 
           - template: ../Tasks/Utils/Util-StopDataFactoryTriggers.yml
             parameters:
