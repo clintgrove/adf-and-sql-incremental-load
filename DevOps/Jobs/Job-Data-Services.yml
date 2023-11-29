@@ -84,6 +84,9 @@ jobs:
 
         # Stop ADF 01 triggers
         - ${{ if eq(parameters.FeatureFlag_ADF_DeployPipelines, true) }}:
+          - script: ls '$(Pipeline.Workspace)/AdfArmTemplatesData01'
+            displayName: 'List artifact files'
+
           - template: ../Tasks/Utils/Util-StopDataFactoryTriggers.yml
             parameters:
               ServiceConnection: ${{ parameters.ServiceConnection }}
