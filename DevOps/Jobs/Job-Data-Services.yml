@@ -86,7 +86,7 @@ jobs:
         - ${{ if eq(parameters.FeatureFlag_ADF_DeployPipelines, true) }}:
           - script: ls '$(Pipeline.Workspace)/AdfArmTemplatesData01'
             displayName: 'List artifact files'
-          - script: ls '$(Build.Repository.LocalPath)/Infrastructure/Services/DataAnalytics/'
+          - script: ls '$(Build.Repository.LocalPath)\Infrastructure\Services\DataAnalytics'
             displayName: 'List specific directory contents'
 
           - template: ../Tasks/Utils/Util-StopDataFactoryTriggers.yml
@@ -109,7 +109,7 @@ jobs:
               location: ${{ parameters.Location }}
               templateLocation: 'Linked artifact'
               csmFile: '$(Pipeline.Workspace)/AdfArmTemplatesData01/ARMTemplateForFactory.json' # From downloaded artifact
-              csmParametersFile: '$(Build.Repository.LocalPath)/Infrastructure/Services/DataAnalytics/ARMTemplateParametersForFactory01${{parameters.Environment}}.json'
+              csmParametersFile: '$(Build.Repository.LocalPath)\Infrastructure\Services\DataAnalytics\ARMTemplateParametersForFactory01${{parameters.Environment}}.json'
 
               deploymentMode: 'Incremental'
               overrideParameters: '-factoryName $(SetSqlVarFQDNp2.adfNameOutput)'
