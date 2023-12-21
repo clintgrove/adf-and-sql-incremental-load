@@ -21,7 +21,7 @@ steps:
       az deployment sub create  \
         --name ClintGAzReal \
         --location ${{parameters.Location}} \
-        --template-file $(Agent.BuildDirectory)/ArmTemplates/ResourceGroupCreation/createResourceGroups.json \
+        --template-file $(Agent.BuildDirectory)\ArmTemplates\ResourceGroupCreation\createResourceGroups.json \
         --parameters rgName=${{parameters.ResourceGroupName}} \
 
 
