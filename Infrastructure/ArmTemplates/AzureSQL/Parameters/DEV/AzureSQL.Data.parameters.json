@@ -2,78 +2,32 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "sqlServerName": {
-            "value": "lz-ghub-dev-uks-sqldb-02"
-        },
-        "adminLogin": {
-            "value": "sqladmin"
-        },
-        "adminPassword": {
-            "reference": {
-                "keyVault": {
-                    "id": "/subscriptions/99405095-9731-419b-9b7c-acb371a14e87/resourceGroups/lz-ghub-dev-uks-rg-01/providers/Microsoft.KeyVault/vaults/lz-ghub-dev-uks-kv-01"
-                },
-                "secretName": "DATransactions-password"
-            }
-        },
-        "sku": {
-            "value": {
-                "name": "Basic",
-                "tier": "Basic",
-                "capacity": 5
-            }
-        },
-        "subnetName": {
-            "value": "snet-lz-ghub-dev-be-uks-01"
-        },
-        "virtualNetworkName": {
-            "value": "vnet-lz-ghub-dev-uks-01"
-        },
-        "enablePrivateEndpoint": {
-            "value": false
-        },
-        "publicNetworkAccess": {
-            "value": "Enabled"
-        },
-        "virtualNetworkResourceGroupName": {
-            "value": "rg-lz-ghub-vnet-dev-uks-01"
-        },
-        "location": {
-            "value": "eastus"
-        },
-        "sqlPrivateDnsZoneName": {
-            "value": "privatelink.database.windows.net"
-        },
-        "publicDNSZoneForwarder": {
-            "value": ".database.windows.net"
-        },
-        "sqlPrivateDnsZoneSubscriptionId": {
-            "value": "964dff1d-bb67-46f1-b262-aa6d663560ab"
-        },
-        "sqlPrivateDnsZoneResourceGroup": {
-            "value": "rg-plt-con-pdns-prod-uks-01"
-        },
-        "keyVaultName": {
-            "value": "lz-ghub-dev-uks-kv-01"
-        },
-        "keyVaultResourceGroupName": {
-            "value": "lz-ghub-dev-uks-rg-01"
-        },
-        "databases": {
-            "value": [
-                {
-                    "name": "DATransactions"
-                }
-            ]
-        }, 
-        "AADAdminLogin": {
-            "value": "CBG_Dataplatform_DEV"
-        },
-        "AADAdminObjectID": {
-            "value": "6706d7ac-3e89-41af-a2fa-7a4bcb6224c0"
-        },
-        "AADTenantID": {
-            "value": "43efbc31-2d3c-470d-bbff-849b0f4ca86b"
-        }
+      "administratorLogin": {
+        "value": "sqladmin"
+      },
+      "administratorLoginPassword": {
+
+        "value": "$(SqlPassword)"
+
+      },
+      "databases": {
+          "value": [
+              {
+                  "name": "dba-fac-stf-source"
+              },
+              {
+                "name": "dba-facstuff-target"
+            },
+            {
+              "name": "DATransactions"
+          }
+          ]
+      },
+      "LogAnalyticsResourceGroup": {
+        "value": "lz-ghub-dev-uks-rg-01"
+      },
+      "LogAnaWspName": {
+        "value": "law-uksouth-dev-01"
+      }
     }
-}
+  }
