@@ -1,0 +1,31 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "value": "uksouth"
+    },
+    "az_environment" : {
+      "value": "dev"
+    }
+    ,
+    "gitConfigureLater": {
+      "value": false
+    },
+    "gitRepoType": {
+      "value": "FactoryGitHubConfiguration"
+    },
+    "gitAccountName": {
+      "value": "clintgrove"
+    },
+    "gitRepositoryName": {
+        "value": "adf-and-sql-incremental-load"
+    },
+    "gitCollaborationBranch": {
+      "value": "dev_test_adf"
+    },
+    "gitRootFolder": {
+      "value": "/DataFactory/adf-gittestcgro-uksouth-dev-01"
+    }
+  }
+}
