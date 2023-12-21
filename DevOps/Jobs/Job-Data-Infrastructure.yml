@@ -30,6 +30,7 @@ jobs:
             ServiceConnection: ${{ parameters.ServiceConnection }}
             SubscriptionId: ${{ variables.SubscriptionIdGHUB }}
             ResourceGroupName: ${{ variables.ResourceGroupNameGHUB }}
+            Environment: ${{ Parameters.Environment }}
             Location: ${{ parameters.Location }}
             ServiceReleased: "Azure Resource Groups"
             doSql: false
