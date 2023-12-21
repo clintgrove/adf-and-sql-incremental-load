@@ -2,13 +2,12 @@ parameters:
   - name: FeatureFlag_SQL_StopIfDataLossCanOccur
     type: boolean
     default: false
-  - name: FeatureFlag_ADF_DeployPipelines
-    type: boolean
-    default: true
   - name: FeatureFlag_SQL_Deploy
     type: boolean
     default: false
-
+  - name: FeatureFlag_ADF_DeployPipelines
+    type: boolean
+    default: true
 
 name: Pipeline-$(Build.DefinitionName)-$(Date:yyyyMMdd)$(Rev:.r)
 

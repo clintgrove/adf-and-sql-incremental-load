@@ -9,8 +9,6 @@ parameters:
     type: boolean
     default: true
 
-
-
 name: Pipeline-$(Build.DefinitionName)-$(Date:yyyyMMdd)$(Rev:.r)
 
 pr: none
