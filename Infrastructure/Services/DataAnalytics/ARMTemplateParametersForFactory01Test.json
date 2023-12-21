@@ -7,9 +7,6 @@
         },
         "default_properties_myGlobalParam1_value": {
             "value": "test"
-        },
-        "dataFactory_location": {
-            "value": "uksouth"
         }
 	}
 }
