@@ -5,6 +5,18 @@
 		"factoryName": {
 			"value": "adf-gittestcgro-uksouth-dev"
 		},
+		"facstuff_DatabaseSOURCE_connectionString": {
+			"value": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=;Initial Catalog="
+		},
+		"facstuff_DatabaseTARGET_connectionString": {
+			"value": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=;Initial Catalog="
+		},
+		"dataFactory_location": {
+			"value": "uksouth"
+		},
+		"dataFactory_identity_type": {
+			"value": "SystemAssigned"
+		},
 		"containerUri": {
 			"value": ""
 		},

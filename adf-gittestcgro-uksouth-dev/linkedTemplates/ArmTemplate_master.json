@@ -7,6 +7,24 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "adf-gittestcgro-uksouth-dev"
 		},
+		"facstuff_DatabaseSOURCE_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'facstuff_DatabaseSOURCE'",
+			"defaultValue": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=;Initial Catalog="
+		},
+		"facstuff_DatabaseTARGET_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'facstuff_DatabaseTARGET'",
+			"defaultValue": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=;Initial Catalog="
+		},
+		"dataFactory_location": {
+			"type": "string",
+			"defaultValue": "uksouth"
+		},
+		"dataFactory_identity_type": {
+			"type": "string",
+			"defaultValue": "SystemAssigned"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -33,6 +51,18 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"facstuff_DatabaseSOURCE_connectionString": {
+						"value": "[parameters('facstuff_DatabaseSOURCE_connectionString')]"
+					},
+					"facstuff_DatabaseTARGET_connectionString": {
+						"value": "[parameters('facstuff_DatabaseTARGET_connectionString')]"
+					},
+					"dataFactory_location": {
+						"value": "[parameters('dataFactory_location')]"
+					},
+					"dataFactory_identity_type": {
+						"value": "[parameters('dataFactory_identity_type')]"
 					}
 				}
 			},
