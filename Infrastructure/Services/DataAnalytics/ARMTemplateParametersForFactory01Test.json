@@ -5,7 +5,7 @@
         "factoryName": {
             "value": "adf-gittestcgro-uksouth-test"
         },
-        "dataFactory_properties_globalParameters_myGlobalParam1_value": {
+        "default_properties_myGlobalParam1_value": {
             "value": "test"
         },
         "dataFactory_location": {
