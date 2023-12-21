@@ -21,7 +21,7 @@ steps:
       az deployment sub create  \
         --name ClintGAzReal \
         --location ${{parameters.Location}} \
-        --template-file $(System.DefaultWorkingDirectory)/Infrastructure/ArmTemplates/ResourceGroupCreation/createResourceGroups.json \
+        --template-file "https://raw.githubusercontent.com/clintgrove/adf-and-sql-incremental-load/main/Infrastructure/ArmTemplates/ResourceGroupCreation/createResourceGroups.json" \
         --parameters $(System.DefaultWorkingDirectory)/Infrastructure/ArmTemplates/ResourceGroupCreation/Parameters/TEST/AzureResourceGroup.Data.parameters.json \
         --only-show-errors
 
