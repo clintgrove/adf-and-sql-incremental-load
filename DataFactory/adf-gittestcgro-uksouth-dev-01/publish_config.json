@@ -1,1 +1,1 @@
-{"publishBranch":"adf_publish","includeFactoryTemplate":true,"enableGitComment":false}
+{"publishBranch":"adf_publish","includeFactoryTemplate":false,"enableGitComment":false,"includeGlobalParamsTemplate":true}
