@@ -17,13 +17,9 @@
 			"metadata": "Secure string for 'connectionString' of 'facstuff_DatabaseTARGET'",
 			"defaultValue": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=;Initial Catalog="
 		},
-		"dataFactory_location": {
+		"default_properties_myGlobalParam1_value": {
 			"type": "string",
-			"defaultValue": "uksouth"
-		},
-		"dataFactory_identity_type": {
-			"type": "string",
-			"defaultValue": "SystemAssigned"
+			"defaultValue": "dev"
 		},
 		"containerUri": {
 			"type": "string",
@@ -58,11 +54,8 @@
 					"facstuff_DatabaseTARGET_connectionString": {
 						"value": "[parameters('facstuff_DatabaseTARGET_connectionString')]"
 					},
-					"dataFactory_location": {
-						"value": "[parameters('dataFactory_location')]"
-					},
-					"dataFactory_identity_type": {
-						"value": "[parameters('dataFactory_identity_type')]"
+					"default_properties_myGlobalParam1_value": {
+						"value": "[parameters('default_properties_myGlobalParam1_value')]"
 					}
 				}
 			},

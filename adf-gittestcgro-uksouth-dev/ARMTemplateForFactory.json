@@ -17,13 +17,9 @@
 			"metadata": "Secure string for 'connectionString' of 'facstuff_DatabaseTARGET'",
 			"defaultValue": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=;Initial Catalog="
 		},
-		"dataFactory_location": {
+		"default_properties_myGlobalParam1_value": {
 			"type": "string",
-			"defaultValue": "uksouth"
-		},
-		"dataFactory_identity_type": {
-			"type": "string",
-			"defaultValue": "SystemAssigned"
+			"defaultValue": "dev"
 		}
 	},
 	"variables": {
@@ -298,7 +294,6 @@
 				"lastPublishTime": "2023-12-21T11:41:27Z"
 			},
 			"dependsOn": [
-				"[variables('factoryId')]",
 				"[concat(variables('factoryId'), '/datasets/dba_fac_a1_source')]",
 				"[concat(variables('factoryId'), '/datasets/dba_fac_a1_target')]",
 				"[concat(variables('factoryId'), '/linkedServices/facstuff_DatabaseTARGET')]"
@@ -336,7 +331,6 @@
 				}
 			},
 			"dependsOn": [
-				"[variables('factoryId')]",
 				"[concat(variables('factoryId'), '/linkedServices/facstuff_DatabaseSOURCE')]"
 			]
 		},
@@ -372,7 +366,6 @@
 				}
 			},
 			"dependsOn": [
-				"[variables('factoryId')]",
 				"[concat(variables('factoryId'), '/linkedServices/facstuff_DatabaseTARGET')]"
 			]
 		},
@@ -388,9 +381,7 @@
 					"authenticationType": "ManagedIdentity"
 				}
 			},
-			"dependsOn": [
-				"[variables('factoryId')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/facstuff_DatabaseTARGET')]",
@@ -404,20 +395,19 @@
 					"authenticationType": "ManagedIdentity"
 				}
 			},
-			"dependsOn": [
-				"[variables('factoryId')]"
-			]
+			"dependsOn": []
 		},
 		{
-			"name": "[parameters('factoryName')]",
-			"type": "Microsoft.DataFactory/factories",
+			"name": "[concat(parameters('factoryName'), '/default')]",
+			"type": "Microsoft.DataFactory/factories/globalparameters",
 			"apiVersion": "2018-06-01",
-			"properties": {},
-			"dependsOn": [],
-			"location": "[parameters('dataFactory_location')]",
-			"identity": {
-				"type": "[parameters('dataFactory_identity_type')]"
-			}
+			"properties": {
+				"myGlobalParam1": {
+					"type": "string",
+					"value": "[parameters('default_properties_myGlobalParam1_value')]"
+				}
+			},
+			"dependsOn": []
 		}
 	]
 }

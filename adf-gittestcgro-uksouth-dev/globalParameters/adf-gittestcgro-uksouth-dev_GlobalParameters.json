@@ -1,1 +1,6 @@
-{}
+{
+	"myGlobalParam1": {
+		"type": "string",
+		"value": "dev"
+	}
+}

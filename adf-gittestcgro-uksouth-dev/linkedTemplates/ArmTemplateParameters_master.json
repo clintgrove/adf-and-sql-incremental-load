@@ -11,11 +11,8 @@
 		"facstuff_DatabaseTARGET_connectionString": {
 			"value": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=;Initial Catalog="
 		},
-		"dataFactory_location": {
-			"value": "uksouth"
-		},
-		"dataFactory_identity_type": {
-			"value": "SystemAssigned"
+		"default_properties_myGlobalParam1_value": {
+			"value": "dev"
 		},
 		"containerUri": {
 			"value": ""
