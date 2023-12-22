@@ -5,6 +5,9 @@
 		"factoryName": {
 			"value": "ghub-test-uks-adf-01"
 		},
+        "default_properties_myGlobalParam1_value": {
+            "value": "test"
+        },
 		"facstuff_DatabaseSOURCE_properties_typeProperties_connectionString_secretName": {
 			"value": "sqlserver-facstuff-test-source-connectionstring"
 		},
