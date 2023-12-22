@@ -7,15 +7,15 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "adf-qn5l2pkcva3s2-uksouth-dev"
 		},
-		"facstuff_DatabaseSOURCE_connectionString": {
+		"factstuff_DatabaseSOURCE_connectionString": {
 			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'facstuff_DatabaseSOURCE'",
-			"defaultValue": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=;Initial Catalog="
+			"metadata": "Secure string for 'connectionString' of 'factstuff_DatabaseSOURCE'",
+			"defaultValue": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=sqlsrv-th5dkllq2i3qa-dev.database.windows.net;Initial Catalog=dba-fac-stf-source"
 		},
-		"facstuff_DatabaseTARGET_connectionString": {
+		"factstuff_DatabaseTARGET_connectionString": {
 			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'facstuff_DatabaseTARGET'",
-			"defaultValue": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=;Initial Catalog="
+			"metadata": "Secure string for 'connectionString' of 'factstuff_DatabaseTARGET'",
+			"defaultValue": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=sqlsrv-th5dkllq2i3qa-dev.database.windows.net;Initial Catalog=dba-facstuff-target"
 		}
 	},
 	"variables": {
@@ -30,29 +30,27 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/facstuff_DatabaseSOURCE')]",
+			"name": "[concat(parameters('factoryName'), '/factstuff_DatabaseSOURCE')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
 				"type": "AzureSqlDatabase",
 				"typeProperties": {
-					"connectionString": "[parameters('facstuff_DatabaseSOURCE_connectionString')]",
-					"authenticationType": "ManagedIdentity"
+					"connectionString": "[parameters('factstuff_DatabaseSOURCE_connectionString')]"
 				}
 			},
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/facstuff_DatabaseTARGET')]",
+			"name": "[concat(parameters('factoryName'), '/factstuff_DatabaseTARGET')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
 				"type": "AzureSqlDatabase",
 				"typeProperties": {
-					"connectionString": "[parameters('facstuff_DatabaseTARGET_connectionString')]",
-					"authenticationType": "ManagedIdentity"
+					"connectionString": "[parameters('factstuff_DatabaseTARGET_connectionString')]"
 				}
 			},
 			"dependsOn": []
@@ -63,7 +61,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "facstuff_DatabaseSOURCE",
+					"referenceName": "factstuff_DatabaseSOURCE",
 					"type": "LinkedServiceReference"
 				},
 				"parameters": {
@@ -89,7 +87,7 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/facstuff_DatabaseSOURCE')]"
+				"[concat(variables('factoryId'), '/linkedServices/factstuff_DatabaseSOURCE')]"
 			]
 		},
 		{
@@ -98,7 +96,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "facstuff_DatabaseTARGET",
+					"referenceName": "factstuff_DatabaseTARGET",
 					"type": "LinkedServiceReference"
 				},
 				"parameters": {
@@ -124,7 +122,7 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/facstuff_DatabaseTARGET')]"
+				"[concat(variables('factoryId'), '/linkedServices/factstuff_DatabaseTARGET')]"
 			]
 		},
 		{
@@ -132,7 +130,6 @@
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"description": "A simple copy and sproc update incremental pipeline. Using an array parameter",
 				"activities": [
 					{
 						"name": "For Table From Source",
@@ -330,7 +327,7 @@
 										}
 									},
 									"linkedServiceName": {
-										"referenceName": "facstuff_DatabaseTARGET",
+										"referenceName": "factstuff_DatabaseTARGET",
 										"type": "LinkedServiceReference"
 									}
 								},
@@ -361,7 +358,7 @@
 										}
 									},
 									"linkedServiceName": {
-										"referenceName": "facstuff_DatabaseTARGET",
+										"referenceName": "factstuff_DatabaseTARGET",
 										"type": "LinkedServiceReference"
 									}
 								}
@@ -398,7 +395,7 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/dba_fac_a1_source')]",
 				"[concat(variables('factoryId'), '/datasets/dba_fac_a1_target')]",
-				"[concat(variables('factoryId'), '/linkedServices/facstuff_DatabaseTARGET')]"
+				"[concat(variables('factoryId'), '/linkedServices/factstuff_DatabaseTARGET')]"
 			]
 		}
 	]
