@@ -7,8 +7,7 @@
     },
     "az_environment" : {
       "value": "dev"
-    }
-    ,
+    },
     "gitConfigureLater": {
       "value": false
     },

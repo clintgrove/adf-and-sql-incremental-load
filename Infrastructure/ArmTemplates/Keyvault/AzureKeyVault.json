@@ -4,7 +4,11 @@
     "parameters": {
         "name": {
             "type": "string",
-			"defaultValue": "[concat('kv-',uniqueString(resourceGroup().id),'-test')]"
+			"defaultValue": "[concat('kv-',uniqueString(resourceGroup().id),'-',parameters('az_environment'))]"
+        },
+        "az_environment": {
+            "type": "string",
+            "defaultValue":"dev"
         },
         "location": {
             "type": "string",

@@ -4,11 +4,15 @@
   "parameters": {
     "sqlServerName": {
       "type": "string",
-      "defaultValue": "[concat('sqlsrv-',uniqueString('sqlsrv-',resourceGroup().location,'-', resourceGroup().id),'-test')]",
+      "defaultValue": "[concat('sqlsrv-',uniqueString('sqlsrv-',resourceGroup().location,'-', resourceGroup().id),'-',parameters('az_environment'))]",
       "metadata": {
         "description": "The name of the SQL logical server."
       }
     },
+    "az_environment": {
+            "type": "string",
+            "defaultValue":"dev"
+        },
     "databases": {
             "type": "array",
             "defaultValue": [

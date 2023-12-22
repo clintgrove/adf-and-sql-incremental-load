@@ -5,6 +5,9 @@
       "location": {
         "value": "uksouth"
       },
+      "az_environment" : {
+        "value": "test"
+      },
       "sku": {
         "value": "standard"
       },
