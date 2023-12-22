@@ -1,6 +1,7 @@
 {
 	"name": "Incremental load - unique id exists in both",
 	"properties": {
+		"description": "A simple copy and sproc update incremental pipeline. Using an array parameter",
 		"activities": [
 			{
 				"name": "For Table From Source",
