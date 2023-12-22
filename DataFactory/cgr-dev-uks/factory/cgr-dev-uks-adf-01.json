@@ -1,9 +1,0 @@
-{
-	"name": "cgr-dev-uks-adf-01",
-	"location": "uksouth",
-	"identity": {
-		"type": "SystemAssigned",
-		"principalId": "36427628-d5a0-4d92-9bb4-c88384298347",
-		"tenantId": "16b3c013-d300-468d-ac64-7eda0820b6d3"
-	}
-}
