@@ -1,15 +1,15 @@
 {
-	"name": "dba_fac_a1_source",
+	"name": "dba_fac_a1_target",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "facstuff_DatabaseSOURCE",
+			"referenceName": "facstuff_DatabaseTARGET",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"schema": {
+			"schema_tgt": {
 				"type": "string"
 			},
-			"tblname": {
+			"tblname_tgt": {
 				"type": "string"
 			}
 		},
@@ -18,11 +18,11 @@
 		"schema": [],
 		"typeProperties": {
 			"schema": {
-				"value": "@dataset().schema",
+				"value": "@dataset().schema_tgt",
 				"type": "Expression"
 			},
 			"table": {
-				"value": "@dataset().tblname",
+				"value": "@dataset().tblname_tgt",
 				"type": "Expression"
 			}
 		}
