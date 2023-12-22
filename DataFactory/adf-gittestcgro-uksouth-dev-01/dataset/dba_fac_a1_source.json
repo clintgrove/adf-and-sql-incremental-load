@@ -2,7 +2,7 @@
 	"name": "dba_fac_a1_source",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "factstuff_DatabaseSOURCE",
+			"referenceName": "facstuff_DatabaseSOURCE",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {

@@ -198,7 +198,7 @@
 								}
 							},
 							"linkedServiceName": {
-								"referenceName": "factstuff_DatabaseTARGET",
+								"referenceName": "facstuff_DatabaseTARGET",
 								"type": "LinkedServiceReference"
 							}
 						},
@@ -229,7 +229,7 @@
 								}
 							},
 							"linkedServiceName": {
-								"referenceName": "factstuff_DatabaseTARGET",
+								"referenceName": "facstuff_DatabaseTARGET",
 								"type": "LinkedServiceReference"
 							}
 						}
