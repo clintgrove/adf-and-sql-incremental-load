@@ -10,6 +10,9 @@
 		},
 		"facstuff_DatabaseTARGET_connectionString": {
 			"value": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=sqlsrv-th5dkllq2i3qa-dev.database.windows.net;Initial Catalog=dba-facstuff-target"
+		},
+		"default_properties_myGlobalParam1_value": {
+			"value": "dev"
 		}
 	}
 }
