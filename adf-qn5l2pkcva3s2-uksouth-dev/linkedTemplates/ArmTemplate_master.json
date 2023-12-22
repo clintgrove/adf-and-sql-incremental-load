@@ -7,14 +7,14 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "adf-qn5l2pkcva3s2-uksouth-dev"
 		},
-		"factstuff_DatabaseSOURCE_connectionString": {
+		"facstuff_DatabaseSOURCE_connectionString": {
 			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'factstuff_DatabaseSOURCE'",
+			"metadata": "Secure string for 'connectionString' of 'facstuff_DatabaseSOURCE'",
 			"defaultValue": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=sqlsrv-th5dkllq2i3qa-dev.database.windows.net;Initial Catalog=dba-fac-stf-source"
 		},
-		"factstuff_DatabaseTARGET_connectionString": {
+		"facstuff_DatabaseTARGET_connectionString": {
 			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'factstuff_DatabaseTARGET'",
+			"metadata": "Secure string for 'connectionString' of 'facstuff_DatabaseTARGET'",
 			"defaultValue": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=sqlsrv-th5dkllq2i3qa-dev.database.windows.net;Initial Catalog=dba-facstuff-target"
 		},
 		"containerUri": {
@@ -44,11 +44,11 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
-					"factstuff_DatabaseSOURCE_connectionString": {
-						"value": "[parameters('factstuff_DatabaseSOURCE_connectionString')]"
+					"facstuff_DatabaseSOURCE_connectionString": {
+						"value": "[parameters('facstuff_DatabaseSOURCE_connectionString')]"
 					},
-					"factstuff_DatabaseTARGET_connectionString": {
-						"value": "[parameters('factstuff_DatabaseTARGET_connectionString')]"
+					"facstuff_DatabaseTARGET_connectionString": {
+						"value": "[parameters('facstuff_DatabaseTARGET_connectionString')]"
 					}
 				}
 			},

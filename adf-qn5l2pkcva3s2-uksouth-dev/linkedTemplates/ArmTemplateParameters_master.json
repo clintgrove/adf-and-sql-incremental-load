@@ -5,10 +5,10 @@
 		"factoryName": {
 			"value": "adf-qn5l2pkcva3s2-uksouth-dev"
 		},
-		"factstuff_DatabaseSOURCE_connectionString": {
+		"facstuff_DatabaseSOURCE_connectionString": {
 			"value": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=sqlsrv-th5dkllq2i3qa-dev.database.windows.net;Initial Catalog=dba-fac-stf-source"
 		},
-		"factstuff_DatabaseTARGET_connectionString": {
+		"facstuff_DatabaseTARGET_connectionString": {
 			"value": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=sqlsrv-th5dkllq2i3qa-dev.database.windows.net;Initial Catalog=dba-facstuff-target"
 		},
 		"containerUri": {
