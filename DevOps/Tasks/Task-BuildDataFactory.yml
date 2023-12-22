@@ -25,12 +25,20 @@ steps:
  
 # Validate and then generate the ARM template into the destination folder. Same as clicking "Publish" from UX
 # The ARM template generated is not published to the ‘Live’ version of the factory. Deployment should be done using a release pipeline. 
+# - task: Npm@1
+#   inputs:
+#     command: 'custom'
+#     customCommand: 'run build export ${{ parameters.ArmTemplateExportPath }}  ${{ parameters.DataFactoryResourceId }} "ADFnpmGeneratedArmTemplate"'
+#   displayName: 'Validate and Generate ARM template'
+ 
 - task: Npm@1
   inputs:
     command: 'custom'
-    customCommand: 'run build export ${{ parameters.ArmTemplateExportPath }}  ${{ parameters.DataFactoryResourceId }} "ADFnpmGeneratedArmTemplate"'
+    workingDir: '$(Build.Repository.LocalPath)'
+    customCommand: 'run build export ${{ parameters.ArmTemplateExportPath }} "ADFnpmGeneratedArmTemplate"'
   displayName: 'Validate and Generate ARM template'
- 
+
+
 # Publish the Artifact to be used as a source for a release pipeline
 - task: PublishPipelineArtifact@1
   inputs:
