@@ -1,0 +1,12 @@
+{
+	"name": "adf-qn5l2pkcva3s2-uksouth-dev",
+	"properties": {
+		"globalParameters": {
+			"myGlobalParam1": {
+				"type": "string",
+				"value": "dev"
+			}
+		}
+	},
+	"location": "uksouth"
+}
