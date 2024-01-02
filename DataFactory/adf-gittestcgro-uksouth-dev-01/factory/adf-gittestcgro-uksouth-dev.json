@@ -1,0 +1,17 @@
+{
+	"name": "adf-gittestcgro-uksouth-dev",
+	"properties": {
+		"globalParameters": {
+			"myGlobalParam1": {
+				"type": "string",
+				"value": "dev"
+			}
+		}
+	},
+	"location": "uksouth",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "cd9ca3cb-c3c4-4581-8aca-9d86812aad02",
+		"tenantId": "16b3c013-d300-468d-ac64-7eda0820b6d3"
+	}
+}

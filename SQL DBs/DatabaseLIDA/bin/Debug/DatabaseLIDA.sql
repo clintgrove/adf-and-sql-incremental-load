@@ -40,6 +40,38 @@ USE [$(DatabaseName)];
 
 
 GO
+IF EXISTS (SELECT 1
+           FROM   [master].[dbo].[sysdatabases]
+           WHERE  [name] = N'$(DatabaseName)')
+    BEGIN
+        ALTER DATABASE [$(DatabaseName)]
+            SET TEMPORAL_HISTORY_RETENTION OFF 
+            WITH ROLLBACK IMMEDIATE;
+    END
+
+
+GO
+PRINT N'Altering Table [dbo].[tblAuthors]...';
+
+
+GO
+ALTER TABLE [dbo].[tblAuthors] ALTER COLUMN [Author_name] NCHAR (155) NULL;
+
+ALTER TABLE [dbo].[tblAuthors] ALTER COLUMN [country] NCHAR (101) NULL;
+
+
+GO
+PRINT N'Creating Table [dbo].[Table22]...';
+
+
+GO
+CREATE TABLE [dbo].[Table22] (
+    [Id] INT NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+
+GO
 PRINT N'Update complete.';
 
 

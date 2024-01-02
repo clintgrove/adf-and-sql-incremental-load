@@ -258,7 +258,7 @@
 			"name": "ETL Demo"
 		},
 		"annotations": [],
-		"lastPublishTime": "2023-10-09T08:17:57Z"
+		"lastPublishTime": "2023-12-21T11:41:27Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }

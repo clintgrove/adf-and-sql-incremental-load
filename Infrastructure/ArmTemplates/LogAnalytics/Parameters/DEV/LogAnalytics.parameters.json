@@ -1,0 +1,21 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "workspaceName": {
+        "value": "law-uksouth-dev-01"
+      },
+      "sku": {
+        "value": "PerGB2018"
+      },
+      "location": {
+        "value": "uksouth"
+      },
+      "resourcePermissions": {
+        "value": true
+      },
+      "heartbeatTableRetention": {
+        "value": 30
+      }
+    }
+  }

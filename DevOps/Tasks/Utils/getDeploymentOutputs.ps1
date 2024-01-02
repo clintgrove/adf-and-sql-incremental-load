@@ -5,14 +5,11 @@ param(
 #https://stackoverflow.com/questions/36948549/how-do-i-use-arm-outputs-values-another-release-task
 
 #$resourceGroupName = 'lz-ghub-test-uks-rg-01'
-$lastSQLDeployment = Get-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName | Sort Timestamp -Descending | Where-Object {$_.DeploymentName -like "AzureSQL*"} | Select -First 1
+$lastSQLDeployment = Get-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName -ErrorAction Continue | Sort Timestamp -Descending | Where-Object {$_.DeploymentName -like "AzureSQL*"} | Select -First 1
 
-if(!$lastSQLDeployment) {
-    throw "Deployment could not be found for Resource Group '$resourceGroupName'."
-}
 
 if(!$lastSQLDeployment.Outputs) {
-    throw "No output parameters could be found for the last deployment of Resource Group '$resourceGroupName'."
+    Write-Host "SQL - No output parameters found for the last deployment of Resource Group '$resourceGroupName'."
 }
 
 foreach ($key in $lastSQLDeployment.Outputs.Keys){
@@ -31,12 +28,9 @@ foreach ($key in $lastSQLDeployment.Outputs.Keys){
 
 $lastADFDeployment = Get-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName | Sort Timestamp -Descending | Where-Object {$_.DeploymentName -like "AzureDataFac*"} | Select -First 1
 
-if(!$lastADFDeployment) {
-    throw "Deployment could not be found for Resource Group '$resourceGroupName'."
-}
 
 if(!$lastADFDeployment.Outputs) {
-    throw "No output parameters could be found for the last deployment of Resource Group '$resourceGroupName'."
+    Write-Host "ADF - No output parameters could be found for the last deployment of Resource Group '$resourceGroupName'."
 }
 
 foreach ($key in $lastADFDeployment.Outputs.Keys){

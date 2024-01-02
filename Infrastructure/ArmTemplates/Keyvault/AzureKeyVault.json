@@ -4,7 +4,11 @@
     "parameters": {
         "name": {
             "type": "string",
-			"defaultValue": "[concat('kv-',uniqueString(resourceGroup().id),'-test')]"
+			"defaultValue": "[concat('kv-',uniqueString(resourceGroup().id),'-',parameters('az_environment'))]"
+        },
+        "az_environment": {
+            "type": "string",
+            "defaultValue":"dev"
         },
         "location": {
             "type": "string",
@@ -115,17 +119,6 @@
             },
             "tags": {},
             "dependsOn": []
-        }
-        ,{
-        "type": "Microsoft.Authorization/roleAssignments",
-        "apiVersion": "2022-04-01",
-        "dependsOn": ["[parameters('name')]"],
-        "name": "[guid(resourceGroup().id)]",
-        "scope": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/',resourceGroup().name,'/providers/Microsoft.KeyVault/vaults/',parameters('name'))]",
-            "properties": {
-                "principalId": "4fe7fc36-b425-420f-a3f4-5e14e084eb5e",
-                "roleDefinitionId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', '4633458b-17de-408a-b874-0445c86b69e6')]"
-            }
         }
     ],
     "outputs": {}

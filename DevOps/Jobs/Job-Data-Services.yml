@@ -103,7 +103,8 @@ jobs:
               resourceGroupName: ${{ variables.ResourceGroupNameGHUB }}
               location: ${{ parameters.Location }}
               templateLocation: 'Linked artifact'
-              csmFile: '$(Pipeline.Workspace)/AdfArmTemplatesData01/ARMTemplateForFactory.json' # From downloaded artifact
+              csmFile: '$(Pipeline.Workspace)/ADFArmTemplatesData01/ARMTemplateForFactory.json' # From downloaded artifact
+              csmParametersFile: '$(Pipeline.Workspace)/ADFArmTemplateParametersData01/ARMTemplateParametersForFactory01${{parameters.Environment}}.json' # From downloaded artifact
               deploymentMode: 'Incremental'
               overrideParameters: '-factoryName $(SetSqlVarFQDNp2.adfNameOutput) -facstuff_DatabaseSOURCE_connectionString "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=$(SetSqlVarFQDNp2.sqlSrvNameOutput);Initial Catalog=dba-fac-stf-source;Server=tcp:$(SetSqlVarFQDNp2.sqlSrvNameOutput),1433;TrustServerCertificate=False" -facstuff_DatabaseTARGET_connectionString "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=$(SetSqlVarFQDNp2.sqlSrvNameOutput);Initial Catalog=dba-facstuff-target;Server=tcp:$(SetSqlVarFQDNp2.sqlSrvNameOutput),1433;TrustServerCertificate=False"'
               outputs: adfNameOutput

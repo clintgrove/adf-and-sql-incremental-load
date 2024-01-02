@@ -25,6 +25,34 @@
             "metadata": {
                 "description": "is this in test, dev or prod"
             }
+        },
+        "gitConfigureLater": {
+            "defaultValue": true,
+            "type": "bool"
+        },
+        "gitRepoType": {
+            "defaultValue": "FactoryVSTSConfiguration",
+            "type": "string"
+        },
+        "gitAccountName": {
+            "defaultValue": "",
+            "type": "string"
+        },
+        "gitProjectName": {
+            "defaultValue": "",
+            "type": "string"
+        },
+        "gitRepositoryName": {
+            "defaultValue": "",
+            "type": "string"
+        },
+        "gitCollaborationBranch": {
+            "defaultValue": "main",
+            "type": "string"
+        },
+        "gitRootFolder": {
+            "defaultValue": "/",
+            "type": "string"
         }
     },
     "variables": {
@@ -48,6 +76,7 @@
                 "type": "SystemAssigned"
             },
             "properties": {
+                 "repoConfiguration": "[if(bool(parameters('gitConfigureLater')), json('null'), json(concat('{\"type\": \"', parameters('gitRepoType'), '\",','\"accountName\": \"', parameters('gitAccountName'), '\",','\"repositoryName\": \"', parameters('gitRepositoryName'), '\",', if(equals(parameters('gitRepoType'), 'FactoryVSTSConfiguration'), concat('\"projectName\": \"', parameters('gitProjectName'), '\",'), ''),'\"collaborationBranch\": \"', parameters('gitCollaborationBranch'), '\",','\"rootFolder\": \"', parameters('gitRootFolder'), '\"}')))]"
             }
         },
         {

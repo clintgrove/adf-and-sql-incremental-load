@@ -6,7 +6,7 @@
         "value": "uksouth"
       },
       "az_environment" : {
-        "value": "test"
+        "value": "dev"
       },
       "sku": {
         "value": "standard"

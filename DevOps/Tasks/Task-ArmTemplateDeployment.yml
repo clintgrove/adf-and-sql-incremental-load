@@ -16,7 +16,7 @@ steps:
 - ${{ if eq(parameters.doSql, 'true') }}:
   - task: AzureResourceManagerTemplateDeployment@3
     #condition: and(succeed(), eq('${{parameters.doSql}}', 'true'))
-    displayName: "Create ${{ parameters.ServiceReleased}}"
+    displayName: "Using Template Deployment (using SQL true branch IF) ${{ parameters.ServiceReleased}}"
     inputs:
       deploymentScope: 'Resource Group'
       azureResourceManagerConnection: ${{ parameters.ServiceConnection }}

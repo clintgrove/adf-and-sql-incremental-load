@@ -21,8 +21,11 @@ steps:
       az deployment sub create  \
         --name ClintGAzReal \
         --location ${{parameters.Location}} \
-        --template-file $(Pipeline.Workspace)/ArmTemplates/ResourceGroupCreation/createResourceGroups.json \
-        --parameters $(Pipeline.Workspace)/ArmTemplates/ResourceGroupCreation/Parameters/TEST/AzureResourceGroup.Data.parameters.json
+        --template-uri "https://raw.githubusercontent.com/clintgrove/adf-and-sql-incremental-load/main/Infrastructure/ArmTemplates/ResourceGroupCreation/createResourceGroups.json" \
+        --parameters rgName=${{parameters.ResourceGroupName}} \
+
+#        --template-uri "https://raw.githubusercontent.com/clintgrove/adf-and-sql-incremental-load/main/Infrastructure/ArmTemplates/ResourceGroupCreation/createResourceGroups.json" \
+
 
 # - task: AzureCLI@2
 #   displayName: Bicep deploy scope to ResourceGroup

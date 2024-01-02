@@ -68,4 +68,7 @@
     <Build Include="usp_loadInfo_Watermark.sql" />
     <Build Include="loadInfo_Watermark.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="Script.PostDeployment1.sql" />
+  </ItemGroup>
 </Project>
