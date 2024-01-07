@@ -21,7 +21,7 @@
         "value": "adf-and-sql-incremental-load"
     },
     "gitCollaborationBranch": {
-      "value": "updatingmain_with_new_globalparamand_gitfix"
+      "value": "main"
     },
     "gitRootFolder": {
       "value": "/DataFactory/adf-gittestcgro-uksouth-dev-01"
