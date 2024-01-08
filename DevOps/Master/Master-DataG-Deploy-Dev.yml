@@ -1,10 +1,10 @@
 parameters:
   - name: FeatureFlag_SQL_StopIfDataLossCanOccur
     type: boolean
-    default: false
+    default: true
   - name: FeatureFlag_SQL_Deploy
     type: boolean
-    default: false
+    default: true
   - name: FeatureFlag_ADF_DeployPipelines
     type: boolean
     default: true
