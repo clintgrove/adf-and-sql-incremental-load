@@ -47,6 +47,7 @@
     },
     "administratorLogin": {
       "type": "string",
+      "defaultValue": "sqladmin",
       "metadata": {
         "description": "The administrator username of the SQL logical server."
       }
