@@ -23,7 +23,7 @@ jobs:
     runOnce:
       deploy:
         steps:
-
+        - script: echo $(aadUsername)
         # Create Resouce Groups GHUB
         - template: ../Tasks/Task-ArmTemplateSubscDeployment.yml
           parameters:
