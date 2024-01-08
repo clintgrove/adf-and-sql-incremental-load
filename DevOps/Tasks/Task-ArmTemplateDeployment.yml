@@ -16,10 +16,10 @@ parameters:
 steps:
 
 - ${{ if eq(parameters.doSql, 'true') }}:
-  - script: echo $(aadUsername) and $(aadUserObjectId) and $(sqlServerPasswordDA)
+  - script: echo $(aadUsername) and $(aadUserObjectId) and $(sqlServerPasswordDA) OR ${{parameters.sqlServerPasswordDA}}
   - task: AzureResourceManagerTemplateDeployment@3
     #condition: and(succeed(), eq('${{parameters.doSql}}', 'true'))
-    displayName: "Using Template Deployment (using SQL true branch IF) ${{ parameters.ServiceReleased}}"
+    displayName: " ${{ parameters.ServiceReleased}} - Using Template Deployment (using SQL true branch IF)"
     inputs:
       deploymentScope: 'Resource Group'
       azureResourceManagerConnection: ${{ parameters.ServiceConnection }}
