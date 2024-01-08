@@ -69,7 +69,7 @@ jobs:
               TemplateFilePath: '$(Agent.BuildDirectory)/${{ variables.AzureSqlServer }}' # From global variables
               TemplateParamFilePath: '$(Agent.BuildDirectory)/${{ variables.AzureSqlServerParametersData }}' # From environment specific variables
               ServiceReleased: "AzureSqlServer"
-              sqlServerPasswordDA: $(SqlPassword)
+              sqlServerPasswordDA: $(SqlGetThrough)
               aadUsername: $(aadUsername)
               aadUserObjectId: $(aadUserObjectId)
               doSql: true
