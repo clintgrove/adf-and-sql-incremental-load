@@ -7,7 +7,6 @@ parameters:
   RGroup: string
 
 steps:
-- script: echo $(SqlGetThrough)
 - task: 'SqlAzureDacpacDeployment@1'
   displayName: 'Deploy SQL Database - ${{ parameters.DatabaseName }}'
   inputs:

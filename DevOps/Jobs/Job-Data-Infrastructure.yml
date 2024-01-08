@@ -23,7 +23,6 @@ jobs:
     runOnce:
       deploy:
         steps:
-        - script: echo library variable SqlGetThrough is $(SqlGetThrough) 
         # Create Resouce Groups GHUB
         - template: ../Tasks/Task-ArmTemplateSubscDeployment.yml
           parameters:

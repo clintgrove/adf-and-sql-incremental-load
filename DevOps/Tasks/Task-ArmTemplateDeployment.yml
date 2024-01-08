@@ -16,7 +16,7 @@ parameters:
 steps:
 
 - ${{ if eq(parameters.doSql, 'true') }}:
-  - script: echo $(aadUsername) and $(aadUserObjectId) and $(sqlServerPasswordDA) OR ${{parameters.sqlServerPasswordDA}}
+  - script: echo $(aadUsername) and $(aadUserObjectId)
   - task: AzureResourceManagerTemplateDeployment@3
     #condition: and(succeed(), eq('${{parameters.doSql}}', 'true'))
     displayName: " ${{ parameters.ServiceReleased}} - Using Template Deployment (using SQL true branch IF)"
