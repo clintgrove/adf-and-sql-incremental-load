@@ -70,7 +70,9 @@ jobs:
               TemplateFilePath: '$(Agent.BuildDirectory)/${{ variables.AzureSqlServer }}' # From global variables
               TemplateParamFilePath: '$(Agent.BuildDirectory)/${{ variables.AzureSqlServerParametersData }}' # From environment specific variables
               ServiceReleased: "AzureSqlServer"
-              sqlServerPasswordDA: $(SqlPassword)
+              sqlServerPasswordDA: $(SqlPassword-gh-simplifiedyaml)
+              aadUsername: $(aadUsername)
+              aadUserObjectId: $(aadUserObjectId)
               doSql: true
    
         # Create Data Factory (as LZ can have INT, DATA and SHARED, this can be seen in the last bit of each variable name such as SubscriptionIdData)
