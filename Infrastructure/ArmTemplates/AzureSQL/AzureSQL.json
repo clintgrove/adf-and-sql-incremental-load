@@ -177,6 +177,21 @@
             "State": "Enabled",
             "isAzureMonitorTargetEnabled": true
           }
+        },
+        {
+          "type": "Microsoft.Sql/servers/administrators",
+          "name": "ActiveDirectory",
+          "apiVersion": "2022-05-01-preview",
+          "location": "[parameters('location')]",
+          "dependsOn": [
+            "[resourceId('Microsoft.Sql/servers/', parameters('sqlServerName'))]"
+          ],
+          "properties": {
+            "administratorType": "ActiveDirectory",
+            "login": "[parameters('aadUsername')]",
+            "sid": "[parameters('aadUserObjectId')]",
+            "tenantId": "[subscription().tenantId]"
+          }
         }
       ]
     },
@@ -219,21 +234,6 @@
       "dependsOn": [
         "[resourceId('Microsoft.Sql/servers', parameters('sqlServerName'))]"
       ]
-    },
-    {
-      "type": "Microsoft.Sql/servers/administrators",
-      "name": "ActiveDirectory",
-      "apiVersion": "2022-05-01-preview",
-      "location": "[parameters('location')]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Sql/servers/', parameters('sqlServerName'))]"
-      ],
-      "properties": {
-        "administratorType": "ActiveDirectory",
-        "login": "[parameters('aadUsername')]",
-        "sid": "[parameters('aadUserObjectId')]",
-        "tenantId": "[subscription().tenantId]"
-      }
     }
   ],
   "outputs": {
