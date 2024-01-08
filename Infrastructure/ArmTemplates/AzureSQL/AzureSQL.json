@@ -222,8 +222,8 @@
     },
     {
       "type": "Microsoft.Sql/servers/administrators",
-      "name": "activeDirectory/ActiveDirectory",
-      "apiVersion": "2020-08-01-preview",
+      "name": "ActiveDirectory",
+      "apiVersion": "2022-05-01-preview",
       "location": "[parameters('location')]",
       "dependsOn": [
         "[resourceId('Microsoft.Sql/servers/', parameters('sqlServerName'))]"
