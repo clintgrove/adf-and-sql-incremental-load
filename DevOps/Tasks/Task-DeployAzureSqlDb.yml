@@ -7,7 +7,7 @@ parameters:
   RGroup: string
 
 steps:
-
+- script: echo $(SqlGetThrough)
 - task: 'SqlAzureDacpacDeployment@1'
   displayName: 'Deploy SQL Database - ${{ parameters.DatabaseName }}'
   inputs:
@@ -15,7 +15,7 @@ steps:
     ServerName: ${{parameters.ServerName}}
     DatabaseName: ${{ parameters.DatabaseName }}
     SqlUsername: 'sqladmin'
-    SqlPassword: $(SqlPassword)
+    SqlPassword: $(SqlGetThrough)
     deployType: 'DacpacTask'
     DeploymentAction: 'Publish'
     DacpacFile: '${{ parameters.DacpacFilePath }}'
