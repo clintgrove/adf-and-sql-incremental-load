@@ -180,11 +180,10 @@
         },
         {
           "type": "Microsoft.Sql/servers/administrators",
-          "name": "ActiveDirectory",
-          "apiVersion": "2022-05-01-preview",
-          "location": "[parameters('location')]",
+          "name": "[concat(parameters('sqlServerName'),'/ActiveDirectory')]",
+          "apiVersion": "2022-02-01-preview",
           "dependsOn": [
-            "[resourceId('Microsoft.Sql/servers/', parameters('sqlServerName'))]"
+            "[concat('Microsoft.Sql/servers/', parameters('sqlServerName'))]"
           ],
           "properties": {
             "administratorType": "ActiveDirectory",
