@@ -5,6 +5,7 @@ parameters:
   ServerName: string
   ServiceConnection: string
   RGroup: string
+  sqlServerPasswordDA: string
 
 steps:
 - task: 'SqlAzureDacpacDeployment@1'
@@ -14,7 +15,7 @@ steps:
     ServerName: ${{parameters.ServerName}}
     DatabaseName: ${{ parameters.DatabaseName }}
     SqlUsername: 'sqladmin'
-    SqlPassword: $(SqlPassword)
+    SqlPassword: ${{ parameters.sqlServerPasswordDA }}
     deployType: 'DacpacTask'
     DeploymentAction: 'Publish'
     DacpacFile: '${{ parameters.DacpacFilePath }}'

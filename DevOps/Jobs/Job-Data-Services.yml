@@ -60,6 +60,7 @@ jobs:
               ServerName: $(SetSqlVarFQDNp2.sqlSrvNameOutput)  #${{ variables.AzureSqlServerName_ghub }}
               ServiceConnection: ${{ parameters.ServiceConnection }}
               RGroup: ${{ parameters.RGroup }}
+              sqlServerPasswordDA: $(SqlPassword)
 
           #dfac source database
           - template: ../Tasks/Task-DeployAzureSqlDb.yml
@@ -70,6 +71,7 @@ jobs:
               ServerName: $(SetSqlVarFQDNp2.sqlSrvNameOutput) # ${{ variables.AzureSqlServerName_ghub }}
               ServiceConnection: ${{ parameters.ServiceConnection }}
               RGroup: ${{ parameters.RGroup }}
+              sqlServerPasswordDA: $(SqlPassword)
           
           #dfac target database
           - template: ../Tasks/Task-DeployAzureSqlDb.yml
@@ -80,6 +82,7 @@ jobs:
               ServerName: $(SetSqlVarFQDNp2.sqlSrvNameOutput) #${{ variables.AzureSqlServerName_ghub }}
               ServiceConnection: ${{ parameters.ServiceConnection }}
               RGroup: ${{ parameters.RGroup }}
+              sqlServerPasswordDA: $(SqlPassword)
 
 
         # Stop ADF 01 triggers
