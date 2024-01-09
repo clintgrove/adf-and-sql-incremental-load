@@ -14,7 +14,7 @@ steps:
     ServerName: ${{parameters.ServerName}}
     DatabaseName: ${{ parameters.DatabaseName }}
     SqlUsername: 'sqladmin'
-    SqlPassword: $(SqlGetThrough)
+    SqlPassword: $(SqlPassword)
     deployType: 'DacpacTask'
     DeploymentAction: 'Publish'
     DacpacFile: '${{ parameters.DacpacFilePath }}'
