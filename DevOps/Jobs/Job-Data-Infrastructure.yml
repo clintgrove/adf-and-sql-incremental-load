@@ -7,6 +7,7 @@ parameters:
   clintazrealappid: string
   FeatureFlag_ADF_DeployPipelines: boolean
   FeatureFlag_SQL_Deploy: boolean
+  CreateRGYesOrNo: boolean
 
 jobs: 
 - deployment: JobDataInfrastructure
@@ -23,16 +24,17 @@ jobs:
     runOnce:
       deploy:
         steps:
+        - ${{ if eq(parameters.CreateRGYesOrNo, true) }}:
         # Create Resouce Groups GHUB
-        - template: ../Tasks/Task-ArmTemplateSubscDeployment.yml
-          parameters:
-            ServiceConnection: ${{ parameters.ServiceConnection }}
-            SubscriptionId: ${{ variables.SubscriptionIdGHUB }}
-            ResourceGroupName: ${{ variables.ResourceGroupNameGHUB }}
-            Environment: ${{ Parameters.Environment }}
-            Location: ${{ parameters.Location }}
-            ServiceReleased: "Azure Resource Groups"
-            doSql: false
+          - template: ../Tasks/Task-ArmTemplateSubscDeployment.yml
+            parameters:
+             ServiceConnection: ${{ parameters.ServiceConnection }}
+             SubscriptionId: ${{ variables.SubscriptionIdGHUB }}
+             ResourceGroupName: ${{ variables.ResourceGroupNameGHUB }}
+             Environment: ${{ Parameters.Environment }}
+             Location: ${{ parameters.Location }}
+             ServiceReleased: "Azure Resource Groups"
+             doSql: false
             
         # Create key vault on GHUB
         - template: ../Tasks/Task-ArmTemplateDeployment.yml
