@@ -8,7 +8,7 @@ parameters:
   - name: FeatureFlag_ADF_DeployPipelines
     type: boolean
     default: true
-  - name: CreateRGYesOrNo
+  - name: Create_ResourceGroup_YesOrNo
     type: boolean
     default: false
 
@@ -33,5 +33,5 @@ stages:
           FeatureFlag_SQL_StopIfDataLossCanOccur: ${{ parameters.FeatureFlag_SQL_StopIfDataLossCanOccur }}
           FeatureFlag_ADF_DeployPipelines: ${{ parameters.FeatureFlag_ADF_DeployPipelines }}
           FeatureFlag_SQL_Deploy: ${{ parameters.FeatureFlag_SQL_Deploy }}
-          CreateRGYesOrNo: ${{ parameters.CreateRGYesOrNo }}
+          CreateRGYesOrNo: ${{ parameters.Create_ResourceGroup_YesOrNo }}
 
