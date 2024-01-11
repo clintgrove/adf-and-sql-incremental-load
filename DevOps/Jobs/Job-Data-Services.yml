@@ -60,7 +60,7 @@ jobs:
               ServerName: $(SetSqlVarFQDNp2.sqlSrvNameOutput)  #${{ variables.AzureSqlServerName_ghub }}
               ServiceConnection: ${{ parameters.ServiceConnection }}
               RGroup: ${{ parameters.RGroup }}
-              sqlServerPasswordDA: $(SqlPassword)
+              sqlServerPasswordDA: $(SqlGetThrough)
 
           #dfac source database
           - template: ../Tasks/Task-DeployAzureSqlDb.yml
@@ -71,7 +71,7 @@ jobs:
               ServerName: $(SetSqlVarFQDNp2.sqlSrvNameOutput) # ${{ variables.AzureSqlServerName_ghub }}
               ServiceConnection: ${{ parameters.ServiceConnection }}
               RGroup: ${{ parameters.RGroup }}
-              sqlServerPasswordDA: $(SqlPassword)
+              sqlServerPasswordDA: $(SqlGetThrough)
           
           #dfac target database
           - template: ../Tasks/Task-DeployAzureSqlDb.yml
@@ -82,7 +82,7 @@ jobs:
               ServerName: $(SetSqlVarFQDNp2.sqlSrvNameOutput) #${{ variables.AzureSqlServerName_ghub }}
               ServiceConnection: ${{ parameters.ServiceConnection }}
               RGroup: ${{ parameters.RGroup }}
-              sqlServerPasswordDA: $(SqlPassword)
+              sqlServerPasswordDA: $(SqlGetThrough)
 
 
         # Stop ADF 01 triggers

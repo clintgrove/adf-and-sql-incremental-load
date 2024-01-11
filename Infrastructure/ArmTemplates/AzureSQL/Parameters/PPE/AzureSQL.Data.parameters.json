@@ -10,7 +10,7 @@
     },
     "administratorLoginPassword": {
 
-      "value": "$(SqlPassword)"
+      "value": "$(SqlGetThrough)"
 
     },
     "databases": {
