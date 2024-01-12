@@ -63,6 +63,7 @@ jobs:
               RGroup: ${{ parameters.RGroup }}
               sqlServerPasswordDA: $(SqlGetThrough)
               AADSecurityGroup: ${{ variables.AADSecurityGroup }}
+              DataFactoryNameGHUB: $(SetSqlVarFQDNp2.adfNameOutput)
           
           #dfac target database
           - template: ../Tasks/Task-DeployAzureSqlDb.yml
@@ -75,7 +76,8 @@ jobs:
               RGroup: ${{ parameters.RGroup }}
               sqlServerPasswordDA: $(SqlGetThrough)
               AADSecurityGroup: ${{ variables.AADSecurityGroup }}
-
+              DataFactoryNameGHUB: $(SetSqlVarFQDNp2.adfNameOutput)
+    
 
         # Stop ADF 01 triggers
         - ${{ if eq(parameters.FeatureFlag_ADF_DeployPipelines, true) }}:
