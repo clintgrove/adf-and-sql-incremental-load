@@ -6,6 +6,7 @@ parameters:
   FeatureFlag_ADF_DeployPipelines: boolean
   FeatureFlag_SQL_Deploy: boolean
   CreateRGYesOrNo: boolean
+  BuildInfra?: boolean
 
 stages:
 - stage: Stage_${{ parameters.Environment }} 
@@ -22,14 +23,15 @@ stages:
         Location: ${{ parameters.Location }}
         ServiceConnection: ${{ parameters.ServiceConnection }}
 
-    - template: ..\Jobs\Job-Data-Infrastructure.yml
-      parameters:
-        Environment: ${{ parameters.Environment }}  
-        Location: ${{ parameters.Location }}
-        ServiceConnection: ${{ parameters.ServiceConnection }}
-        FeatureFlag_ADF_DeployPipelines: ${{ parameters.FeatureFlag_ADF_DeployPipelines }}   
-        FeatureFlag_SQL_Deploy: ${{ parameters.FeatureFlag_SQL_Deploy }}    
-        CreateRGYesOrNo: ${{ parameters.CreateRGYesOrNo }}  
+    - ${{ if eq(parameters.BuildInfra?, true) }}:
+        - template: ..\Jobs\Job-Data-Infrastructure.yml
+          parameters:
+            Environment: ${{ parameters.Environment }}  
+            Location: ${{ parameters.Location }}
+            ServiceConnection: ${{ parameters.ServiceConnection }}
+            FeatureFlag_ADF_DeployPipelines: ${{ parameters.FeatureFlag_ADF_DeployPipelines }}   
+            FeatureFlag_SQL_Deploy: ${{ parameters.FeatureFlag_SQL_Deploy }}    
+            CreateRGYesOrNo: ${{ parameters.CreateRGYesOrNo }}  
 
     - template: ..\Jobs\Job-Data-Build.yml
       parameters:
