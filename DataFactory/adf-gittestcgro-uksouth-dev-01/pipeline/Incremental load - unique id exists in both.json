@@ -224,7 +224,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"storedProcedureName": {
-									"value": "usp_upsert_@{item().TABLE_NAME}",
+									"value": "@{item().StoredProcedureNameForMergeOperation}",
 									"type": "Expression"
 								}
 							},
