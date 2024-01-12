@@ -18,13 +18,13 @@ VALUES ('Amazing project','2024-01-01')
 
 BEGIN TRY 
 CREATE ROLE ADFReadWriteToTables
-GRANT SELECT ON DATABASE::[$(DatabaseName)] to SynapseReadWriteToTables
-GRANT INSERT ON DATABASE::[$(DatabaseName)] to SynapseReadWriteToTables
-GRANT UPDATE ON DATABASE::[$(DatabaseName)] to SynapseReadWriteToTables
-GRANT DELETE ON DATABASE::[$(DatabaseName)] to SynapseReadWriteToTables
-GRANT CREATE TABLE TO SynapseReadWriteToTables
-GRANT CREATE VIEW TO SynapseReadWriteToTables
-GRANT ALTER ANY SCHEMA TO SynapseReadWriteToTables
+GRANT SELECT ON DATABASE::[$(DatabaseName)] to ADFReadWriteToTables
+GRANT INSERT ON DATABASE::[$(DatabaseName)] to ADFReadWriteToTables
+GRANT UPDATE ON DATABASE::[$(DatabaseName)] to ADFReadWriteToTables
+GRANT DELETE ON DATABASE::[$(DatabaseName)] to ADFReadWriteToTables
+GRANT CREATE TABLE TO ADFReadWriteToTables
+GRANT CREATE VIEW TO ADFReadWriteToTables
+GRANT ALTER ANY SCHEMA TO ADFReadWriteToTables
 END TRY
 
 BEGIN CATCH
