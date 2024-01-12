@@ -1,6 +1,6 @@
 param (
   [String] $aadGroupName = 'SQLDataWriters',
-  [String] $dbRoleName = 'SynapseReadWriteToTables',
+  [String] $dbRoleName = 'ADFReadWriteToTables',
   [String] $db_server = 'sqlsrv-xxxx-test.database.windows.net',
   [String] $db_name = 'DATransactions'
 )

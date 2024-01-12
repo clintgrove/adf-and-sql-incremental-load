@@ -15,3 +15,18 @@ VALUES(1,'Joe Reegsblog','2024-01-01')
   
 INSERT INTO project_table 
 VALUES ('Amazing project','2024-01-01')
+
+BEGIN TRY 
+CREATE ROLE ADFReadWriteToTables
+GRANT SELECT ON DATABASE::[$(DatabaseName)] to SynapseReadWriteToTables
+GRANT INSERT ON DATABASE::[$(DatabaseName)] to SynapseReadWriteToTables
+GRANT UPDATE ON DATABASE::[$(DatabaseName)] to SynapseReadWriteToTables
+GRANT DELETE ON DATABASE::[$(DatabaseName)] to SynapseReadWriteToTables
+GRANT CREATE TABLE TO SynapseReadWriteToTables
+GRANT CREATE VIEW TO SynapseReadWriteToTables
+GRANT ALTER ANY SCHEMA TO SynapseReadWriteToTables
+END TRY
+
+BEGIN CATCH
+SELECT 'ALREADY THERE'
+END CATCH

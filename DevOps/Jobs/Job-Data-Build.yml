@@ -24,11 +24,6 @@ jobs:
         
         
         - ${{ if eq(parameters.FeatureFlag_SQL_Deploy, true) }}:
-          # Build DATransactions database
-          - template: ..\Tasks\Task-BuildAzureSqlDb.yml
-            parameters:
-              SQLBuildSourceFolder: ${{ variables.SQLBuildSourceFolder_dbLida }}
-              ArtifactName: 'dropDacpacDATransactions'
           
           # dfac source build
           - template: ..\Tasks\Task-BuildAzureSqlDb.yml

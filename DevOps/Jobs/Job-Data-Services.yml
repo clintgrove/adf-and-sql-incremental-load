@@ -51,16 +51,6 @@ jobs:
         
         # Deploy Databases
         - ${{ if eq(parameters.FeatureFlag_SQL_Deploy, true) }}:
-          # Deploy LIDAMovementTransactions Database
-          - template: ../Tasks/Task-DeployAzureSqlDb.yml
-            parameters:
-              DacpacFilePath: '$(Pipeline.Workspace)/dropDacpacDATransactions/DatabaseLIDA.dacpac'
-              DatabaseName: ${{ variables.DADatabaseName }}
-              AdditionalArguments: /p:BlockOnPossibleDataLoss=${{ lower(parameters.FeatureFlag_SQL_StopIfDataLossCanOccur) }}
-              ServerName: $(SetSqlVarFQDNp2.sqlSrvNameOutput)  #${{ variables.AzureSqlServerName_ghub }}
-              ServiceConnection: ${{ parameters.ServiceConnection }}
-              RGroup: ${{ parameters.RGroup }}
-              sqlServerPasswordDA: $(SqlGetThrough)
 
           #dfac source database
           - template: ../Tasks/Task-DeployAzureSqlDb.yml
