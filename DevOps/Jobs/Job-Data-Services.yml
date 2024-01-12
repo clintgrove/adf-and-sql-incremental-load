@@ -26,7 +26,7 @@ jobs:
             artifact: 'AdfArmTemplatesData01' #  ADF01 arm templates
         - ${{ if eq(parameters.FeatureFlag_SQL_Deploy, true) }}:
           - download: current
-            artifact: 'dropDacpacDATransactions' #  Lida dacpac
+            artifact: 'dropDacpacFACTARGET' #  facTarget dacpac
           - download: current
             artifact: 'dropDacpacFACSOURCE' #  facSource dacpac
         - download: current
