@@ -11,9 +11,7 @@ parameters:
   - name: Create_ResourceGroup_YesOrNo
     type: boolean
     default: false
-  - name: Build_Infrastructure_YesOrNo
-    type: boolean
-    default: false
+
 
 name: Pipeline-$(Build.DefinitionName)-$(Date:yyyyMMdd)$(Rev:.r)
 
@@ -28,7 +26,7 @@ pool: 'Azure Pipelines'
 
 stages:
 
-- template: ..\Stages\Stage-Environment.yml
+- template: ..\Stages\Stage-Environment-Infra.yml
   parameters:
           ServiceConnection: ${{ variables.serviceConnection }}
           Environment: ${{ variables.DevEnvironment }}
@@ -37,5 +35,5 @@ stages:
           FeatureFlag_ADF_DeployPipelines: ${{ parameters.FeatureFlag_ADF_DeployPipelines }}
           FeatureFlag_SQL_Deploy: ${{ parameters.FeatureFlag_SQL_Deploy }}
           CreateRGYesOrNo: ${{ parameters.Create_ResourceGroup_YesOrNo }}
-          BuildInfr : ${{ parameters.Build_Infrastructure_YesOrNo }}
+
 
