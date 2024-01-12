@@ -1,0 +1,36 @@
+parameters:
+  Environment: String  
+  Location: String
+  ServiceConnection: String
+  FeatureFlag_SQL_StopIfDataLossCanOccur: boolean
+  FeatureFlag_ADF_DeployPipelines: boolean
+  FeatureFlag_SQL_Deploy: boolean
+  CreateRGYesOrNo: boolean
+
+stages:
+- stage: INFRA Stage_${{ parameters.Environment }}
+  displayName: INFRA Stage - ${{ parameters.Environment }}
+  dependsOn: []
+  variables:
+    - template: ..\Variables\Variables-Global.yml
+    - template: ..\Variables\Variables-${{ Parameters.Environment }}.yml
+  jobs:  
+
+    - template: ..\Jobs\Job-Global-Build.yml
+      parameters: 
+        Environment: ${{ parameters.Environment }}  
+        Location: ${{ parameters.Location }}
+        ServiceConnection: ${{ parameters.ServiceConnection }}
+
+    - template: ..\Jobs\Job-Data-Infrastructure.yml
+      parameters:
+        Environment: ${{ parameters.Environment }}  
+        Location: ${{ parameters.Location }}
+        ServiceConnection: ${{ parameters.ServiceConnection }}
+        FeatureFlag_ADF_DeployPipelines: ${{ parameters.FeatureFlag_ADF_DeployPipelines }}   
+        FeatureFlag_SQL_Deploy: ${{ parameters.FeatureFlag_SQL_Deploy }}    
+        CreateRGYesOrNo: ${{ parameters.CreateRGYesOrNo }}  
+
+
+
+

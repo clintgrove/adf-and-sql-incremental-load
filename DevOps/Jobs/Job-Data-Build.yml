@@ -10,7 +10,7 @@ jobs:
   pool:
     vmImage: 'windows-latest'
   displayName: Job - Data Build
-  dependsOn: JobDataInfrastructure
+  dependsOn: JobGlobalBuild
   variables:
     - template: ..\Variables\Variables-Global.yml
     - template: ..\Variables\Variables-${{ Parameters.Environment }}.yml

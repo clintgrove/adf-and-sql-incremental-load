@@ -1,0 +1,41 @@
+parameters:
+  - name: FeatureFlag_SQL_StopIfDataLossCanOccur
+    type: boolean
+    default: true
+  - name: FeatureFlag_SQL_Deploy
+    type: boolean
+    default: true
+  - name: FeatureFlag_ADF_DeployPipelines
+    type: boolean
+    default: true
+  - name: Create_ResourceGroup_YesOrNo
+    type: boolean
+    default: false
+  - name: Build_Infrastructure_YesOrNo
+    type: boolean
+    default: false
+
+name: Pipeline-$(Build.DefinitionName)-$(Date:yyyyMMdd)$(Rev:.r)
+
+pr: none
+trigger: none
+
+variables:
+- template: ..\Variables\Variables-Global.yml
+
+pool: 'Azure Pipelines'
+
+
+stages:
+
+- template: ..\Stages\Stage-Environment.yml
+  parameters:
+          ServiceConnection: ${{ variables.serviceConnection }}
+          Environment: ${{ variables.DevEnvironment }}
+          Location: ${{ variables.Location }}
+          FeatureFlag_SQL_StopIfDataLossCanOccur: ${{ parameters.FeatureFlag_SQL_StopIfDataLossCanOccur }}
+          FeatureFlag_ADF_DeployPipelines: ${{ parameters.FeatureFlag_ADF_DeployPipelines }}
+          FeatureFlag_SQL_Deploy: ${{ parameters.FeatureFlag_SQL_Deploy }}
+          CreateRGYesOrNo: ${{ parameters.Create_ResourceGroup_YesOrNo }}
+          BuildInfr : ${{ parameters.Build_Infrastructure_YesOrNo }}
+
