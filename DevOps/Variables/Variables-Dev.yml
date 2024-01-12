@@ -12,10 +12,7 @@ variables:
   AzureDataFactoryParametersData: "ArmTemplates/DataFactory/Parameters/${{ upper(variables.Environment) }}/AzureDataFactory.parameters.json"
   AzureLogAnalyticsParameters: "ArmTemplates/LogAnalytics/Parameters/${{ upper(variables.Environment) }}/LogAnalytics.parameters.json"
 
- 
-  # DATransactions vars
-  SQLBuildSourceFolder_dbLida: "SQL DBs/DatabaseLIDA"
-  DADatabaseName: "DATransactions"
+  AADSecurityGroup: "SQL-DataWriters-${{ upper(variables.Environment) }}"
 
   # dafac source database vars
   SQLBuildSourceFolder_dbfacStuffSource: "SQL DBs/dafacstuffuks"
