@@ -21,3 +21,21 @@ steps:
     DacpacFile: '${{ parameters.DacpacFilePath }}'
     IpDetectionMethod: 'AutoDetect'
     additionalArguments: ${{ parameters.AdditionalArguments }}
+
+- task: AzurePowerShell@5
+  displayName: add adf managed identity user to Security Group
+  inputs:
+    script: FilePath
+    azureSubscription: '$(ServiceConnection)'
+    ScriptPath: '$(Pipeline.Workspace)/scripts/AddADFUserToSecurityGroup.ps1'
+    ScriptArguments: -AD_SecurityGroup ${{ parameters.AADSecurityGroup }} -FactoryNameUpToEnv ${{ parameters.DataFactoryNameGHUB }}
+    azurePowerShellVersion: LatestVersion
+
+- task: AzurePowerShell@5
+  displayName: add Security Group to sql server
+  inputs:
+    script: FilePath
+    azureSubscription: '$(ServiceConnection)'
+    ScriptPath: '$(Pipeline.Workspace)/scripts/AddSGObjectidToSQLserverAsUser.ps1'
+    ScriptArguments: -db_server ${{ parameters.ServerName }} -db_name ${{parameters.DatabaseName}} -aadGroupName ${{ parameters.AADSecurityGroup }}
+    azurePowerShellVersion: LatestVersion
