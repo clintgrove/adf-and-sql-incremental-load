@@ -12,10 +12,7 @@
               },
               {
                 "name": "dba-facstuff-target"
-            },
-            {
-              "name": "DATransactions"
-          }
+            }
           ]
       },
       "LogAnalyticsResourceGroup": {
