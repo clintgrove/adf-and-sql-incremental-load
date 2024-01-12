@@ -1,14 +1,15 @@
 param (
   [String] $aadGroupName = 'SQL-DataWriters-DEV',
   [String] $dbRoleName = 'ADFReadWriteToTables',
-  [String] $db_server = 'sqlsrv-xxxx-test.database.windows.net',
-  [String] $db_name = 'DATransactions'
+  [String] $db_server = 'sqlsrv-j4ckpfb4gepfo-dev.database.windows.net',
+  [String] $db_name = 'dba-fac-stf-source'
 )
 # idea from https://medium.com/microsoftazure/deploying-a-dacpac-to-azure-with-azure-pipelines-and-managed-identity-89703d405e00
 
 $aadGroupObjectId = (Get-AzADGroup -DisplayName $aadGroupName).id #az ad group show --group $aadGroupName --query objectId
 
 WRITE-HOST $aadGroupObjectId
+Get-AzContext
 
 $context = [Microsoft.Azure.Commands.Common.Authentication.Abstractions.AzureRmProfileProvider]::Instance.Profile.DefaultContext
 $sqlToken = [Microsoft.Azure.Commands.Common.Authentication.AzureSession]::Instance.AuthenticationFactory.Authenticate($context.Account, $context.Environment, $context.Tenant.Id.ToString(), $null, [Microsoft.Azure.Commands.Common.Authentication.ShowDialog]::Never, $null, "https://database.windows.net").AccessToken
