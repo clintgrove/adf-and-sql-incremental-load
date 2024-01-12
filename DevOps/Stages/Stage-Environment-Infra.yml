@@ -8,7 +8,7 @@ parameters:
   CreateRGYesOrNo: boolean
 
 stages:
-- stage: INFRA Stage_${{ parameters.Environment }}
+- stage: INFRA_Stage_${{ parameters.Environment }}
   displayName: INFRA Stage - ${{ parameters.Environment }}
   dependsOn: []
   variables:

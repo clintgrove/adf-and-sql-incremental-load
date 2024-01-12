@@ -8,7 +8,7 @@ parameters:
   CreateRGYesOrNo: boolean
 
 stages:
-- stage: Stage_${{ parameters.Environment }} 
+- stage: SERVICES_Stage_${{ parameters.Environment }} 
   displayName: Stage - ${{ parameters.Environment }}
   dependsOn: []
   variables:
