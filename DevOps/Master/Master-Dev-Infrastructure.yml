@@ -1,0 +1,35 @@
+parameters:
+  - name: Create_SQL
+    type: boolean
+    default: true
+  - name: Create_ADF
+    type: boolean
+    default: true
+  - name: Create_ResourceGroup_YesOrNo
+    type: boolean
+    default: false
+
+
+name: Pipeline-$(Build.DefinitionName)-$(Date:yyyyMMdd)$(Rev:.r)
+
+pr: none
+trigger: none
+
+variables:
+- template: ..\Variables\Variables-Global.yml
+
+pool: 'Azure Pipelines'
+
+
+stages:
+
+- template: ..\Stages\Stage-Environment-Infra.yml
+  parameters:
+          ServiceConnection: ${{ variables.serviceConnection }}
+          Environment: ${{ variables.DevEnvironment }}
+          Location: ${{ variables.Location }}
+          FeatureFlag_ADF_DeployPipelines: ${{ parameters.Create_ADF }}
+          FeatureFlag_SQL_Deploy: ${{ parameters.Create_SQL }}
+          CreateRGYesOrNo: ${{ parameters.Create_ResourceGroup_YesOrNo }}
+
+

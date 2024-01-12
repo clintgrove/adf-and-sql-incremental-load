@@ -6,6 +6,8 @@ parameters:
   ServiceConnection: string
   RGroup: string
   sqlServerPasswordDA: string
+  AADSecurityGroup: string
+  DataFactoryNameGHUB: string
 
 steps:
 - task: 'SqlAzureDacpacDeployment@1'

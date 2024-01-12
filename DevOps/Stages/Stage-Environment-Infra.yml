@@ -8,8 +8,8 @@ parameters:
   CreateRGYesOrNo: boolean
 
 stages:
-- stage: Stage_${{ parameters.Environment }} 
-  displayName: Stage - ${{ parameters.Environment }}
+- stage: INFRA_Stage_${{ parameters.Environment }}
+  displayName: INFRA Stage - ${{ parameters.Environment }}
   dependsOn: []
   variables:
     - template: ..\Variables\Variables-Global.yml
@@ -31,22 +31,6 @@ stages:
         FeatureFlag_SQL_Deploy: ${{ parameters.FeatureFlag_SQL_Deploy }}    
         CreateRGYesOrNo: ${{ parameters.CreateRGYesOrNo }}  
 
-    - template: ..\Jobs\Job-Data-Build.yml
-      parameters:
-        Environment: ${{ parameters.Environment }}  
-        Location: ${{ parameters.Location }}
-        ServiceConnection: ${{ parameters.ServiceConnection }}
-        FeatureFlag_ADF_DeployPipelines: ${{ parameters.FeatureFlag_ADF_DeployPipelines }}
-        FeatureFlag_SQL_Deploy: ${{ parameters.FeatureFlag_SQL_Deploy }}   
 
-    - template: ..\Jobs\Job-Data-Services.yml
-      parameters:
-        Environment: ${{ parameters.Environment }}  
-        Location: ${{ parameters.Location }}
-        ServiceConnection: ${{ parameters.ServiceConnection }}
-        RGroup: ${{ variables.ResourceGroupNameGHUB}}
-        FeatureFlag_SQL_StopIfDataLossCanOccur: ${{ parameters.FeatureFlag_SQL_StopIfDataLossCanOccur }}
-        FeatureFlag_ADF_DeployPipelines: ${{ parameters.FeatureFlag_ADF_DeployPipelines }}
-        FeatureFlag_SQL_Deploy: ${{ parameters.FeatureFlag_SQL_Deploy }}   
 
 

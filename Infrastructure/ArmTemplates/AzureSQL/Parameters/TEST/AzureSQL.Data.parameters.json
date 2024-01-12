@@ -5,14 +5,6 @@
       "az_environment" : {
         "value": "test"
       },
-      "administratorLogin": {
-        "value": "sqladmin"
-      },
-      "administratorLoginPassword": {
-
-        "value": "$(SqlGetThrough)"
-
-      },
       "databases": {
           "value": [
               {
@@ -20,10 +12,7 @@
               },
               {
                 "name": "dba-facstuff-target"
-            },
-            {
-              "name": "DATransactions"
-          }
+            }
           ]
       },
       "LogAnalyticsResourceGroup": {

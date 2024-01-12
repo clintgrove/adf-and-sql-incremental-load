@@ -15,3 +15,18 @@ VALUES(1,'Joe Reegsblog','2024-01-01')
   
 INSERT INTO project_table 
 VALUES ('Amazing project','2024-01-01')
+
+BEGIN TRY 
+CREATE ROLE ADFReadWriteToTables
+GRANT SELECT ON DATABASE::[$(DatabaseName)] to ADFReadWriteToTables
+GRANT INSERT ON DATABASE::[$(DatabaseName)] to ADFReadWriteToTables
+GRANT UPDATE ON DATABASE::[$(DatabaseName)] to ADFReadWriteToTables
+GRANT DELETE ON DATABASE::[$(DatabaseName)] to ADFReadWriteToTables
+GRANT CREATE TABLE TO ADFReadWriteToTables
+GRANT CREATE VIEW TO ADFReadWriteToTables
+GRANT ALTER ANY SCHEMA TO ADFReadWriteToTables
+END TRY
+
+BEGIN CATCH
+SELECT 'ALREADY THERE'
+END CATCH
