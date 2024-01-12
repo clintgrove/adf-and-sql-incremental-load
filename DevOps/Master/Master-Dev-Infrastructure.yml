@@ -1,11 +1,8 @@
 parameters:
-  - name: FeatureFlag_SQL_StopIfDataLossCanOccur
+  - name: Create_SQL
     type: boolean
     default: true
-  - name: FeatureFlag_SQL_Deploy
-    type: boolean
-    default: true
-  - name: FeatureFlag_ADF_DeployPipelines
+  - name: Create_ADF
     type: boolean
     default: true
   - name: Create_ResourceGroup_YesOrNo
@@ -31,9 +28,8 @@ stages:
           ServiceConnection: ${{ variables.serviceConnection }}
           Environment: ${{ variables.DevEnvironment }}
           Location: ${{ variables.Location }}
-          FeatureFlag_SQL_StopIfDataLossCanOccur: ${{ parameters.FeatureFlag_SQL_StopIfDataLossCanOccur }}
-          FeatureFlag_ADF_DeployPipelines: ${{ parameters.FeatureFlag_ADF_DeployPipelines }}
-          FeatureFlag_SQL_Deploy: ${{ parameters.FeatureFlag_SQL_Deploy }}
+          FeatureFlag_ADF_DeployPipelines: ${{ parameters.Create_ADF }}
+          FeatureFlag_SQL_Deploy: ${{ parameters.Create_SQL }}
           CreateRGYesOrNo: ${{ parameters.Create_ResourceGroup_YesOrNo }}
 
 

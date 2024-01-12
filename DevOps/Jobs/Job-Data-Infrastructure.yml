@@ -3,8 +3,6 @@ parameters:
   Location: String
   ServiceConnection: String
   sqlServerPasswordDA: String
-  clintazrealsecret: string
-  clintazrealappid: string
   FeatureFlag_ADF_DeployPipelines: boolean
   FeatureFlag_SQL_Deploy: boolean
   CreateRGYesOrNo: boolean
