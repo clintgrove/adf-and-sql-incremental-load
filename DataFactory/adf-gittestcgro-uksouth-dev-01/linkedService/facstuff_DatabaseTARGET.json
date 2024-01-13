@@ -1,10 +1,11 @@
 {
 	"name": "facstuff_DatabaseTARGET",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
 		"annotations": [],
 		"type": "AzureSqlDatabase",
 		"typeProperties": {
-			"connectionString": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=sqlsrv-th5dkllq2i3qa-dev.database.windows.net;Initial Catalog=dba-facstuff-target"
+			"connectionString": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=sqlsrv-j4ckpfb4gepfo-dev.database.windows.net;Initial Catalog=dba-facstuff-target;Server=tcp:sqlsrv-j4ckpfb4gepfo-dev.database.windows.net,1433;TrustServerCertificate=False"
 		}
 	}
 }
