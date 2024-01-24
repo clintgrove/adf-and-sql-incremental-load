@@ -20,6 +20,7 @@ GRANT SELECT ON DATABASE::[$(DatabaseName)] to ADFReadWriteToTables
 GRANT INSERT ON DATABASE::[$(DatabaseName)] to ADFReadWriteToTables
 GRANT UPDATE ON DATABASE::[$(DatabaseName)] to ADFReadWriteToTables
 GRANT DELETE ON DATABASE::[$(DatabaseName)] to ADFReadWriteToTables
+GRANT EXECUTE TO ADFReadWriteToTables
 GRANT CREATE TABLE TO ADFReadWriteToTables
 GRANT CREATE VIEW TO ADFReadWriteToTables
 GRANT ALTER ANY SCHEMA TO ADFReadWriteToTables
