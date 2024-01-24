@@ -204,7 +204,7 @@
 						},
 						{
 							"name": "Sproc to copy new rows from staging",
-							"description": "copy news rows only to main live table",
+							"description": "copy news rows only to main live table. This goes to schema called staging",
 							"type": "SqlServerStoredProcedure",
 							"dependsOn": [
 								{
