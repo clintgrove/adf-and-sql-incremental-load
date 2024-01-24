@@ -459,10 +459,14 @@
             ]
         }
     ],
-    "outputs": {
-        "adfNameOutput": {
-            "type": "string",
-            "value": "[variables('dataFactoryName')]"
-        }
+  "outputs": {
+    "adfNameOutput": {
+      "type": "string",
+      "value": "[variables('dataFactoryName')]"
+    },
+    "adfResourceId": {
+      "type": "string",
+      "value": "[resourceId('Microsoft.DataFactory/factories', variables('dataFactoryName'))]"
     }
+  }
 }
