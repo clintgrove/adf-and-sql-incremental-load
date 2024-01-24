@@ -41,7 +41,7 @@ jobs:
         - ${{ if eq(parameters.FeatureFlag_ADF_DeployPipelines, true) }}:
           - template: ..\Tasks\Task-BuildDataFactory.yml
             parameters:
-              ArmTemplateExportPath : '$(Build.Repository.LocalPath)/DataFactory/adf-gittestcgro-uksouth-dev-01'
+              ArmTemplateExportPath : '$(Build.Repository.LocalPath)/DataFactory/adf-git'
               #DataFactoryResourceId must always point to the dev data factory you are trying to build
               DataFactoryResourceId : '/subscriptions/1943f6e4-c483-433c-a82b-cc02e45ad73c/resourceGroups/lz-ghub-dev-uks-rg-01/providers/Microsoft.DataFactory/factories/adf-qn5l2pkcva3s2-uksouth-dev'
               ZoneType : 'DataAnalytics'
