@@ -44,7 +44,7 @@ jobs:
             script: FilePath
             azureSubscription: '$(ServiceConnection)'
             ScriptPath: '$(Pipeline.Workspace)/Scripts/getDeploymentOutputs.ps1'
-            ScriptArguments: '-resourceGroupName ${{variables.ResourceGroupNameGHUB}}'
+            ScriptArguments: '-resourceGroupName lz-ghub-dev-uks-rg-01'  #we need the dev factory here to feed into action below
             azurePowerShellVersion: LatestVersion
             
         - script: echo ADF rsc id is  $(RGoutputs.adfResourceId)
