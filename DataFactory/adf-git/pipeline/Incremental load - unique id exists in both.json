@@ -164,7 +164,7 @@
 							"type": "SqlServerStoredProcedure",
 							"dependsOn": [
 								{
-									"activity": "Copy data to staging",
+									"activity": "Sproc to copy new rows from staging",
 									"dependencyConditions": [
 										"Succeeded"
 									]
@@ -208,7 +208,7 @@
 							"type": "SqlServerStoredProcedure",
 							"dependsOn": [
 								{
-									"activity": "Sproc update watermark",
+									"activity": "Copy data to staging",
 									"dependencyConditions": [
 										"Succeeded"
 									]
