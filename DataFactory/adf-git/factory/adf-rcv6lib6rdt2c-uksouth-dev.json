@@ -1,5 +1,13 @@
 {
 	"name": "adf-rcv6lib6rdt2c-uksouth-dev",
+	"properties": {
+		"globalParameters": {
+			"myGlobalParam1": {
+				"type": "string",
+				"value": "dev"
+			}
+		}
+	},
 	"location": "uksouth",
 	"identity": {
 		"type": "SystemAssigned",
