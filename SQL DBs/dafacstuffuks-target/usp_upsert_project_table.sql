@@ -2,8 +2,21 @@
 AS
 
 BEGIN
+	IF OBJECT_ID('tempdb..#tempproject', 'U') IS NOT NULL
+		DROP TABLE #tempproject;
+
+	CREATE TABLE #tempproject (
+		-- Define the columns of the temporary table
+		Project VARCHAR(255),
+		Creationtime datetime
+	);
+
+	INSERT INTO #tempproject
+	SELECT DISTINCT * FROM staging.project_table;
+
+
   MERGE project_table AS target
-  USING staging.project_table AS source
+  USING #tempproject AS source
   ON (target.Project = source.Project)
   WHEN MATCHED THEN
       UPDATE SET Creationtime = source.Creationtime
