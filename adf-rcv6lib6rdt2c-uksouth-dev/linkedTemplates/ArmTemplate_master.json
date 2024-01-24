@@ -17,6 +17,10 @@
 			"metadata": "Secure string for 'connectionString' of 'facstuff_DatabaseTARGET'",
 			"defaultValue": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=;Initial Catalog="
 		},
+		"default_properties_myGlobalParam1_value": {
+			"type": "string",
+			"defaultValue": "dev"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -49,6 +53,9 @@
 					},
 					"facstuff_DatabaseTARGET_connectionString": {
 						"value": "[parameters('facstuff_DatabaseTARGET_connectionString')]"
+					},
+					"default_properties_myGlobalParam1_value": {
+						"value": "[parameters('default_properties_myGlobalParam1_value')]"
 					}
 				}
 			},

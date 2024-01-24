@@ -11,6 +11,9 @@
 		"facstuff_DatabaseTARGET_connectionString": {
 			"value": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=;Initial Catalog="
 		},
+		"default_properties_myGlobalParam1_value": {
+			"value": "dev"
+		},
 		"containerUri": {
 			"value": ""
 		},
