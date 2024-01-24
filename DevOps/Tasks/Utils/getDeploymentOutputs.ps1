@@ -44,6 +44,9 @@ foreach ($key in $lastADFDeployment.Outputs.Keys){
         if ($key -eq "adfNameOutput") {
             Write-Host "##vso[task.setvariable variable=adfNameOutput;isOutput=true]$value"
         }
+        if ($key -eq "adfResourceId") {
+            Write-Host "##vso[task.setvariable variable=adfResourceId;isOutput=true]$value"
+        }
 
     }
 }

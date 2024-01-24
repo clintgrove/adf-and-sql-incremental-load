@@ -37,13 +37,26 @@ jobs:
               SQLBuildSourceFolder: ${{ variables.SQLBuildSourceFolder_dbfacStuffTarget }}
               ArtifactName: 'dropDacpacFACTARGET'
 
+        - task: AzurePowerShell@5
+          displayName: Get output from ARM template
+          name: RGoutputs
+          inputs:
+            script: FilePath
+            azureSubscription: '$(ServiceConnection)'
+            ScriptPath: '$(Pipeline.Workspace)/Scripts/getDeploymentOutputs.ps1'
+            ScriptArguments: '-resourceGroupName ${{variables.ResourceGroupNameGHUB}}'
+            azurePowerShellVersion: LatestVersion
+            
+        - script: echo ADF rsc id is  $(RGoutputs.adfResourceId)
+
+  
         # Build Data Factory ADF01
         - ${{ if eq(parameters.FeatureFlag_ADF_DeployPipelines, true) }}:
           - template: ..\Tasks\Task-BuildDataFactory.yml
             parameters:
               ArmTemplateExportPath : '$(Build.Repository.LocalPath)/DataFactory/adf-git'
-              #DataFactoryResourceId must always point to the dev data factory you are trying to build
-              DataFactoryResourceId : '/subscriptions/1943f6e4-c483-433c-a82b-cc02e45ad73c/resourceGroups/lz-ghub-dev-uks-rg-01/providers/Microsoft.DataFactory/factories/adf-rcv6lib6rdt2c-uksouth-dev'
+              #DataFactoryResourceId must always point to the dev data factory you are trying to build 
+              DataFactoryResourceId : $(RGoutputs.adfResourceId)
               ZoneType : 'DataAnalytics'
               ArmTemplatesADFArtifact: 'ADFArmTemplatesData01'
               ArmTemplateParametersADFArtifact: 'ADFArmTemplateParametersData01'
