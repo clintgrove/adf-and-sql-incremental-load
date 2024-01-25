@@ -10,11 +10,16 @@ Post-Deployment Script Template
 --------------------------------------------------------------------------------------
 */
 
-INSERT INTO [customer_table]
-VALUES(1,'Joe Reegsblog','2024-01-01')
-  
-INSERT INTO project_table 
-VALUES ('Amazing project','2024-01-01')
+IF NOT EXISTS (SELECT * FROM [customer_table] WHERE PersonID = 1)
+BEGIN
+    INSERT INTO [customer_table] VALUES(1,'Joe Reegsblog','2024-01-01')
+END
+
+
+IF NOT EXISTS (SELECT * FROM project_table WHERE Project = 'Amazing project')
+BEGIN
+    INSERT INTO project_table VALUES ('Amazing project','2024-01-01')
+END
 
 BEGIN TRY 
 CREATE ROLE ADFReadWriteToTables
