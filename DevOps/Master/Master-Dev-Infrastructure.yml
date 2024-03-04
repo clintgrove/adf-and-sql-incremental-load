@@ -13,7 +13,11 @@ parameters:
 name: Pipeline-$(Build.DefinitionName)-$(Date:yyyyMMdd)$(Rev:.r)
 
 pr: none
-trigger: none
+trigger:  
+  batch: true
+  branches:
+    include:
+      - release-*
 
 variables:
 - template: ..\Variables\Variables-Global.yml
