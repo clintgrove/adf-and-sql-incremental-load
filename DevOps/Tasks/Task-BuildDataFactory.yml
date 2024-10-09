@@ -30,7 +30,7 @@ steps:
   inputs:
     command: 'custom'
     workingDir: '$(Build.Repository.LocalPath)/' #replace with the package.json folder
-    customCommand: 'run build validate $(Build.Repository.LocalPath)/DataFactory/adf-gittestcgro-uksouth-dev-01 ${{ parameters.DataFactoryResourceId }}'
+    customCommand: 'run build validate $(Build.Repository.LocalPath)/DataFactory/adf-git ${{ parameters.DataFactoryResourceId }}'
   displayName: 'Validate'
 
 # Validate and then generate the ARM template into the destination folder, which is the same as selecting "Publish" from the UX.
