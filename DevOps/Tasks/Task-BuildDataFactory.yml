@@ -14,7 +14,7 @@ parameters:
 steps:
 - task: NodeTool@1
   inputs:
-    versionSpec: '^19.9.0'
+    versionSpec: '22.9.0'
   displayName: 'Install Node.js'
  
 - task: Npm@1
