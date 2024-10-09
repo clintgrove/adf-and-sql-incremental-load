@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[loadInfo_Watermark](
 	[rowNum] [int] IDENTITY(1,1) NOT NULL,
-	[dateofload] [datetime] NULL,
+	[dateofload] [datetime] NOT NULL,
 	[sourceinfo] [varchar](50) NULL,
 	[targetinfo] [varchar](50) NULL
 ) 
