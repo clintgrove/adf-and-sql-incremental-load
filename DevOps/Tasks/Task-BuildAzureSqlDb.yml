@@ -9,7 +9,8 @@ steps:
       displayName: 'Visual Studio Build sln file '
       inputs:
         vsVersion: 17.0
-        msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactstagingdirectory)\\"'
+        msbuildArgs: '/p:PackageLocation="$(build.artifactstagingdirectory)\\"'
+        #/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true
         platform: 'any cpu'
         configuration: release
 
