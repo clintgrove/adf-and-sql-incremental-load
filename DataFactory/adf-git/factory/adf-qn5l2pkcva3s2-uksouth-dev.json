@@ -14,7 +14,7 @@
 				"type": "string",
 				"value": "0114-162642-14sfdk4y"
 			},
-			"myGlobalParam1_": {
+			"myGlobalParam1": {
 				"type": "string",
 				"value": "devo"
 			}
