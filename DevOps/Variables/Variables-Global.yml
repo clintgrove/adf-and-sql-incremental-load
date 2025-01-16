@@ -1,5 +1,5 @@
 variables:
-  ServiceConnection: 'bloom-connect-vse'
+  ServiceConnection: 'clintazreal2'
   DevEnvironment: 'Dev'
   TestEnvironment: 'Test'
   PpeEnvironment: 'Ppe'
