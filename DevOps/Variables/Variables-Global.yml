@@ -1,5 +1,5 @@
 variables:
-  ServiceConnection: 'clintazreal2'
+  ServiceConnection: 'clintazreal2' # the service connection name in devops. if you change this make sure to change the subscription id in the vars file for each environment
   DevEnvironment: 'Dev'
   TestEnvironment: 'Test'
   PpeEnvironment: 'Ppe'
