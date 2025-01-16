@@ -1,0 +1,101 @@
+{
+	"name": "AzureDatabricksDeltaLakeDataset1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDatabricksDeltaLake1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureDatabricksDeltaLakeDataset",
+		"typeProperties": {
+			"database": "databaseclinto",
+			"table": "mytaxiservice"
+		},
+		"schema": [
+			{
+				"name": "vendorID",
+				"type": "string"
+			},
+			{
+				"name": "tpepPickupDateTime",
+				"type": "timestamp"
+			},
+			{
+				"name": "tpepDropoffDateTime",
+				"type": "timestamp"
+			},
+			{
+				"name": "passengerCount",
+				"type": "integer"
+			},
+			{
+				"name": "tripDistance",
+				"type": "double"
+			},
+			{
+				"name": "puLocationId",
+				"type": "string"
+			},
+			{
+				"name": "doLocationId",
+				"type": "string"
+			},
+			{
+				"name": "startLon",
+				"type": "double"
+			},
+			{
+				"name": "startLat",
+				"type": "double"
+			},
+			{
+				"name": "endLon",
+				"type": "double"
+			},
+			{
+				"name": "endLat",
+				"type": "double"
+			},
+			{
+				"name": "rateCodeId",
+				"type": "integer"
+			},
+			{
+				"name": "storeAndFwdFlag",
+				"type": "string"
+			},
+			{
+				"name": "paymentType",
+				"type": "string"
+			},
+			{
+				"name": "fareAmount",
+				"type": "double"
+			},
+			{
+				"name": "extra",
+				"type": "double"
+			},
+			{
+				"name": "mtaTax",
+				"type": "double"
+			},
+			{
+				"name": "improvementSurcharge",
+				"type": "string"
+			},
+			{
+				"name": "tipAmount",
+				"type": "double"
+			},
+			{
+				"name": "tollsAmount",
+				"type": "double"
+			},
+			{
+				"name": "totalAmount",
+				"type": "double"
+			}
+		]
+	}
+}
