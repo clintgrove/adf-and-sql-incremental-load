@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1",
+				"name": "Copy dbr lakehouse to sql via staging",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -24,7 +24,9 @@
 					"sink": {
 						"type": "AzureSqlSink",
 						"writeBehavior": "insert",
-						"sqlWriterUseTableLock": false
+						"sqlWriterUseTableLock": false,
+						"tableOption": "autoCreate",
+						"disableMetricsCollection": false
 					},
 					"enableStaging": true,
 					"stagingSettings": {
@@ -47,7 +49,11 @@
 				"outputs": [
 					{
 						"referenceName": "dba_fac_a1_source",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"schema": "x",
+							"tblname": "x"
+						}
 					}
 				]
 			}
