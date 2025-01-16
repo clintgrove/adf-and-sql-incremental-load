@@ -1,0 +1,12 @@
+{
+	"name": "adf-qn5l2pkcva3s2-uksouth-dev",
+	"properties": {
+		"globalParameters": {
+			"gp_dbricks_domainurl": {
+				"type": "string",
+				"value": "https://adb-5117909456747887.7.azuredatabricks.net/"
+			}
+		}
+	},
+	"location": "uksouth"
+}
