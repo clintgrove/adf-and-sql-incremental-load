@@ -45,7 +45,6 @@
 						"referenceName": "AzureDatabricksDeltaLakeDataset1",
 						"type": "DatasetReference",
 						"parameters": {
-							"lakehouseTable_param": "mytaxiservice",
 							"ds_parm_drburl": {
 								"value": "@pipeline().globalParameters.gp_dbricks_domainurl",
 								"type": "Expression"
