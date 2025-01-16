@@ -7,6 +7,9 @@
         },
         "default_properties_myGlobalParam1_value": {
             "value": "dev"
-        }
+        },
+        "default_properties_gp_dbricks_domainurl_value": {
+            "value": "https://adb-55somebollock234.7.azuredatabricks.net/"
+        },
 	}
 }
