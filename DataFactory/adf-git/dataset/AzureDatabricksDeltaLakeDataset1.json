@@ -14,7 +14,7 @@
 					"type": "Expression"
 				},
 				"databricksClusterID": {
-					"value": "@dataset().ds_param_dbresourceid",
+					"value": "@dataset().ds_param_dbrclusterid",
 					"type": "Expression"
 				}
 			}
