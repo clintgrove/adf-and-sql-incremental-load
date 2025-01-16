@@ -33,7 +33,8 @@
 						"referenceName": "AzureDatabricksDeltaLakeDataset1",
 						"type": "DatasetReference",
 						"parameters": {
-							"lakehouseSchema_param": "databaseclinto"
+							"lakehouseSchema_param": "databaseclinto",
+							"lakehouseTable_param": "mytaxiservice"
 						}
 					}
 				],
