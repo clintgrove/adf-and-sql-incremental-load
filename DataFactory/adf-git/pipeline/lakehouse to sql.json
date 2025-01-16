@@ -33,7 +33,8 @@
 						"linkedServiceName": {
 							"referenceName": "Gen2DataLakeStorage",
 							"type": "LinkedServiceReference"
-						}
+						},
+						"path": "fssyntest"
 					}
 				},
 				"inputs": [
