@@ -31,7 +31,10 @@
 				"inputs": [
 					{
 						"referenceName": "AzureDatabricksDeltaLakeDataset1",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"lakehouseSchema_param": "databaseclinto"
+						}
 					}
 				],
 				"outputs": [

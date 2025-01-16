@@ -5,10 +5,23 @@
 			"referenceName": "AzureDatabricksDeltaLake1",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"lakehouseSchema_param": {
+				"type": "string",
+				"defaultValue": "databaseclinto"
+			},
+			"lakehouseTable_param": {
+				"type": "string",
+				"defaultValue": "mytaxiservice"
+			}
+		},
 		"annotations": [],
 		"type": "AzureDatabricksDeltaLakeDataset",
 		"typeProperties": {
-			"database": "databaseclinto",
+			"database": {
+				"value": "@dataset().lakehouseSchema_param",
+				"type": "Expression"
+			},
 			"table": "mytaxiservice"
 		},
 		"schema": [
