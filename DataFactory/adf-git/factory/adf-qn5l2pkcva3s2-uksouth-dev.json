@@ -4,7 +4,7 @@
 		"globalParameters": {
 			"gp_dbricks_domainurl": {
 				"type": "string",
-				"value": "https://adb-5117909456747887.7.azuredatabricks.net/"
+				"value": "https://adb-5shizer87.7.azuredatabricks.net/"
 			},
 			"gp_dbricks_resourceid": {
 				"type": "string",
