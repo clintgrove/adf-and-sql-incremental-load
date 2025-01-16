@@ -1,0 +1,126 @@
+{
+	"name": "AzureDatabricksDeltaLakeDataset1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDatabricksDeltaLake1",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"databricksDomain": {
+					"value": "@dataset().ds_parm_drburl",
+					"type": "Expression"
+				},
+				"databricksWorkspaceResourceId": {
+					"value": "@dataset().ds_param_dbresourceid",
+					"type": "Expression"
+				},
+				"databricksClusterID": {
+					"value": "@dataset().ds_param_dbresourceid",
+					"type": "Expression"
+				}
+			}
+		},
+		"parameters": {
+			"ds_parm_drburl": {
+				"type": "string"
+			},
+			"ds_param_dbresourceid": {
+				"type": "string"
+			},
+			"ds_param_dbrclusterid": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "AzureDatabricksDeltaLakeDataset",
+		"typeProperties": {
+			"database": "databaseclinto",
+			"table": "mytaxiservice"
+		},
+		"schema": [
+			{
+				"name": "vendorID",
+				"type": "string"
+			},
+			{
+				"name": "tpepPickupDateTime",
+				"type": "timestamp"
+			},
+			{
+				"name": "tpepDropoffDateTime",
+				"type": "timestamp"
+			},
+			{
+				"name": "passengerCount",
+				"type": "integer"
+			},
+			{
+				"name": "tripDistance",
+				"type": "double"
+			},
+			{
+				"name": "puLocationId",
+				"type": "string"
+			},
+			{
+				"name": "doLocationId",
+				"type": "string"
+			},
+			{
+				"name": "startLon",
+				"type": "double"
+			},
+			{
+				"name": "startLat",
+				"type": "double"
+			},
+			{
+				"name": "endLon",
+				"type": "double"
+			},
+			{
+				"name": "endLat",
+				"type": "double"
+			},
+			{
+				"name": "rateCodeId",
+				"type": "integer"
+			},
+			{
+				"name": "storeAndFwdFlag",
+				"type": "string"
+			},
+			{
+				"name": "paymentType",
+				"type": "string"
+			},
+			{
+				"name": "fareAmount",
+				"type": "double"
+			},
+			{
+				"name": "extra",
+				"type": "double"
+			},
+			{
+				"name": "mtaTax",
+				"type": "double"
+			},
+			{
+				"name": "improvementSurcharge",
+				"type": "string"
+			},
+			{
+				"name": "tipAmount",
+				"type": "double"
+			},
+			{
+				"name": "tollsAmount",
+				"type": "double"
+			},
+			{
+				"name": "totalAmount",
+				"type": "double"
+			}
+		]
+	}
+}

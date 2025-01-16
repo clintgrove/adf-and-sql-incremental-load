@@ -1,12 +1,11 @@
 {
 	"name": "facstuff_DatabaseSOURCE",
-	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
 		"annotations": [],
 		"type": "AzureSqlDatabase",
 		"typeProperties": {
-			"connectionString": "",
-			"authenticationType": "ManagedIdentity"
+			"connectionString": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=facstuf-sqlserver-uks-a1.database.windows.net;Initial Catalog=dba-fac-stf-source"
 		}
-	}
+	},
+	"type": "Microsoft.DataFactory/factories/linkedservices"
 }

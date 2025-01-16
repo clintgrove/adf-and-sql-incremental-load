@@ -1,0 +1,17 @@
+{
+	"name": "Gen2DataLakeStorage",
+	"properties": {
+		"parameters": {
+			"lakeurl": {
+				"type": "string",
+				"defaultValue": "https://storagelake2clinto876.dfs.core.windows.net/"
+			}
+		},
+		"annotations": [],
+		"type": "AzureBlobFS",
+		"typeProperties": {
+			"url": "@{linkedService().lakeurl}"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/linkedservices"
+}
