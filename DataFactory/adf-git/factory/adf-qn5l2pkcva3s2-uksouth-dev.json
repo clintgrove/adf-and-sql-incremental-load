@@ -13,6 +13,10 @@
 			"gp_dbricks_clusterid": {
 				"type": "string",
 				"value": "0114-162642-14sfdk4y"
+			},
+			"myGlobalParam1_": {
+				"type": "string",
+				"value": "devo"
 			}
 		}
 	},
