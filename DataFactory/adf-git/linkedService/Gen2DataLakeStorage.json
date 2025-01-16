@@ -4,7 +4,7 @@
 		"annotations": [],
 		"type": "AzureBlobFS",
 		"typeProperties": {
-			"url": "https://stguksclintonpmsft2.dfs.core.windows.net/"
+			"url": "https://storagelake2clinto876.dfs.core.windows.net/"
 		}
 	},
 	"type": "Microsoft.DataFactory/factories/linkedservices"
