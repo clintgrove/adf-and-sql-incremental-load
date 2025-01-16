@@ -5,28 +5,35 @@
 			"referenceName": "AzureDatabricksDeltaLake1",
 			"type": "LinkedServiceReference",
 			"parameters": {
-				"databricksDomain": "https://adb-5117909456747887.7.azuredatabricks.net",
-				"databricksWorkspaceResourceId": "/subscriptions/3be2ce56-4a5f-4034-88d7-2953d1819ed3/resourceGroups/factorystuff/providers/Microsoft.Databricks/workspaces/cgroovedbricks",
-				"databricksClusterID": "0114-162642-14sfdk4y"
+				"databricksDomain": {
+					"value": "@dataset().ds_parm_drburl",
+					"type": "Expression"
+				},
+				"databricksWorkspaceResourceId": {
+					"value": "@dataset().ds_param_dbresourceid",
+					"type": "Expression"
+				},
+				"databricksClusterID": {
+					"value": "@dataset().ds_param_dbresourceid",
+					"type": "Expression"
+				}
 			}
 		},
 		"parameters": {
-			"lakehouseSchema_param": {
-				"type": "string",
-				"defaultValue": "databaseclinto"
+			"ds_parm_drburl": {
+				"type": "string"
 			},
-			"lakehouseTable_param": {
-				"type": "string",
-				"defaultValue": "mytaxiservice"
+			"ds_param_dbresourceid": {
+				"type": "string"
+			},
+			"ds_param_dbrclusterid": {
+				"type": "string"
 			}
 		},
 		"annotations": [],
 		"type": "AzureDatabricksDeltaLakeDataset",
 		"typeProperties": {
-			"database": {
-				"value": "@dataset().lakehouseSchema_param",
-				"type": "Expression"
-			},
+			"database": "databaseclinto",
 			"table": "mytaxiservice"
 		},
 		"schema": [

@@ -32,7 +32,10 @@
 					"stagingSettings": {
 						"linkedServiceName": {
 							"referenceName": "Gen2DataLakeStorage",
-							"type": "LinkedServiceReference"
+							"type": "LinkedServiceReference",
+							"parameters": {
+								"lakeurl": "https://storagelake2clinto876.dfs.core.windows.net/"
+							}
 						},
 						"path": "fssyntest"
 					}
@@ -42,8 +45,19 @@
 						"referenceName": "AzureDatabricksDeltaLakeDataset1",
 						"type": "DatasetReference",
 						"parameters": {
-							"lakehouseSchema_param": "databaseclinto",
-							"lakehouseTable_param": "mytaxiservice"
+							"lakehouseTable_param": "mytaxiservice",
+							"ds_parm_drburl": {
+								"value": "@pipeline().globalParameters.gp_dbricks_domainurl",
+								"type": "Expression"
+							},
+							"ds_param_dbresourceid": {
+								"value": "@pipeline().globalParameters.gp_dbricks_resourceid",
+								"type": "Expression"
+							},
+							"ds_param_dbrclusterid": {
+								"value": "@pipeline().globalParameters.gp_dbricks_clusterid",
+								"type": "Expression"
+							}
 						}
 					}
 				],
